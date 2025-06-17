@@ -3,10 +3,9 @@
 import type { PayloadAdminBarProps, PayloadMeUser } from '@payloadcms/admin-bar'
 
 import { cn } from '@/utilities/ui'
-import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
+import { useRouter, useSelectedLayoutSegments } from 'next/navigation'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 
 import './index.scss'
 
@@ -29,7 +28,7 @@ const collectionLabels = {
   },
 }
 
-const Title: React.FC = () => <span>Dashboard</span>
+const Title: React.FC = () => <span>Tableau de bord</span>
 
 export const AdminBar: React.FC<{
   adminBarProps?: PayloadAdminBarProps
@@ -53,7 +52,7 @@ export const AdminBar: React.FC<{
         hidden: !show,
       })}
     >
-      <div className="container">
+      <div className="container mx-auto">
         <PayloadAdminBar
           {...adminBarProps}
           className="py-2 text-white"

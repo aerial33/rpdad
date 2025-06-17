@@ -1,11 +1,13 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 
-import sharp from 'sharp' // sharp-import
+import { fr } from '@payloadcms/translations/languages/fr'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
+import sharp from 'sharp' // sharp-import
 import { fileURLToPath } from 'url'
 
+import { defaultLexical } from '@/fields/defaultLexical'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -14,7 +16,6 @@ import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
-import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 
 const filename = fileURLToPath(import.meta.url)
@@ -26,9 +27,10 @@ export default buildConfig({
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      beforeDashboard: ['@/components/BeforeDashboard'],
+      graphics: {
+        Logo: '/graphics/LogoRpdad/logo#Logo',
+        Icon: '/graphics/LogoRpdad/logo#LogoIcon',
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -56,6 +58,11 @@ export default buildConfig({
         },
       ],
     },
+  },
+  i18n: {
+    fallbackLanguage: 'fr',
+    supportedLanguages: { fr },
+    translations: { fr },
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
