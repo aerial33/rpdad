@@ -101,11 +101,11 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
-    header: Header;
+    'haut-de-page': HautDePage;
     footer: Footer;
   };
   globalsSelect: {
-    header: HeaderSelect<false> | HeaderSelect<true>;
+    'haut-de-page': HautDePageSelect<false> | HautDePageSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
@@ -1534,9 +1534,9 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
+ * via the `definition` "haut-de-page".
  */
-export interface Header {
+export interface HautDePage {
   id: number;
   navItems?:
     | {
@@ -1592,9 +1592,9 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
+ * via the `definition` "haut-de-page_select".
  */
-export interface HeaderSelect<T extends boolean = true> {
+export interface HautDePageSelect<T extends boolean = true> {
   navItems?:
     | T
     | {

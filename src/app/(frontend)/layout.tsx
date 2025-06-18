@@ -1,30 +1,38 @@
-import type { Metadata } from 'next'
-
-import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 
-import { AdminBar } from '@/components/AdminBar'
-import { Footer } from '@/Footer/Component'
-import { Header } from '@/Header/Component'
-import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import type { Metadata } from 'next'
+import { Lexend_Deca, Nunito } from 'next/font/google'
 import { draftMode } from 'next/headers'
 
-import './globals.css'
+import { Footer } from '@/Footer/Component'
+import { Header } from '@/Header/Component'
+import { AdminBar } from '@/components/AdminBar'
+import { Providers } from '@/providers'
+import { InitTheme } from '@/providers/Theme/InitTheme'
 import { getServerSideURL } from '@/utilities/getURL'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { cn } from '@/utilities/ui'
+
+import './globals.css'
+
+const lexendDeca = Lexend_Deca({
+  variable: '--font-lexend-deca',
+  subsets: ['latin'],
+})
+
+const nunito = Nunito({
+  variable: '--font-nunito',
+  subsets: ['latin'],
+})
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html className={cn(lexendDeca.variable, nunito.variable)} lang="fr" suppressHydrationWarning>
       <head>
         <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+        <link href="/icon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
         <Providers>
