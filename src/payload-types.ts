@@ -101,11 +101,11 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
-    'haut-de-page': HautDePage;
+    hautDePage: HautDePage;
     footer: Footer;
   };
   globalsSelect: {
-    'haut-de-page': HautDePageSelect<false> | HautDePageSelect<true>;
+    hautDePage: HautDePageSelect<false> | HautDePageSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
@@ -1534,7 +1534,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "haut-de-page".
+ * via the `definition` "hautDePage".
  */
 export interface HautDePage {
   id: number;
@@ -1555,6 +1555,26 @@ export interface HautDePage {
           url?: string | null;
           label: string;
         };
+        subNavigation?:
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?:
+                  | ({
+                      relationTo: 'pages';
+                      value: number | Page;
+                    } | null)
+                  | ({
+                      relationTo: 'posts';
+                      value: number | Post;
+                    } | null);
+                url?: string | null;
+                label: string;
+              };
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1592,7 +1612,7 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "haut-de-page_select".
+ * via the `definition` "hautDePage_select".
  */
 export interface HautDePageSelect<T extends boolean = true> {
   navItems?:
@@ -1606,6 +1626,20 @@ export interface HautDePageSelect<T extends boolean = true> {
               reference?: T;
               url?: T;
               label?: T;
+            };
+        subNavigation?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              id?: T;
             };
         id?: T;
       };

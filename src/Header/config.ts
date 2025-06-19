@@ -1,10 +1,11 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
+
 import { revalidateHeader } from './hooks/revalidateHeader'
 
 export const Header: GlobalConfig = {
-  slug: 'haut-de-page',
+  slug: 'hautDePage',
   access: {
     read: () => true,
   },
@@ -16,6 +17,15 @@ export const Header: GlobalConfig = {
         link({
           appearances: false,
         }),
+        {
+          name: 'subNavigation',
+          type: 'array',
+          fields: [
+            link({
+              appearances: false,
+            }),
+          ],
+        },
       ],
       maxRows: 6,
       admin: {

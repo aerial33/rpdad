@@ -1,13 +1,25 @@
+//todo: add the cta and dynamic social media links
 'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+
+import { Facebook, Instagram, Linkedin, SearchIcon, Youtube } from 'lucide-react'
+
 import React, { useEffect, useState } from 'react'
 
-import type { HautDePage } from '@/payload-types'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-import { Logo } from '@/components/Logo/Logo'
-import { HeaderNav } from './Nav'
+import { RpdadLogo } from '@/graphics/LogoRpdad/logo'
+import type { HautDePage } from '@/payload-types'
+import { useHeaderTheme } from '@/providers/HeaderTheme'
+
+import { MobileMenu } from './Nav/MobileNav'
+import { NavbarMedium } from './Nav/NavMedium'
+
+//todo: add the cta and dynamic social media links
+
+//todo: add the cta and dynamic social media links
+
+//todo: add the cta and dynamic social media links
 
 interface HeaderClientProps {
   data: HautDePage
@@ -30,15 +42,47 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [headerTheme])
 
   return (
-    <header
-      className="container relative z-20 mx-auto  "
-      {...(theme ? { 'data-theme': theme } : {})}
-    >
-      <div className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
-        </Link>
-        <HeaderNav data={data} />
+    <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
+      <div className="py-4 flex justify-between items-center">
+        <div className="flex items-center space-x-12">
+          <Link href="/">
+            <RpdadLogo />
+          </Link>
+          <NavbarMedium data={data} />
+        </div>
+        <div className="lg:flex hidden items-center gap-4">
+          <ul className="text-foreground flex items-center space-x-4">
+            <li className="hover:text-primary ">
+              <a href="https://www.facebook.com/rpdadgironde" target="_blank">
+                <Facebook className="size-5" />
+              </a>
+            </li>
+            <li className="hover:text-primary ">
+              <a href="https://www.youtube.com/@RPDAD33" target="_blank">
+                <Youtube className="size-5" />
+              </a>
+            </li>
+            <li className="hover:text-primary ">
+              <a
+                href="https://www.linkedin.com/company/rpdad33/posts/?feedView=all"
+                target="_blank"
+              >
+                <Linkedin className="size-5" />
+              </a>
+            </li>
+            <li className="hover:text-primary ">
+              <a href="https://www.instagram.com/rpdad_33/" target="_blank">
+                <Instagram className="size-5" />
+              </a>
+            </li>
+          </ul>
+          <Link href="/search">
+            <span className="sr-only">Search</span>
+            <SearchIcon className="w-5 hover:text-primary font-medium text-foreground" />
+          </Link>
+        </div>
+        <MobileMenu data={data} />
+        {/* <CTA label="Contactez-nous" link="/contact" variant="default" /> */}
       </div>
     </header>
   )
