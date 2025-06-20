@@ -15,6 +15,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
+import editor from '@/access/editor'
 import { slugField } from '@/fields/slug'
 
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
@@ -22,7 +23,6 @@ import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
-import editor from '../Users/access/editor'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 

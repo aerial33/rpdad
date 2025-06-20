@@ -8,7 +8,7 @@ import type { CollectionConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { anyone } from '@/access/anyone'
-import editor from '@/collections/Users/access/editor'
+import editor from '@/access/editor'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

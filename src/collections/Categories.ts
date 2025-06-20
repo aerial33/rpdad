@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import editor from '@/collections/Users/access/editor'
+import editor from '@/access/editor'
 import { slugField } from '@/fields/slug'
 
 export const Categories: CollectionConfig = {

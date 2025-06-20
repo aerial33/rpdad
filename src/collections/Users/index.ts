@@ -1,11 +1,11 @@
 import type { CollectionConfig } from 'payload'
 
+import admin from '@/access/admin'
+import { checkRole } from '@/access/checkRole'
+import editor from '@/access/editor'
+import user from '@/access/user'
 import { User } from '@/payload-types'
 
-import admin from './access/admin'
-import { checkRole } from './access/checkRole'
-import editor from './access/editor'
-import user from './access/user'
 import { protectRoles } from './hook/protectRoles'
 
 export const Users: CollectionConfig = {

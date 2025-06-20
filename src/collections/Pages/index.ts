@@ -8,6 +8,7 @@ import {
 import type { CollectionConfig } from 'payload'
 
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
+import editor from '@/access/editor'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 
@@ -18,7 +19,6 @@ import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
-import editor from '../Users/access/editor'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 
 export const Pages: CollectionConfig<'pages'> = {
