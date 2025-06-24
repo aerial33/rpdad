@@ -15,6 +15,9 @@ const dirname = path.dirname(filename)
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  admin: {
+    hideAPIURL: true,
+  },
   access: {
     create: editor,
     delete: editor,
@@ -29,6 +32,7 @@ export const Media: CollectionConfig = {
     },
     {
       name: 'caption',
+      label: 'Légende',
       type: 'richText',
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {

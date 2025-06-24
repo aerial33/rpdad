@@ -1,5 +1,6 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { fr } from '@payloadcms/translations/languages/fr'
 import path from 'path'
 import { PayloadRequest, buildConfig } from 'payload'
@@ -97,6 +98,20 @@ export default buildConfig({
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET || '',
+        },
+        region: 'auto',
+        endpoint: process.env.S3_ENDPOINT || '',
+      },
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,

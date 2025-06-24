@@ -27,6 +27,7 @@ import { LogoIcon as LogoIcon_f009030f22af14c21626edd52c238de4 } from '../../../
 import { Logo as Logo_f009030f22af14c21626edd52c238de4 } from '../../../graphics/LogoRpdad/logo'
 import { Welcome as Welcome_eb20c25977e07aef8ed2a6a5f926672b } from '@/components/Admin/ui/beforeDashboad.tsx'
 import { default as default_c952b30f87c526e75f64597baba73c3e } from '@/components/Admin/BeforeLogin'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -57,5 +58,6 @@ export const importMap = {
   "/graphics/LogoRpdad/logo#LogoIcon": LogoIcon_f009030f22af14c21626edd52c238de4,
   "/graphics/LogoRpdad/logo#Logo": Logo_f009030f22af14c21626edd52c238de4,
   "@/components/Admin/ui/beforeDashboad.tsx#Welcome": Welcome_eb20c25977e07aef8ed2a6a5f926672b,
-  "@/components/Admin/BeforeLogin#default": default_c952b30f87c526e75f64597baba73c3e
+  "@/components/Admin/BeforeLogin#default": default_c952b30f87c526e75f64597baba73c3e,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }
