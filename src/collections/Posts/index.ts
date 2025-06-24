@@ -72,7 +72,13 @@ export const Posts: CollectionConfig<'posts'> = {
     {
       name: 'title',
       type: 'text',
+      label: "Titre de l'article",
       required: true,
+      admin: {
+        components: {
+          Cell: '@/components/Admin/Fields/Cell.tsx#TitleCell',
+        },
+      },
     },
     {
       type: 'tabs',
@@ -86,6 +92,7 @@ export const Posts: CollectionConfig<'posts'> = {
             },
             {
               name: 'content',
+              label: "Contenu de l'article",
               type: 'richText',
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
@@ -99,7 +106,7 @@ export const Posts: CollectionConfig<'posts'> = {
                   ]
                 },
               }),
-              label: false,
+
               required: true,
             },
           ],

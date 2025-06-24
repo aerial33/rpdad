@@ -27,11 +27,16 @@ export default buildConfig({
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
-      beforeLogin: ['@/components/BeforeLogin'],
+      beforeLogin: ['@/components/Admin/BeforeLogin'],
       graphics: {
         Logo: '/graphics/LogoRpdad/logo#Logo',
         Icon: '/graphics/LogoRpdad/logo#LogoIcon',
       },
+      logout: {
+        Button: '@/components/Admin/ui/logout.tsx#Logout',
+      },
+      beforeDashboard: [{ path: '@/components/Admin/ui/beforeDashboad.tsx#Welcome' }],
+      actions: [{ path: '@/components/Admin/ui/logout.tsx#Logout' }],
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -58,6 +63,20 @@ export default buildConfig({
           height: 900,
         },
       ],
+    },
+    meta: {
+      titleSuffix: ' - RPDAD',
+      title: "Réseau Public Départemental d'aide à Domicile",
+      description:
+        "Le RPDAD est un réseau public départemental d'aide à domicile qui a pour mission de fournir des services de qualité à domicile aux personnes âgées et aux personnes en situation de handicap.",
+      openGraph: {
+        title: "Réseau Public Départemental d'aide à Domicile",
+        description:
+          "Le RPDAD est un réseau public départemental d'aide à domicile qui a pour mission de fournir des services de qualité à domicile aux personnes âgées et aux personnes en situation de handicap.",
+
+        siteName: 'RPDAD',
+        // images: []
+      },
     },
   },
   i18n: {

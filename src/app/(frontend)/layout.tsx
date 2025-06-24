@@ -6,7 +6,7 @@ import { draftMode } from 'next/headers'
 
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
-import { AdminBar } from '@/components/AdminBar'
+import { AdminBar } from '@/components/Admin/AdminBar'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { getServerSideURL } from '@/utilities/getURL'
