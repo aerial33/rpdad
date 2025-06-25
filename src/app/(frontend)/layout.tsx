@@ -34,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/icon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className="bg-flamingo-lightest flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col">
         <Providers>
           <AdminBar
             adminBarProps={{

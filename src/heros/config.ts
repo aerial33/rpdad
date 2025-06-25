@@ -3,6 +3,7 @@ import type { Field } from 'payload'
 import {
   FixedToolbarFeature,
   HeadingFeature,
+  HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
@@ -35,6 +36,14 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'Hero Grid',
+          value: 'heroGrid',
+        },
+        {
+          label: 'Hero Primary',
+          value: 'heroPrimary',
+        },
       ],
       required: true,
     },
@@ -48,6 +57,7 @@ export const hero: Field = {
             HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
+            HorizontalRuleFeature(),
           ]
         },
       }),
@@ -62,7 +72,7 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'heroGrid'].includes(type),
       },
       relationTo: 'media',
       required: true,

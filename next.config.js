@@ -18,6 +18,22 @@ const nextConfig = {
           protocol: url.protocol.replace(':', ''),
         }
       }),
+      {
+        hostname: 'www.rpdad.fr',
+        protocol: 'https',
+      },
+      {
+        hostname: 'sandbox-tailwind-template.netlify.app',
+        protocol: 'https',
+      },
+      {
+        hostname: 'images.unsplash.com',
+        protocol: 'https',
+      },
+      {
+        hostname: 'picsum.photos',
+        protocol: 'https',
+      },
     ],
   },
   reactStrictMode: true,

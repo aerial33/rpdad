@@ -11,9 +11,6 @@ import { Button } from '@/components/ui/button'
 export default function NotFound() {
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Fond avec gradient */}
-      <div className="from-flamingo-lightest to-flamingo-lighter absolute inset-0 bg-gradient-to-b"></div>
-
       {/* Patterns décoratifs */}
       <DotPattern
         variant="sparse"

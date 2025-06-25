@@ -18,7 +18,7 @@
   --color-flamingo-lightest: oklch(96.12% 0.0179 48.53);
   --color-flamingo-lighter: oklch(92.59% 0.0363 48.31);
   --color-flamingo-light: oklch(75.63% 0.1339 45.75);
-  --color-flamingo-base: oklch(67.59% 0.1886 42.04);
+  --color-flamingo: oklch(67.59% 0.1886 42.04);
   --color-flamingo-dark: oklch(57.18% 0.1579 42.07);
   --color-flamingo-darker: oklch(35.19% 0.0899 43.51);
   --color-flamingo-darkest: oklch(29.25% 0.071 43.86);
@@ -42,7 +42,7 @@
   --color-chateau-lightest: oklch(96% 0.0149 158.25);
   --color-chateau-lighter: oklch(92.27% 0.0307 155.95);
   --color-chateau-light: oklch(73.92% 0.1111 153.06);
-  --color-chateau-base: oklch(63.73% 0.1516 150.05);
+  --color-chateau: oklch(63.73% 0.1516 150.05);
   --color-chateau-dark: oklch(54.13% 0.1275 150.16);
   --color-chateau-darker: oklch(33.52% 0.0731 150.68);
   --color-chateau-darkest: oklch(28.09% 0.0579 151.48);
@@ -56,7 +56,7 @@
   --color-red-darkest: oklch(28.5% 0.08 20);
 
   /* Variables sémantiques utilisant la nouvelle palette - Thème clair */
-  --background: white;
+  --background: var(--color-flamingo-lightest);
   --foreground: oklch(0.2 0.02 262);
   --text: oklch(0.2 0.02 262);
 
@@ -71,9 +71,8 @@
 
   --secondary: var(--color-flamingo-lighter);
   --secondary-foreground: var(--color-flamingo-darkest);
-
-  --muted: var(--color-flamingo-lighter);
-  --muted-foreground: var(--color-flamingo-dark);
+  --muted: oklch(0.96 0.01 262);
+  --muted-foreground: oklch(0.54 0.01 262);
 
   --accent: var(--color-blue-light);
   --accent-foreground: var(--color-blue-darkest);
@@ -87,7 +86,7 @@
 
   --radius: 0.2rem;
 
-  --success: var(--color-chateau-base);
+  --success: var(--color-chateau);
   --warning: var(--color-yellow-base);
   --error: var(--color-red-base);
 }
@@ -110,11 +109,11 @@
   --secondary: var(--color-flamingo-darker);
   --secondary-foreground: var(--color-flamingo-lightest);
 
-  --muted: var(--color-flamingo-darker);
-  --muted-foreground: var(--color-flamingo-light);
+  --muted: oklch(0.96 0.01 262);
+  --muted-foreground: oklch(0.54 0.01 262);
 
-  --accent: var(--color-blue-dark);
-  --accent-foreground: var(--color-blue-lightest);
+  --accent: var(--color-chateau-dark);
+  --accent-foreground: var(--color-chateau-lightest);
 
   --destructive: var(--color-red-dark);
   --destructive-foreground: var(--color-red-lightest);
@@ -166,7 +165,7 @@
   --color-flamingo-lightest: var(--color-flamingo-lightest);
   --color-flamingo-lighter: var(--color-flamingo-lighter);
   --color-flamingo-light: var(--color-flamingo-light);
-  --color-flamingo-base: var(--color-flamingo-base);
+  --color-flamingo: var(--color-flamingo);
   --color-flamingo-dark: var(--color-flamingo-dark);
   --color-flamingo-darker: var(--color-flamingo-darker);
   --color-flamingo-darkest: var(--color-flamingo-darkest);
@@ -190,7 +189,7 @@
   --color-chateau-lightest: var(--color-chateau-lightest);
   --color-chateau-lighter: var(--color-chateau-lighter);
   --color-chateau-light: var(--color-chateau-light);
-  --color-chateau-base: var(--color-chateau-base);
+  --color-chateau: var(--color-chateau);
   --color-chateau-dark: var(--color-chateau-dark);
   --color-chateau-darker: var(--color-chateau-darker);
   --color-chateau-darkest: var(--color-chateau-darkest);
@@ -258,7 +257,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground flex min-h-[100vh] flex-col font-mono;
+    @apply bg-background text-muted-foreground flex min-h-[100vh] flex-col font-mono;
   }
 }
 
@@ -338,7 +337,7 @@ html[data-theme='light'] {
   }
 
   .gradient-secondary {
-    background: linear-gradient(to right, var(--color-primary-light), var(--color-flamingo-base));
+    background: linear-gradient(to right, var(--color-primary-light), var(--color-flamingo));
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
