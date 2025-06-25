@@ -1,7 +1,6 @@
-import RichText from '@/components/RichText'
-import { cn } from '@/utilities/ui'
 import React from 'react'
 
+import RichText from '@/components/RichText'
 import type { ContentBlock as ContentBlockProps } from '@/payload-types'
 
 import { CMSLink } from '../../components/Link'
@@ -16,21 +15,27 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
     twoThirds: '8',
   }
 
+  // Classes responsives pour chaque taille
+  const getResponsiveClasses = (size: string) => {
+    const sizeMap = {
+      full: 'col-span-4 md:col-span-4 lg:col-span-12',
+      half: 'col-span-4 md:col-span-2 lg:col-span-6',
+      oneThird: 'col-span-4 md:col-span-2 lg:col-span-4',
+      twoThirds: 'col-span-4 md:col-span-3 lg:col-span-8',
+    }
+    return sizeMap[size as keyof typeof sizeMap] || 'col-span-4'
+  }
+
   return (
-    <div className="container my-16 mx-auto border">
-      <div className="grid grid-cols-4 lg:grid-cols-12 gap-y-8 gap-x-16">
+    <div className="container mx-auto my-16 border">
+      <div className="grid grid-cols-4 gap-x-16 gap-y-8 lg:grid-cols-12">
         {columns &&
           columns.length > 0 &&
           columns.map((col, index) => {
             const { enableLink, link, richText, size } = col
 
             return (
-              <div
-                className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
-                  'md:col-span-2': size !== 'full',
-                })}
-                key={index}
-              >
+              <div className={getResponsiveClasses(size!)} key={index}>
                 {richText && <RichText data={richText} enableGutter={false} />}
 
                 {enableLink && <CMSLink {...link} />}

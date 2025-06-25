@@ -36,6 +36,11 @@ export const plugins: Plugin[] = [
       admin: {
         group: 'Formulaires',
         description: 'Formulaire de contact',
+        hideAPIURL: true,
+      },
+      labels: {
+        singular: 'Formulaire',
+        plural: 'Formulaires',
       },
       access: {
         update: editor,
@@ -62,8 +67,13 @@ export const plugins: Plugin[] = [
     },
     formSubmissionOverrides: {
       slug: 'form-submissions',
+      labels: {
+        singular: 'Réponse de formulaire',
+        plural: 'Réponses des formulaires',
+      },
       admin: {
         group: 'Formulaires',
+        hideAPIURL: true,
       },
     },
   }),

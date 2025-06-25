@@ -1,11 +1,10 @@
-import type { Block } from 'payload'
-
 import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import type { Block } from 'payload'
 
 export const FormBlock: Block = {
   slug: 'formBlock',
@@ -13,6 +12,7 @@ export const FormBlock: Block = {
   fields: [
     {
       name: 'form',
+      label: 'Formulaire',
       type: 'relationship',
       relationTo: 'forms',
       required: true,
@@ -20,7 +20,7 @@ export const FormBlock: Block = {
     {
       name: 'enableIntro',
       type: 'checkbox',
-      label: 'Enable Intro Content',
+      label: "Activer le contenu d'introduction",
     },
     {
       name: 'introContent',

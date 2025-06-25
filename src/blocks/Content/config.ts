@@ -1,11 +1,10 @@
-import type { Block, Field } from 'payload'
-
 import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import type { Block, Field } from 'payload'
 
 import { link } from '@/fields/link'
 
@@ -14,21 +13,22 @@ const columnFields: Field[] = [
     name: 'size',
     type: 'select',
     defaultValue: 'oneThird',
+    label: 'Taille de la colonne',
     options: [
       {
-        label: 'One Third',
+        label: '33% (Un tiers)',
         value: 'oneThird',
       },
       {
-        label: 'Half',
+        label: '50% (Une moitié)',
         value: 'half',
       },
       {
-        label: 'Two Thirds',
+        label: '67% (Deux tiers)',
         value: 'twoThirds',
       },
       {
-        label: 'Full',
+        label: '100% (Largeur complète)',
         value: 'full',
       },
     ],
@@ -51,6 +51,7 @@ const columnFields: Field[] = [
   {
     name: 'enableLink',
     type: 'checkbox',
+    label: 'Lien',
   },
   link({
     overrides: {
@@ -65,10 +66,15 @@ const columnFields: Field[] = [
 
 export const Content: Block = {
   slug: 'content',
+  labels: {
+    singular: 'Contenu',
+    plural: 'Contenus',
+  },
   interfaceName: 'ContentBlock',
   fields: [
     {
       name: 'columns',
+      label: 'Colonnes',
       type: 'array',
       admin: {
         initCollapsed: true,

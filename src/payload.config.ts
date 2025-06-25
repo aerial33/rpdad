@@ -1,5 +1,7 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
+// import { resendAdapter } from '@payloadcms/email-resend'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { fr } from '@payloadcms/translations/languages/fr'
 import path from 'path'
@@ -118,6 +120,24 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  email: nodemailerAdapter({
+    defaultFromAddress: 'contact@rpdad.fr',
+    defaultFromName: 'RPDAD',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
+  // email: resendAdapter({
+  //   defaultFromAddress: process.env.RESEND_FROM_ADDRESS || 'onboarding@resend.dev',
+  //   defaultFromName: process.env.RESEND_FROM_NAME || 'RPDAD',
+  //   apiKey: process.env.RESEND_API_KEY || '',
+  // }),
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {
