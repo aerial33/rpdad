@@ -34,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <InitTheme />
         <link href="/icon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body>
+      <body className="bg-flamingo-lightest flex min-h-screen flex-col">
         <Providers>
           <AdminBar
             adminBarProps={{
@@ -56,6 +56,6 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
+    creator: '@fouad_dev',
   },
 }

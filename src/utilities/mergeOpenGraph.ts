@@ -1,16 +1,18 @@
 import type { Metadata } from 'next'
+
 import { getServerSideURL } from './getURL'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'An open-source website built with Payload and Next.js.',
+  description:
+    "Le Réseau Public Départemental d'Aide à Domicile  (RPDAD) de la Gironde accompagne les personnes âgées et personnes en situation de handicap qui choisissent de vivre à domicile.",
   images: [
     {
       url: `${getServerSideURL()}/website-template-OG.webp`,
     },
   ],
-  siteName: 'Payload Website Template',
-  title: 'Payload Website Template',
+  siteName: 'Rpdad Réseau départemental de la gironde ',
+  title: 'Rpdad Réseau départemental de la gironde ',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {
