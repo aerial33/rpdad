@@ -246,9 +246,10 @@
   h4,
   h5,
   h6 {
-    font-size: unset;
-    font-weight: unset;
     font-family: var(--font-sans);
+  }
+  h2 {
+    @apply text-3xl font-bold text-balance md:text-4xl;
   }
 }
 
@@ -341,5 +342,121 @@ html[data-theme='light'] {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+  }
+
+  .richtext-content {
+    @apply leading-relaxed text-gray-600;
+
+    /* Classes highlight personnalisées */
+    .highlight-underline {
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+    }
+    .highlight-underline::after {
+      content: '';
+      position: absolute;
+      bottom: 5%;
+      left: -1.5%;
+      z-index: -1;
+      display: block;
+      height: 30%;
+      width: 102.5%;
+      border-radius: 5rem;
+      transition: all 0.2s ease-in-out;
+      background-color: var(--color-chateau-light, oklch(73.92% 0.1111 153.06));
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .highlight-underline::after {
+        transition: none;
+      }
+    }
+    /* Déclinaisons dynamiques avec les couleurs Tailwind */
+    .highlight-underline-flamingo::after {
+      background-color: var(--color-flamingo-light);
+    }
+    .highlight-underline-picton-blue::after {
+      background-color: var(--color-picton-blue-light);
+    }
+    .highlight-underline-yellow::after {
+      background-color: var(--color-yellow-light);
+    }
+    .highlight-underline-primary::after {
+      background-color: var(--color-primary-light);
+    }
+
+    /* Styles pour les titres h3 */
+    h3 {
+      @apply mb-4 text-2xl leading-7 font-light text-gray-600 md:text-3xl md:leading-8;
+      font-family: var(--font-nunito);
+    }
+
+    /* Styles pour les paragraphes */
+    p {
+      @apply mb-4 text-base leading-7 text-gray-600;
+      font-family: var(--font-lexend-deca);
+
+      &:last-child {
+        @apply mb-0;
+      }
+    }
+
+    /* Traiter les underlines comme du highlight */
+    span[style*='text-decoration:underline'],
+    span[style*='text-decoration: underline'] {
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+      text-decoration: none !important;
+    }
+
+    span[style*='text-decoration:underline']::after,
+    span[style*='text-decoration: underline']::after {
+      content: '';
+      position: absolute;
+      bottom: 5%;
+      left: -1.5%;
+      z-index: -1;
+      display: block;
+      height: 30%;
+      width: 102.5%;
+      border-radius: 5rem;
+      transition: all 0.2s ease-in-out;
+      background-color: var(--color-flamingo-light);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      span[style*='text-decoration:underline']::after,
+      span[style*='text-decoration: underline']::after {
+        transition: none;
+      }
+    }
+
+    /* Styles pour les liens */
+    a {
+      @apply text-primary hover:text-primary-dark underline decoration-1 underline-offset-2 transition-colors;
+    }
+
+    /* Styles pour le texte en gras */
+    strong,
+    b {
+      @apply font-semibold text-gray-700;
+    }
+
+    /* Styles pour le texte en italique */
+    em,
+    i {
+      @apply italic;
+    }
+
+    /* Espacement entre les éléments */
+    > * + * {
+      @apply mt-4;
+    }
+
+    /* Première ligne du premier paragraphe */
+    > p:first-of-type {
+      @apply text-gray-700;
+    }
   }
 }

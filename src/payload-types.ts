@@ -191,7 +191,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | ContentSectionBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -714,6 +714,78 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentSectionBlock".
+ */
+export interface ContentSectionBlock {
+  images?:
+    | {
+        image: number | Media;
+        alt: string;
+        id?: string | null;
+      }[]
+    | null;
+  cardInfo: {
+    value: string;
+    label: string;
+  };
+  title: string;
+  /**
+   * Contenu principal de la section avec formatage riche
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  button: {
+    text: string;
+    href: string;
+    icon?: ('arrow-right' | 'arrow-left' | 'external-link' | 'download' | 'none') | null;
+  };
+  dotPatterns?: {
+    /**
+     * Cochez pour configurer les motifs de points décoratifs
+     */
+    enablePatterns?: boolean | null;
+    top?: {
+      enabled?: boolean | null;
+      className?: string | null;
+      rows?: number | null;
+      cols?: number | null;
+      dotSize?: ('sm' | 'md' | 'lg') | null;
+      dotColor?: ('bg-flamingo' | 'bg-primary-dark' | 'bg-primary' | 'bg-secondary') | null;
+      gap?: ('sm' | 'md' | 'lg') | null;
+    };
+    bottom?: {
+      enabled?: boolean | null;
+      className?: string | null;
+      variant?: ('normal' | 'dense' | 'sparse') | null;
+      rows?: number | null;
+      cols?: number | null;
+      dotSize?: ('sm' | 'md' | 'lg') | null;
+      dotColor?: ('bg-flamingo' | 'bg-primary-dark' | 'bg-primary' | 'bg-secondary') | null;
+    };
+  };
+  /**
+   * Classes CSS personnalisées pour le background de la section
+   */
+  bgClass?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1003,6 +1075,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        contentSection?: T | ContentSectionBlockSelect<T>;
       };
   meta?:
     | T
@@ -1099,6 +1172,64 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentSectionBlock_select".
+ */
+export interface ContentSectionBlockSelect<T extends boolean = true> {
+  images?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        id?: T;
+      };
+  cardInfo?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+      };
+  title?: T;
+  content?: T;
+  button?:
+    | T
+    | {
+        text?: T;
+        href?: T;
+        icon?: T;
+      };
+  dotPatterns?:
+    | T
+    | {
+        enablePatterns?: T;
+        top?:
+          | T
+          | {
+              enabled?: T;
+              className?: T;
+              rows?: T;
+              cols?: T;
+              dotSize?: T;
+              dotColor?: T;
+              gap?: T;
+            };
+        bottom?:
+          | T
+          | {
+              enabled?: T;
+              className?: T;
+              variant?: T;
+              rows?: T;
+              cols?: T;
+              dotSize?: T;
+              dotColor?: T;
+            };
+      };
+  bgClass?: T;
   id?: T;
   blockName?: T;
 }

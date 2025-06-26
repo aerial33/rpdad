@@ -9,6 +9,7 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import editor from '@/access/editor'
+import { ContentSectionBlock } from '@/blocks/contentSection/config'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 
@@ -76,7 +77,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock, ContentSectionBlock],
               required: true,
               admin: {
                 initCollapsed: true,
