@@ -12,8 +12,8 @@ export default async function Home() {
   return (
     <h1 className="flex flex-col items-center justify-center text-2xl font-bold">
       {user
-        ? `Welcome ${user.name} ! You are authenticated as ${user.roles}`
-        : 'You are not logged in'}
+        ? `Bonjour ${user.name} ! Vous êtes authentifié en tant que ${user.roles}`
+        : "Vous n'êtes pas connecté"}
     </h1>
   )
 }

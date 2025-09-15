@@ -17,7 +17,7 @@ const stylesBeforeLogin = {
 
 const BeforeLogin: React.FC = () => {
   return (
-    // @ts-ignore
+    // @ts-expect-error eslint-disable-line
     <div style={stylesBeforeLogin.container}>
       <p style={stylesBeforeLogin.title}>
         <b>{"Bienvenue sur votre espace d'administration de votre site !"}</b>

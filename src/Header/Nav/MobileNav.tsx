@@ -21,8 +21,9 @@ import { usePathname } from 'next/navigation'
 
 import { CMSLink } from '@/components/Link'
 import { RpdadLogo } from '@/graphics/LogoRpdad/logo'
-import type { Header as HeaderType } from '@/payload-types'
+import type { HautDePage as HeaderType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
+
 export function MobileMenu({ data }: { data: HeaderType }) {
   const [isOpen, setIsOpen] = useState(false)
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
@@ -58,7 +59,7 @@ export function MobileMenu({ data }: { data: HeaderType }) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className=" fixed top-0 right-0 h-full w-full p-6 flex flex-col space-y-6"
+              className="fixed top-0 right-0 flex h-full w-full flex-col space-y-6 p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
@@ -71,7 +72,7 @@ export function MobileMenu({ data }: { data: HeaderType }) {
                   <X width={32} height={32} />
                 </button>
               </div>
-              <div className="flex h-screen flex-col space-y-6 overflow-y-scroll pt-10 mt-10">
+              <div className="mt-10 flex h-screen flex-col space-y-6 overflow-y-scroll pt-10">
                 {data.navItems?.map((item) => {
                   // Si c'est un lien simple sans sous-menu
                   if (item.link) {
@@ -174,7 +175,7 @@ export function MobileMenu({ data }: { data: HeaderType }) {
                 </ul>
                 <Link href="/search">
                   <span className="sr-only">Search</span>
-                  <SearchIcon className="w-6 hover:text-primary font-medium" />
+                  <SearchIcon className="hover:text-primary w-6 font-medium" />
                 </Link>
               </div>
             </motion.div>

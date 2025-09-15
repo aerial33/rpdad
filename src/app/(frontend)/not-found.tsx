@@ -49,12 +49,12 @@ export default function NotFound() {
             className="mb-8"
           >
             <h2 className="text-foreground mb-4 text-2xl font-bold md:text-3xl">
-              Oups ! Page introuvable
+              "Oups ! Page introuvable"
             </h2>
             <p className="text-blue-darker mb-6 text-lg leading-relaxed">
-              La page que vous recherchez semble avoir pris un chemin différent.
+              " La page que vous recherchez semble avoir pris un chemin différent."
               <br className="hidden md:block" />
-              Ne vous inquiétez pas, nous sommes là pour vous aider à retrouver votre route.
+              "Ne vous inquiétez pas, nous sommes là pour vous aider à retrouver votre route."
             </p>
           </motion.div>
 
@@ -68,14 +68,14 @@ export default function NotFound() {
             <Button asChild size="lg" className="group gap-2">
               <Link href="/">
                 <Home className="h-4 w-4 transition-transform group-hover:scale-110" />
-                Retour à l'accueil
+                "Retour à l'accueil"
               </Link>
             </Button>
 
             <Button asChild variant="outline" size="lg" className="group gap-2">
               <Link href="/search">
                 <Search className="h-4 w-4 transition-transform group-hover:scale-110" />
-                Rechercher
+                "Rechercher"
               </Link>
             </Button>
           </motion.div>
@@ -87,23 +87,23 @@ export default function NotFound() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="text-blue-darker text-sm"
           >
-            <p className="mb-4">Vous pouvez également :</p>
+            <p className="mb-4">"Vous pouvez également :"</p>
             <div className="flex flex-wrap justify-center gap-6">
               <Link
                 href="/le-rpdad"
                 className="hover:text-primary flex items-center gap-1 transition-colors duration-200"
               >
                 <ArrowLeft className="h-3 w-3" />
-                Découvrir le RPDAD
+                "Découvrir le RPDAD"
               </Link>
               <Link href="/posts" className="hover:text-primary transition-colors duration-200">
-                Nos actualités
+                "Nos actualités"
               </Link>
               <Link
                 href="/services-membres"
                 className="hover:text-primary transition-colors duration-200"
               >
-                Services membres
+                "Services membres"
               </Link>
             </div>
           </motion.div>
