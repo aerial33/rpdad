@@ -4,10 +4,9 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import type { Block, Field } from 'payload'
+import type { Field } from 'payload'
 
-// Champs pour le variant BasicContent
-const basicContentFields: Field[] = [
+export const basicContentFields: Field[] = [
   // Images principales
   {
     name: 'images',
@@ -25,11 +24,13 @@ const basicContentFields: Field[] = [
         label: 'Image',
         type: 'upload',
         relationTo: 'media',
+        required: true,
       },
       {
         name: 'alt',
         label: 'Texte alternatif',
         type: 'text',
+        required: true,
       },
     ],
   },
@@ -44,6 +45,7 @@ const basicContentFields: Field[] = [
         name: 'value',
         label: 'Valeur',
         type: 'text',
+        required: true,
         admin: {
           placeholder: 'ex: + de 5 000',
         },
@@ -52,6 +54,7 @@ const basicContentFields: Field[] = [
         name: 'label',
         label: 'Libellé',
         type: 'text',
+        required: true,
         admin: {
           placeholder: 'ex: Personnes accompagnées',
         },
@@ -64,6 +67,7 @@ const basicContentFields: Field[] = [
     name: 'title',
     label: 'Titre',
     type: 'text',
+    required: true,
     admin: {
       placeholder: 'ex: Nos Services Membres',
     },
@@ -166,143 +170,3 @@ const basicContentFields: Field[] = [
     defaultValue: 'py-16',
   },
 ]
-
-// Champs pour le variant ImageGrid
-const imageGridFields: Field[] = [
-  {
-    name: 'galleryTitle',
-    label: 'Titre de la galerie',
-    type: 'text',
-    required: true,
-    admin: {
-      placeholder: 'ex: Notre Galerie Photos',
-    },
-  },
-  {
-    name: 'images',
-    label: 'Images de la galerie',
-    type: 'array',
-    minRows: 1,
-    maxRows: 12,
-    labels: {
-      singular: 'Image',
-      plural: 'Images',
-    },
-    fields: [
-      {
-        name: 'image',
-        label: 'Image',
-        type: 'upload',
-        relationTo: 'media',
-        required: true,
-      },
-      {
-        name: 'alt',
-        label: 'Texte alternatif',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'caption',
-        label: 'Légende',
-        type: 'text',
-        admin: {
-          placeholder: "ex: Description de l'image",
-        },
-      },
-    ],
-  },
-  {
-    name: 'displayConfig',
-    label: "Configuration d'affichage",
-    type: 'group',
-    fields: [
-      {
-        name: 'columns',
-        label: 'Nombre de colonnes',
-        type: 'select',
-        dbName: 'cols',
-        options: [
-          { label: '2 colonnes', value: '2' },
-          { label: '3 colonnes', value: '3' },
-          { label: '4 colonnes', value: '4' },
-        ],
-        defaultValue: '3',
-      },
-      {
-        name: 'spacing',
-        label: 'Espacement',
-        type: 'select',
-        dbName: 'space',
-        options: [
-          { label: 'Serré', value: 'tight' },
-          { label: 'Normal', value: 'normal' },
-          { label: 'Large', value: 'wide' },
-        ],
-        defaultValue: 'normal',
-      },
-    ],
-  },
-  {
-    name: 'bgClass',
-    label: 'Classes CSS du background',
-    type: 'text',
-    admin: {
-      description: 'Classes CSS personnalisées pour le background de la section',
-      placeholder: 'ex: py-16 bg-gray-50',
-    },
-    defaultValue: 'py-16',
-  },
-]
-
-export const ContentSectionBlock: Block = {
-  slug: 'contentSection',
-  interfaceName: 'ContentSectionBlock',
-  imageURL: '/img/blocks/content-section-preview.jpeg',
-  imageAltText: 'Aperçu du block Section de Contenu',
-  labels: {
-    singular: 'Section de Contenu',
-    plural: 'Sections de Contenu',
-  },
-  fields: [
-    {
-      name: 'type',
-      type: 'select',
-      defaultValue: 'basicContent',
-      label: 'Type de section',
-      options: [
-        {
-          label: 'Contenu Basique',
-          value: 'basicContent',
-        },
-        {
-          label: "Galerie d'Images",
-          value: 'imageGrid',
-        },
-      ],
-      required: true,
-    },
-
-    // Group pour BasicContent
-    {
-      name: 'basicContentConfig',
-      type: 'group',
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === 'basicContent',
-      },
-      fields: basicContentFields,
-    },
-
-    // Group pour ImageGrid
-    {
-      name: 'imageGridConfig',
-      type: 'group',
-      admin: {
-        condition: (_, siblingData) => siblingData?.type === 'imageGrid',
-      },
-      fields: imageGridFields,
-    },
-  ],
-}
-
-export default ContentSectionBlock

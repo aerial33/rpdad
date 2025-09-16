@@ -717,69 +717,68 @@ export interface Form {
  * via the `definition` "ContentSectionBlock".
  */
 export interface ContentSectionBlock {
-  images?:
-    | {
-        image: number | Media;
-        alt: string;
-        id?: string | null;
-      }[]
-    | null;
-  cardInfo: {
-    value: string;
-    label: string;
-  };
-  title: string;
-  /**
-   * Contenu principal de la section avec formatage riche
-   */
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+  type: 'basicContent' | 'imageGrid';
+  basicContentConfig?: {
+    images?:
+      | {
+          image?: (number | null) | Media;
+          alt?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    cardInfo?: {
+      value?: string | null;
+      label?: string | null;
     };
-    [k: string]: unknown;
-  };
-  button: {
-    text: string;
-    href: string;
-    icon?: ('arrow-right' | 'arrow-left' | 'external-link' | 'download' | 'none') | null;
-  };
-  dotPatterns?: {
+    title?: string | null;
     /**
-     * Cochez pour configurer les motifs de points décoratifs
+     * Contenu principal de la section avec formatage riche
      */
-    enablePatterns?: boolean | null;
-    top?: {
-      enabled?: boolean | null;
-      className?: string | null;
-      rows?: number | null;
-      cols?: number | null;
-      dotSize?: ('sm' | 'md' | 'lg') | null;
-      dotColor?: ('bg-flamingo' | 'bg-primary-dark' | 'bg-primary' | 'bg-secondary') | null;
-      gap?: ('sm' | 'md' | 'lg') | null;
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
     };
-    bottom?: {
-      enabled?: boolean | null;
-      className?: string | null;
-      variant?: ('normal' | 'dense' | 'sparse') | null;
-      rows?: number | null;
-      cols?: number | null;
-      dotSize?: ('sm' | 'md' | 'lg') | null;
-      dotColor?: ('bg-flamingo' | 'bg-primary-dark' | 'bg-primary' | 'bg-secondary') | null;
+    button: {
+      text: string;
+      href: string;
+      icon?: ('arrow-right' | 'arrow-left' | 'external-link' | 'download' | 'none') | null;
     };
+    enableDotPatterns?: boolean | null;
+    /**
+     * Classes CSS personnalisées pour le background de la section
+     */
+    bgClass?: string | null;
   };
-  /**
-   * Classes CSS personnalisées pour le background de la section
-   */
-  bgClass?: string | null;
+  imageGridConfig?: {
+    galleryTitle: string;
+    images?:
+      | {
+          image: number | Media;
+          alt: string;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    displayConfig?: {
+      columns?: ('2' | '3' | '4') | null;
+      spacing?: ('tight' | 'normal' | 'wide') | null;
+    };
+    /**
+     * Classes CSS personnalisées pour le background de la section
+     */
+    bgClass?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'contentSection';
@@ -1180,56 +1179,55 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "ContentSectionBlock_select".
  */
 export interface ContentSectionBlockSelect<T extends boolean = true> {
-  images?:
+  type?: T;
+  basicContentConfig?:
     | T
     | {
-        image?: T;
-        alt?: T;
-        id?: T;
-      };
-  cardInfo?:
-    | T
-    | {
-        value?: T;
-        label?: T;
-      };
-  title?: T;
-  content?: T;
-  button?:
-    | T
-    | {
-        text?: T;
-        href?: T;
-        icon?: T;
-      };
-  dotPatterns?:
-    | T
-    | {
-        enablePatterns?: T;
-        top?:
+        images?:
           | T
           | {
-              enabled?: T;
-              className?: T;
-              rows?: T;
-              cols?: T;
-              dotSize?: T;
-              dotColor?: T;
-              gap?: T;
+              image?: T;
+              alt?: T;
+              id?: T;
             };
-        bottom?:
+        cardInfo?:
           | T
           | {
-              enabled?: T;
-              className?: T;
-              variant?: T;
-              rows?: T;
-              cols?: T;
-              dotSize?: T;
-              dotColor?: T;
+              value?: T;
+              label?: T;
             };
+        title?: T;
+        content?: T;
+        button?:
+          | T
+          | {
+              text?: T;
+              href?: T;
+              icon?: T;
+            };
+        enableDotPatterns?: T;
+        bgClass?: T;
       };
-  bgClass?: T;
+  imageGridConfig?:
+    | T
+    | {
+        galleryTitle?: T;
+        images?:
+          | T
+          | {
+              image?: T;
+              alt?: T;
+              caption?: T;
+              id?: T;
+            };
+        displayConfig?:
+          | T
+          | {
+              columns?: T;
+              spacing?: T;
+            };
+        bgClass?: T;
+      };
   id?: T;
   blockName?: T;
 }

@@ -1,9 +1,8 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
-
-import type { Footer } from '@/payload-types'
+import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
 
 import { RpdadLogo } from '@/graphics/LogoRpdad/logo'
-import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
+import type { Footer } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
@@ -11,7 +10,7 @@ export async function Footer() {
   const navItems = footerData?.navItems || []
 
   return (
-    <footer className="bg-flamingo-lighter rounded-t-4xl py-12 md:pt-16">
+    <footer className="bg-flamingo-white rounded-t-4xl py-4">
       <div className="container flex flex-col items-center justify-between gap-10 border-t border-gray-200 text-center lg:flex-row lg:text-left">
         <div className="flex w-full max-w-96 shrink flex-col items-center justify-between gap-6 lg:items-start">
           <div>
@@ -65,15 +64,15 @@ export async function Footer() {
         <div className="flex flex-col items-center justify-center text-center">
           <h3 className="mb-6 font-bold">Adresse</h3>
           <p className="text-muted-foreground mb-6">
-            Le Colisée <br />
-            17 rue Thomas Edison <br />
-            33600 PESSAC
+            4 voie Romaine, <br />
+            Espace France Bâtiment B<br />
+            33610 Canéjan
           </p>
           <p className="text-muted-foreground">{'05.40.12.90.11'}</p>
           <p className="text-muted-foreground">{'rpdad@udccas33.org'}</p>
         </div>
       </div>
-      <div className="container text-muted-foreground border-flamingo mt-20 flex flex-col justify-between gap-4 border-t px-4 pt-8 text-center text-sm font-medium lg:flex-row lg:items-center lg:text-left">
+      <div className="text-muted-foreground border-flamingo container mt-20 flex flex-col justify-between gap-4 border-t px-4 pt-8 text-center text-sm font-medium lg:flex-row lg:items-center lg:text-left">
         <p>© 2025 RPDAD. Tous droits réservés.</p>
         <ul className="flex justify-center gap-4 lg:justify-start">
           <li className="hover:text-primary">

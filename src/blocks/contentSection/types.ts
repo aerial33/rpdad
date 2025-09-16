@@ -53,3 +53,45 @@ export interface ContentSectionProps {
 export interface IconMap {
   [key: string]: ReactNode
 }
+
+// Types pour les variants
+export type ContentSectionVariant = 'basicContent' | 'imageGrid'
+
+export interface BaseVariantProps {
+  type?: ContentSectionVariant
+  bgClass?: string
+}
+
+// Types spécifiques pour BasicContent
+export interface BasicContentProps extends BaseVariantProps {
+  images?: Array<{
+    image: any
+    alt: string
+  }>
+  cardInfo?: {
+    value: string
+    label: string
+  }
+  title?: string
+  content?: any
+  button?: {
+    text: string
+    href: string
+    icon?: string
+  }
+  dotPatterns?: DotPatternsConfig
+}
+
+// Types spécifiques pour ImageGrid
+export interface ImageGridProps extends BaseVariantProps {
+  galleryTitle?: string
+  images?: Array<{
+    image: any
+    alt: string
+    caption?: string
+  }>
+  displayConfig?: {
+    columns?: string
+    spacing?: string
+  }
+}

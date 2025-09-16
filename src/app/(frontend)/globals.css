@@ -56,7 +56,7 @@
   --color-red-darkest: oklch(28.5% 0.08 20);
 
   /* Variables sémantiques utilisant la nouvelle palette - Thème clair */
-  --background: var(--color-flamingo-lightest);
+  --background: var(--color-white);
   --foreground: oklch(0.2 0.02 262);
   --text: oklch(0.2 0.02 262);
 
@@ -93,7 +93,7 @@
 
 [data-theme='dark'] {
   /* Variables sémantiques utilisant la nouvelle palette - Thème sombre */
-  --background: var(--color-primary-darkest);
+  --background: var(--color-flamingo-lighter);
   --foreground: oklch(0.95 0 0);
   --text: oklch(0.95 0 0);
 
