@@ -111,7 +111,13 @@ export const FormBlock: React.FC<
         }
       }
 
-      void submitForm()
+      submitForm().catch((error) => {
+        console.error('Erreur lors de la soumission du formulaire:', error)
+        setIsLoading(false)
+        setError({
+          message: 'Une erreur est survenue lors de la soumission.',
+        })
+      })
     },
     [router, formID, redirect, confirmationType],
   )

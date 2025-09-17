@@ -1,15 +1,16 @@
 'use client'
 
 import type { PayloadAdminBarProps, PayloadMeUser } from '@payloadcms/admin-bar'
-
-import { cn } from '@/utilities/ui'
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
-import { useRouter, useSelectedLayoutSegments } from 'next/navigation'
+
 import React, { useState } from 'react'
 
-import './index.scss'
+import { useRouter, useSelectedLayoutSegments } from 'next/navigation'
 
 import { getClientSideURL } from '@/utilities/getURL'
+import { cn } from '@/utilities/ui'
+
+import './index.scss'
 
 const baseClass = 'admin-bar'
 
@@ -47,7 +48,7 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn(baseClass, 'py-2 bg-black text-white', {
+      className={cn(baseClass, 'bg-black py-2 text-white', {
         block: show,
         hidden: !show,
       })}
@@ -70,10 +71,17 @@ export const AdminBar: React.FC<{
           logo={<Title />}
           onAuthChange={onAuthChange}
           onPreviewExit={() => {
-            fetch('/next/exit-preview').then(() => {
-              router.push('/')
-              router.refresh()
-            })
+            fetch('/next/exit-preview')
+              .then(() => {
+                router.push('/')
+                router.refresh()
+              })
+              .catch((error) => {
+                console.error('Erreur lors de la sortie du mode aperçu:', error)
+                // Continuer avec la navigation même en cas d'erreur
+                router.push('/')
+                router.refresh()
+              })
           }}
           style={{
             backgroundColor: 'transparent',
