@@ -1,7 +1,7 @@
 // Main exports
-export { RenderContentSection, ContentSectionBlock } from './Component'
+export { ContentSectionBlock } from './Component'
 export { default as ContentSectionConfig } from './config'
-export * from './variants'
+export { ContentSection } from './ContentSection'
 
 // Types and utilities
 export type {
