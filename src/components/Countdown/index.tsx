@@ -57,31 +57,33 @@ export function Countdown({
 
   return (
     <div className={className} aria-live="polite" role="timer">
-      <div className="flex justify-center">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
         <div className="flex flex-col items-center">
-          <div className="text-5xl font-bold tabular-nums">{timeLeft.days}</div>
-          <div className="mt-2 text-sm text-gray-600">{labels.days}</div>
+          <div className="text-2xl font-bold tabular-nums sm:text-3xl md:text-4xl lg:text-5xl">
+            {timeLeft.days}
+          </div>
+          <div className="mt-1 text-xs text-gray-600 sm:mt-2 sm:text-sm">{labels.days}</div>
         </div>
-        <div className="mx-4 text-5xl font-bold">:</div>
+        <div className="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">:</div>
         <div className="flex flex-col items-center">
-          <div className="text-5xl font-bold tabular-nums">
+          <div className="text-2xl font-bold tabular-nums sm:text-3xl md:text-4xl lg:text-5xl">
             {timeLeft.hours.toString().padStart(2, '0')}
           </div>
-          <div className="mt-2 text-sm text-gray-600">{labels.hours}</div>
+          <div className="mt-1 text-xs text-gray-600 sm:mt-2 sm:text-sm">{labels.hours}</div>
         </div>
-        <div className="mx-4 text-5xl font-bold">:</div>
+        <div className="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">:</div>
         <div className="flex flex-col items-center">
-          <div className="text-5xl font-bold tabular-nums">
+          <div className="text-2xl font-bold tabular-nums sm:text-3xl md:text-4xl lg:text-5xl">
             {timeLeft.minutes.toString().padStart(2, '0')}
           </div>
-          <div className="mt-2 text-sm text-gray-600">{labels.minutes}</div>
+          <div className="mt-1 text-xs text-gray-600 sm:mt-2 sm:text-sm">{labels.minutes}</div>
         </div>
-        <div className="mx-4 text-5xl font-bold">:</div>
+        <div className="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">:</div>
         <div className="flex flex-col items-center">
-          <div className="text-5xl font-bold tabular-nums">
+          <div className="text-2xl font-bold tabular-nums sm:text-3xl md:text-4xl lg:text-5xl">
             {timeLeft.seconds.toString().padStart(2, '0')}
           </div>
-          <div className="mt-2 text-sm text-gray-600">{labels.seconds}</div>
+          <div className="mt-1 text-xs text-gray-600 sm:mt-2 sm:text-sm">{labels.seconds}</div>
         </div>
       </div>
     </div>

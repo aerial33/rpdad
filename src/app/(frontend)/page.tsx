@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 
 export default function Component() {
   return (
-    <div className="flex h-full flex-1 items-center justify-center py-32">
+    <div className="flex h-full flex-1 items-center justify-center px-4 py-32">
       <Card className="m-4 mx-auto max-w-md flex-1 overflow-hidden rounded-xl bg-white shadow-md md:max-w-2xl">
         <CardContent className="p-8">
           <div className="text-primary-dark text-center text-2xl font-semibold tracking-wide uppercase">
