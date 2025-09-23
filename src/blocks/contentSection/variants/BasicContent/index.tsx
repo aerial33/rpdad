@@ -1,66 +1,69 @@
-import React from 'react'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
-// Interface pour les props de la variante BasicContent
-interface BasicContentSectionProps {
-  images?: Array<{
-    image: any
-    alt: string
-  }>
-  cardInfo?: {
-    value: string
-    label: string
-  }
-  title?: string
-  content?: any
-  button?: {
-    text: string
-    href: string
-    icon?: string
-  }
-  dotPatterns?: {
-    enablePatterns?: boolean
-    top?: {
-      enabled?: boolean
-      className?: string
-      rows?: number
-      cols?: number
-      dotSize?: string
-      dotColor?: string
-      gap?: string
+import { Media as MediaComponent } from '@/components/Media'
+import type { ContentWithImage as ContentWithImageProps } from '@/payload-types'
+import { getPopulatedImageData } from '@/utilities/isImagePopulated'
+
+export const ContentWithImage: React.FC<ContentWithImageProps> = (props) => {
+  const { content, image, imagePosition } = props
+
+  // Vérifier si l'image est un objet Media complet ou juste un ID
+  const imageData = getPopulatedImageData(image)
+
+  // Composant pour afficher l'image
+  const ImageComponent = () => {
+    if (!imageData?.url) {
+      return (
+        <div className="flex h-64 w-full items-center justify-center bg-gray-200">
+          <span className="text-gray-500">Image non disponible</span>
+        </div>
+      )
     }
-    bottom?: {
-      enabled?: boolean
-      className?: string
-      variant?: string
-      rows?: number
-      cols?: number
-      dotSize?: string
-      dotColor?: string
-    }
+
+    return (
+      <div className="relative overflow-hidden rounded-lg">
+        {/* <Image
+          src={imageData.url}
+          alt={imageData.alt || 'Image'}
+          width={imageData.width || 800}
+          height={imageData.height || 600}
+          className="h-auto w-full object-cover"
+          priority // Si c'est une image importante
+        /> */}
+        <MediaComponent resource={imageData} />
+      </div>
+    )
   }
-  bgClass?: string
-}
 
-// Fonctions supprimées temporairement pour éviter les erreurs d'import
-
-export const BasicContentSection: React.FC<BasicContentSectionProps> = (props) => {
-  console.log('BasicContentSection render with props:', props)
+  // Composant pour le contenu texte
+  const ContentComponent = () => (
+    <div className="richtext-content flex min-w-[250px] flex-col gap-4">
+      {content && <RichText className="m-0" data={content} />}
+    </div>
+  )
 
   return (
-    <div className="p-8 bg-green-100 border border-green-400 rounded">
-      <h3 className="text-lg font-bold text-green-800">✅ BasicContent Section Rendu !</h3>
-      <p className="text-green-700">Le composant BasicContent fonctionne correctement.</p>
-      <div className="mt-4 text-sm">
-        <p><strong>Title:</strong> {props.title || 'Non défini'}</p>
-        <p><strong>Images:</strong> {props.images?.length || 0} image(s)</p>
-        <p><strong>Card Info:</strong> {props.cardInfo ? `${props.cardInfo.value} - ${props.cardInfo.label}` : 'Non défini'}</p>
-      </div>
-      <details className="mt-4">
-        <summary className="cursor-pointer text-green-800 font-medium">Voir toutes les props</summary>
-        <pre className="mt-2 text-xs bg-white p-2 rounded overflow-auto max-h-40">
-          {JSON.stringify(props, null, 2)}
-        </pre>
-      </details>
+    <div className="container flex flex-col gap-8 md:flex-row md:items-center md:justify-center">
+      {/* Gestion de la position de l'image */}
+      {imagePosition === 'Gauche' ? (
+        <>
+          <div className="md:w-1/2">
+            <ImageComponent />
+          </div>
+          <div className="md:w-1/2">
+            <ContentComponent />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="md:w-1/2">
+            <ContentComponent />
+          </div>
+          <div className="md:w-1/2">
+            <ImageComponent />
+          </div>
+        </>
+      )}
     </div>
   )
 }
