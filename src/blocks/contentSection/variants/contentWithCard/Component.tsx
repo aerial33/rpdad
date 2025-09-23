@@ -4,7 +4,7 @@ import { ContentSection } from '@/blocks/contentSection/variants/contentWithCard
 import type { ContentSectionBlock as ContentSectionBlockType } from '@/payload-types'
 
 export const ContentSectionBlock: React.FC<ContentSectionBlockType> = ({
-  images,
+  multipleImages,
   cardInfo,
   badge,
   content,
@@ -12,7 +12,7 @@ export const ContentSectionBlock: React.FC<ContentSectionBlockType> = ({
 }) => {
   return (
     <ContentSection
-      images={images}
+      images={multipleImages}
       cardInfo={cardInfo}
       badge={badge}
       content={content}

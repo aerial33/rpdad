@@ -26,7 +26,7 @@ const InfoCard: React.FC<{ cardInfo: any }> = ({ cardInfo }) => (
 )
 
 interface ContentSectionProps {
-  images?: ContentSectionBlockType['images']
+  images?: ContentSectionBlockType['multipleImages']
   cardInfo: ContentSectionBlockType['cardInfo']
   badge?: ContentSectionBlockType['badge']
   content: ContentSectionBlockType['content']

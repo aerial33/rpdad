@@ -6,10 +6,10 @@ import { ContentSectionBlock } from '@/payload-types'
 import { getPopulatedImageData } from '@/utilities/isImagePopulated'
 
 export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
-  const { content, images, imagePosition } = props
+  const { content, singleImage, imagePosition } = props
 
-  // Récupérer la première image du tableau
-  const firstImage = images?.[0]?.image
+  // Récupérer l'image unique
+  const firstImage = singleImage?.image
 
   // Vérifier si l'image est un objet Media complet ou juste un ID
   const imageData = getPopulatedImageData(firstImage)

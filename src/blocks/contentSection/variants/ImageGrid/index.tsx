@@ -6,11 +6,11 @@ import { ContentSectionBlock } from '@/payload-types'
 import { getPopulatedImageData } from '@/utilities/isImagePopulated'
 
 export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
-  const { content, images } = props
+  const { content, multipleImages } = props
 
   // Composant pour afficher la grille d'images
   const ImageGridComponent = () => {
-    if (!images || images.length === 0) {
+    if (!multipleImages || multipleImages.length === 0) {
       return (
         <div className="flex h-64 w-full items-center justify-center bg-gray-200 rounded-lg">
           <span className="text-gray-500">Aucune image disponible</span>
@@ -26,8 +26,8 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
     }
 
     return (
-      <div className={`grid gap-4 ${getGridClass(images.length)}`}>
-        {images.map((imageItem, index) => {
+      <div className={`grid gap-4 ${getGridClass(multipleImages.length)}`}>
+        {multipleImages.map((imageItem, index) => {
           const imageData = getPopulatedImageData(imageItem.image)
 
           if (!imageData?.url) {

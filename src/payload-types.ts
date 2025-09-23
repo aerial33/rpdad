@@ -721,7 +721,11 @@ export interface ContentSectionBlock {
    * Choisir le type de présentation du contenu
    */
   variant: 'basicContent' | 'contentWithImage' | 'contentWithGallery' | 'contentWithCard';
-  images?:
+  singleImage?: {
+    image: number | Media;
+    alt: string;
+  };
+  multipleImages?:
     | {
         image: number | Media;
         alt: string;
@@ -1172,7 +1176,13 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface ContentSectionBlockSelect<T extends boolean = true> {
   variant?: T;
-  images?:
+  singleImage?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+      };
+  multipleImages?:
     | T
     | {
         image?: T;

@@ -46,17 +46,42 @@ export const ContentSectionBlock: Block = {
       },
     },
 
-    // Images principales (conditionnelles)
+    // Image unique pour contentWithImage
     {
-      name: 'images',
+      name: 'singleImage',
+      label: 'Image',
+      type: 'group',
+      admin: {
+        condition: (_, { variant } = {}) => variant === 'contentWithImage',
+      },
+      fields: [
+        {
+          name: 'image',
+          label: 'Image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        {
+          name: 'alt',
+          label: 'Texte alternatif',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+
+    // Images multiples pour contentWithGallery et contentWithCard
+    {
+      name: 'multipleImages',
       label: 'Images',
       type: 'array',
       admin: {
         condition: (_, { variant } = {}) =>
-          ['contentWithImage', 'contentWithGallery', 'contentWithCard'].includes(variant),
+          ['contentWithGallery', 'contentWithCard'].includes(variant),
       },
-      minRows: 1,
-      maxRows: 2,
+      minRows: 2,
+      maxRows: 3,
       labels: {
         singular: 'Image',
         plural: 'Images',
