@@ -1,38 +1,71 @@
-import React from 'react'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
-// Interface pour les props de la variante ImageGrid
-interface ImageGridSectionProps {
-  galleryTitle?: string
-  images?: Array<{
-    image: any
-    alt: string
-    caption?: string
-  }>
-  displayConfig?: {
-    columns?: string
-    spacing?: string
+import { Media as MediaComponent } from '@/components/Media'
+// import type { ContentWithImage as ContentWithImageProps } from '@/payload-types'
+import { ContentSectionBlock } from '@/payload-types'
+import { getPopulatedImageData } from '@/utilities/isImagePopulated'
+
+export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
+  const { content, images } = props
+
+  // Composant pour afficher la grille d'images
+  const ImageGridComponent = () => {
+    if (!images || images.length === 0) {
+      return (
+        <div className="flex h-64 w-full items-center justify-center bg-gray-200 rounded-lg">
+          <span className="text-gray-500">Aucune image disponible</span>
+        </div>
+      )
+    }
+
+    // Déterminer la classe de grille selon le nombre d'images
+    const getGridClass = (count: number) => {
+      if (count === 1) return 'grid-cols-1'
+      if (count === 2) return 'grid-cols-1 md:grid-cols-2'
+      return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+    }
+
+    return (
+      <div className={`grid gap-4 ${getGridClass(images.length)}`}>
+        {images.map((imageItem, index) => {
+          const imageData = getPopulatedImageData(imageItem.image)
+
+          if (!imageData?.url) {
+            return (
+              <div key={index} className="flex h-48 w-full items-center justify-center bg-gray-200 rounded-lg">
+                <span className="text-gray-500">Image non disponible</span>
+              </div>
+            )
+          }
+
+          return (
+            <div key={index} className="relative overflow-hidden rounded-lg aspect-video">
+              <MediaComponent resource={imageData} />
+            </div>
+          )
+        })}
+      </div>
+    )
   }
-  bgClass?: string
-}
 
-export const ImageGridSection: React.FC<ImageGridSectionProps> = (props) => {
-  console.log('ImageGridSection render with props:', props)
+  // Composant pour le contenu texte
+  const ContentComponent = () => (
+    <div className="richtext-content flex min-w-[250px] flex-col gap-4">
+      {content && <RichText className="m-0" data={content} />}
+    </div>
+  )
 
   return (
-    <div className="p-8 bg-purple-100 border border-purple-400 rounded">
-      <h3 className="text-lg font-bold text-purple-800">🖼️ ImageGrid Section Rendu !</h3>
-      <p className="text-purple-700">Le composant ImageGrid fonctionne correctement.</p>
-      <div className="mt-4 text-sm">
-        <p><strong>Gallery Title:</strong> {props.galleryTitle || 'Non défini'}</p>
-        <p><strong>Images:</strong> {props.images?.length || 0} image(s)</p>
-        <p><strong>Columns:</strong> {props.displayConfig?.columns || 'Non défini'}</p>
+    <div className="container flex flex-col gap-8">
+      {/* Contenu texte en premier */}
+      <div className="w-full">
+        <ContentComponent />
       </div>
-      <details className="mt-4">
-        <summary className="cursor-pointer text-purple-800 font-medium">Voir toutes les props</summary>
-        <pre className="mt-2 text-xs bg-white p-2 rounded overflow-auto max-h-40">
-          {JSON.stringify(props, null, 2)}
-        </pre>
-      </details>
+
+      {/* Grille d'images en dessous */}
+      <div className="w-full">
+        <ImageGridComponent />
+      </div>
     </div>
   )
 }

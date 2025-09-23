@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { ContentSectionBlock as ContentSectionBlockType, Media } from '@/payload-types'
 
-import { DEFAULT_BG_CLASSES, DEFAULT_CONTAINER_CLASSES, getIconComponent } from './utils'
+import { getIconComponent } from '../../utils'
 
 const ImageDisplay: React.FC<{ image?: { src: string; alt: string } }> = ({ image }) => {
   if (!image) return null
@@ -47,8 +47,8 @@ export function ContentSection({ images, cardInfo, badge, content, button }: Con
   const secondImage = images?.[1] ? getImageUrl(images[1]) : undefined
 
   return (
-    <section className={DEFAULT_BG_CLASSES}>
-      <div className={DEFAULT_CONTAINER_CLASSES}>
+    <section className="py-10">
+      <div className="container mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-20 lg:pt-28 lg:pb-20 xl:pt-28 xl:pb-20 2xl:px-0">
         <div className="mx-[-15px] !mt-[-50px] flex flex-wrap items-center lg:mx-[-20px] xl:mx-[-35px]">
           {/* Colonne images + card */}
           <div className="!relative !mt-[50px] w-full max-w-full flex-[0_0_auto] !px-[15px] lg:w-7/12 lg:!px-[20px] xl:w-7/12 xl:!px-[35px]">

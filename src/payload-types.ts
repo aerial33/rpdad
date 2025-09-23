@@ -717,6 +717,10 @@ export interface Form {
  * via the `definition` "ContentSectionBlock".
  */
 export interface ContentSectionBlock {
+  /**
+   * Choisir le type de présentation du contenu
+   */
+  variant: 'basicContent' | 'contentWithImage' | 'contentWithGallery' | 'contentWithCard';
   images?:
     | {
         image: number | Media;
@@ -766,6 +770,7 @@ export interface ContentSectionBlock {
     href: string;
     icon?: ('arrow-right' | 'arrow-left' | 'external-link' | 'download' | 'none') | null;
   };
+  imagePosition?: ('Droite' | 'Gauche') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contentSection';
@@ -1166,6 +1171,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "ContentSectionBlock_select".
  */
 export interface ContentSectionBlockSelect<T extends boolean = true> {
+  variant?: T;
   images?:
     | T
     | {
@@ -1183,6 +1189,7 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
         href?: T;
         icon?: T;
       };
+  imagePosition?: T;
   id?: T;
   blockName?: T;
 }

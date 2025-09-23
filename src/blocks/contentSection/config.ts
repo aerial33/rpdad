@@ -12,15 +12,49 @@ export const ContentSectionBlock: Block = {
   imageURL: '/img/blocks/content-section-preview.jpeg',
   imageAltText: 'Aperçu du block Section de Contenu',
   labels: {
-    singular: 'Section de Contenu',
-    plural: 'Sections de Contenu',
+    singular: 'Section Texte & Média',
+    plural: 'Sections Texte & Média',
   },
   fields: [
-    // Images principales
+    // Sélection du variant
+    {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'basicContent',
+      label: 'Type de contenu',
+      options: [
+        {
+          label: 'Contenu de base',
+          value: 'basicContent',
+        },
+        {
+          label: 'Contenu avec image',
+          value: 'contentWithImage',
+        },
+        {
+          label: 'Contenu avec galerie',
+          value: 'contentWithGallery',
+        },
+        {
+          label: 'Contenu avec carte info',
+          value: 'contentWithCard',
+        },
+      ],
+      required: true,
+      admin: {
+        description: 'Choisir le type de présentation du contenu',
+      },
+    },
+
+    // Images principales (conditionnelles)
     {
       name: 'images',
       label: 'Images',
       type: 'array',
+      admin: {
+        condition: (_, { variant } = {}) =>
+          ['contentWithImage', 'contentWithGallery', 'contentWithCard'].includes(variant),
+      },
       minRows: 1,
       maxRows: 2,
       labels: {
@@ -44,11 +78,14 @@ export const ContentSectionBlock: Block = {
       ],
     },
 
-    // Informations de la carte
+    // Informations de la carte (conditionnelles)
     {
       name: 'cardInfo',
       label: 'Informations de la carte',
       type: 'richText',
+      admin: {
+        condition: (_, { variant } = {}) => variant === 'contentWithCard',
+      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [
@@ -145,6 +182,13 @@ export const ContentSectionBlock: Block = {
           defaultValue: 'arrow-right',
         },
       ],
+    },
+    {
+      type: 'radio',
+      name: 'imagePosition',
+      label: 'Position de l’image',
+      options: ['Droite', 'Gauche'],
+      defaultValue: 'Droite',
     },
   ],
 }

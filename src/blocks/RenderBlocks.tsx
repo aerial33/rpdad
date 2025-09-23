@@ -7,7 +7,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import type { Page } from '@/payload-types'
 
-import { ContentSectionBlock } from './contentSection/Component'
+import ContentSectionBlock from './contentSection/RenderContentSection'
 
 const blockComponents = {
   archive: ArchiveBlock,

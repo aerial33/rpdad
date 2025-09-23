@@ -1,7 +1,9 @@
 // Main exports
-export { ContentSectionBlock } from './Component'
 export { default as ContentSectionConfig } from './config'
-export { ContentSection } from './ContentSection'
+export {
+  default as ContentSectionBlock,
+  default as TextMediaSectionBlock,
+} from './RenderContentSection'
 
 export {
   DEFAULT_BG_CLASSES,

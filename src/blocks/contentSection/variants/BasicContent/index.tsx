@@ -1,69 +1,49 @@
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import React from 'react'
 
-import { Media as MediaComponent } from '@/components/Media'
-import type { ContentWithImage as ContentWithImageProps } from '@/payload-types'
-import { getPopulatedImageData } from '@/utilities/isImagePopulated'
+import Link from 'next/link'
 
-export const ContentWithImage: React.FC<ContentWithImageProps> = (props) => {
-  const { content, image, imagePosition } = props
+import RichText from '@/components/RichText'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import type { ContentSectionBlock as ContentSectionBlockType } from '@/payload-types'
 
-  // Vérifier si l'image est un objet Media complet ou juste un ID
-  const imageData = getPopulatedImageData(image)
+import { DEFAULT_BG_CLASSES, DEFAULT_CONTAINER_CLASSES, getIconComponent } from '../../utils'
 
-  // Composant pour afficher l'image
-  const ImageComponent = () => {
-    if (!imageData?.url) {
-      return (
-        <div className="flex h-64 w-full items-center justify-center bg-gray-200">
-          <span className="text-gray-500">Image non disponible</span>
-        </div>
-      )
-    }
-
-    return (
-      <div className="relative overflow-hidden rounded-lg">
-        {/* <Image
-          src={imageData.url}
-          alt={imageData.alt || 'Image'}
-          width={imageData.width || 800}
-          height={imageData.height || 600}
-          className="h-auto w-full object-cover"
-          priority // Si c'est une image importante
-        /> */}
-        <MediaComponent resource={imageData} />
-      </div>
-    )
-  }
-
-  // Composant pour le contenu texte
-  const ContentComponent = () => (
-    <div className="richtext-content flex min-w-[250px] flex-col gap-4">
-      {content && <RichText className="m-0" data={content} />}
-    </div>
-  )
-
+export const BasicContent: React.FC<ContentSectionBlockType> = ({ badge, content, button }) => {
   return (
-    <div className="container flex flex-col gap-8 md:flex-row md:items-center md:justify-center">
-      {/* Gestion de la position de l'image */}
-      {imagePosition === 'Gauche' ? (
-        <>
-          <div className="md:w-1/2">
-            <ImageComponent />
+    <section className={DEFAULT_BG_CLASSES}>
+      <div className={DEFAULT_CONTAINER_CLASSES}>
+        <div className="mx-[-15px] flex flex-wrap items-start lg:mx-[-20px] xl:mx-[-35px]">
+          <div className="w-full max-w-full flex-[0_0_auto] px-[15px] lg:!px-[20px] xl:!px-[35px]">
+            {badge && (
+              <Badge
+                className="border-flamingo-light text-muted-foreground mb-4"
+                variant={'outline'}
+              >
+                {badge}
+              </Badge>
+            )}
+            <div className="richtext-content">
+              <RichText
+                data={content}
+                enableGutter={false}
+                enableProse={false}
+                className="[&>*:first-child]:feature-paragraph [&>*:not(:first-child)]:text-muted-foreground [&>*:last-child]:mb-8"
+              />
+            </div>
+            {button?.text && button?.href && (
+              <Button className="group !mt-8">
+                <Link href={button.href}>{button.text}</Link>
+                {button.icon && button.icon !== 'none' && (
+                  <span className="ml-2 text-lg transition-transform group-hover:translate-x-1">
+                    {getIconComponent(button.icon)}
+                  </span>
+                )}
+              </Button>
+            )}
           </div>
-          <div className="md:w-1/2">
-            <ContentComponent />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="md:w-1/2">
-            <ContentComponent />
-          </div>
-          <div className="md:w-1/2">
-            <ImageComponent />
-          </div>
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+    </section>
   )
 }
