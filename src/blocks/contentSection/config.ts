@@ -48,37 +48,27 @@ export const ContentSectionBlock: Block = {
     {
       name: 'cardInfo',
       label: 'Informations de la carte',
-      type: 'group',
-      fields: [
-        {
-          name: 'value',
-          label: 'Valeur',
-          type: 'text',
-          required: true,
-          admin: {
-            placeholder: 'ex: + de 5 000',
-          },
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [
+            ...rootFeatures,
+            HeadingFeature({ enabledHeadingSizes: ['h3', 'h4'] }),
+            FixedToolbarFeature(),
+            InlineToolbarFeature(),
+          ]
         },
-        {
-          name: 'label',
-          label: 'Libellé',
-          type: 'text',
-          required: true,
-          admin: {
-            placeholder: 'ex: Personnes accompagnées',
-          },
-        },
-      ],
+      }),
     },
 
     // Titre principal
     {
-      name: 'title',
-      label: 'Titre',
+      name: 'badge',
+      label: 'Badge',
       type: 'text',
-      required: true,
       admin: {
         placeholder: 'ex: Nos Services Membres',
+        description: 'Badge principal de la section',
       },
     },
 
@@ -92,7 +82,7 @@ export const ContentSectionBlock: Block = {
         features: ({ rootFeatures }) => {
           return [
             ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h3', 'h4'] }),
+            HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
             FixedToolbarFeature(),
             InlineToolbarFeature(),
           ]
@@ -155,228 +145,6 @@ export const ContentSectionBlock: Block = {
           defaultValue: 'arrow-right',
         },
       ],
-    },
-
-    // Configuration des motifs de points (Dot Patterns)
-    {
-      name: 'dotPatterns',
-      label: 'Motifs de points',
-      type: 'group',
-      fields: [
-        // Contrôle global pour activer/désactiver les motifs
-        {
-          name: 'enablePatterns',
-          label: 'Activer les motifs de points',
-          type: 'checkbox',
-          defaultValue: false,
-          admin: {
-            description: 'Cochez pour configurer les motifs de points décoratifs',
-          },
-        },
-
-        // Motif du haut
-        {
-          name: 'top',
-          label: 'Motif du haut',
-          type: 'group',
-          admin: {
-            condition: (data, siblingData) => siblingData?.enablePatterns,
-            style: {
-              border: '1px solid #e5e7eb',
-              borderRadius: '6px',
-              padding: '16px',
-              marginTop: '12px',
-            },
-          },
-          fields: [
-            {
-              name: 'enabled',
-              label: 'Activer le motif du haut',
-              type: 'checkbox',
-              defaultValue: false,
-            },
-            {
-              name: 'className',
-              label: 'Classes CSS',
-              type: 'text',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-                placeholder: 'ex: absolute -top-10 left-5 hidden lg:flex',
-              },
-            },
-            {
-              name: 'rows',
-              label: 'Nombre de lignes',
-              type: 'number',
-              defaultValue: 11,
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'cols',
-              label: 'Nombre de colonnes',
-              type: 'number',
-              defaultValue: 11,
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'dotSize',
-              label: 'Taille des points',
-              type: 'select',
-              options: [
-                { label: 'Petit', value: 'sm' },
-                { label: 'Moyen', value: 'md' },
-                { label: 'Grand', value: 'lg' },
-              ],
-              defaultValue: 'md',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'dotColor',
-              label: 'Couleur des points',
-              type: 'select',
-              options: [
-                { label: 'Flamingo', value: 'bg-flamingo' },
-                { label: 'Primary Dark', value: 'bg-primary-dark' },
-                { label: 'Primary', value: 'bg-primary' },
-                { label: 'Secondary', value: 'bg-secondary' },
-              ],
-              defaultValue: 'bg-flamingo',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'gap',
-              label: 'Espacement',
-              type: 'select',
-              options: [
-                { label: 'Petit', value: 'sm' },
-                { label: 'Moyen', value: 'md' },
-                { label: 'Grand', value: 'lg' },
-              ],
-              defaultValue: 'md',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-          ],
-        },
-
-        // Motif du bas
-        {
-          name: 'bottom',
-          label: 'Motif du bas',
-          type: 'group',
-          admin: {
-            condition: (data, siblingData) => siblingData?.enablePatterns,
-            style: {
-              border: '1px solid #e5e7eb',
-              borderRadius: '6px',
-              padding: '16px',
-              marginTop: '12px',
-            },
-          },
-          fields: [
-            {
-              name: 'enabled',
-              label: 'Activer le motif du bas',
-              type: 'checkbox',
-              defaultValue: false,
-            },
-            {
-              name: 'className',
-              label: 'Classes CSS',
-              type: 'text',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-                placeholder: 'ex: absolute -bottom-30 left-70 hidden lg:flex',
-              },
-            },
-            {
-              name: 'variant',
-              label: 'Variante',
-              type: 'select',
-              dbName: 'bot_variant',
-              options: [
-                { label: 'Normal', value: 'normal' },
-                { label: 'Dense', value: 'dense' },
-                { label: 'Sparse', value: 'sparse' },
-              ],
-              defaultValue: 'normal',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'rows',
-              label: 'Nombre de lignes',
-              type: 'number',
-              defaultValue: 9,
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'cols',
-              label: 'Nombre de colonnes',
-              type: 'number',
-              defaultValue: 9,
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'dotSize',
-              label: 'Taille des points',
-              type: 'select',
-              dbName: 'bot_dot_size',
-              options: [
-                { label: 'Petit', value: 'sm' },
-                { label: 'Moyen', value: 'md' },
-                { label: 'Grand', value: 'lg' },
-              ],
-              defaultValue: 'sm',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-            {
-              name: 'dotColor',
-              label: 'Couleur des points',
-              type: 'select',
-              dbName: 'bot_dot_color',
-              options: [
-                { label: 'Flamingo', value: 'bg-flamingo' },
-                { label: 'Primary Dark', value: 'bg-primary-dark' },
-                { label: 'Primary', value: 'bg-primary' },
-                { label: 'Secondary', value: 'bg-secondary' },
-              ],
-              defaultValue: 'bg-primary-dark',
-              admin: {
-                condition: (data, siblingData) => siblingData?.enabled,
-              },
-            },
-          ],
-        },
-      ],
-    },
-
-    // Classe CSS pour le background
-    {
-      name: 'bgClass',
-      label: 'Classes CSS du background',
-      type: 'text',
-      admin: {
-        description: 'Classes CSS personnalisées pour le background de la section',
-        placeholder: 'ex: py-16 bg-gray-50',
-      },
-      defaultValue: 'py-16',
     },
   ],
 }

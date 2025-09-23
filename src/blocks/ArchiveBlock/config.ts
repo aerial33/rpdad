@@ -1,11 +1,10 @@
-import type { Block } from 'payload'
-
 import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import type { Block } from 'payload'
 
 export const Archive: Block = {
   slug: 'archive',
@@ -24,10 +23,11 @@ export const Archive: Block = {
           ]
         },
       }),
-      label: 'Intro Content',
+      label: 'Titre de notre archive',
     },
     {
       name: 'populateBy',
+      label: 'Choix de la source de données',
       type: 'select',
       defaultValue: 'collection',
       options: [
@@ -48,7 +48,7 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
       },
       defaultValue: 'posts',
-      label: 'Collections To Show',
+      label: 'Collections à afficher',
       options: [
         {
           label: 'Posts',
@@ -63,7 +63,7 @@ export const Archive: Block = {
         condition: (_, siblingData) => siblingData.populateBy === 'collection',
       },
       hasMany: true,
-      label: 'Categories To Show',
+      label: 'Categories à afficher',
       relationTo: 'categories',
     },
     {
@@ -74,7 +74,7 @@ export const Archive: Block = {
         step: 1,
       },
       defaultValue: 10,
-      label: 'Limit',
+      label: 'Limite de résultats',
     },
     {
       name: 'selectedDocs',

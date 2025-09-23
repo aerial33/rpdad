@@ -3,11 +3,13 @@ import React from 'react'
 
 import Link from 'next/link'
 
+import { DotPattern } from '@/components/DotPattern'
 import RichText from '@/components/RichText'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import type { ContentSectionBlock as ContentSectionBlockType, Media } from '@/payload-types'
 
-import type { ContentSectionProps } from './types'
-import { DEFAULT_BG_CLASSES, DEFAULT_CONTAINER_CLASSES, getImageByIndex } from './utils'
+import { DEFAULT_BG_CLASSES, DEFAULT_CONTAINER_CLASSES, getIconComponent } from './utils'
 
 const ImageDisplay: React.FC<{ image?: { src: string; alt: string } }> = ({ image }) => {
   if (!image) return null
@@ -15,41 +17,43 @@ const ImageDisplay: React.FC<{ image?: { src: string; alt: string } }> = ({ imag
   return <img className="rounded-xl" src={image.src} srcSet={image.src} alt={image.alt} />
 }
 
-const InfoCard: React.FC<{ cardInfo: { value: string; label: string } }> = ({ cardInfo }) => (
+const InfoCard: React.FC<{ cardInfo: any }> = ({ cardInfo }) => (
   <div className="card from-chateau-lighter to-chateau-lightest rounded-xl bg-gradient-to-bl !text-center">
-    <div className="card-body counter-wrapper !px-[2rem] !py-12">
-      <h3 className="!mb-2 !text-[calc(1.325rem_+_0.9vw)] !leading-none font-semibold !tracking-[normal] !whitespace-nowrap xl:!text-[2rem]">
-        {cardInfo.value}
-      </h3>
-      <p className="!mb-0 text-sm font-medium">{cardInfo.label}</p>
+    <div className="card-body counter-wrapper richtext-content !px-[2rem] !py-12">
+      <RichText data={cardInfo} enableGutter={false} enableProse={false} className="m-0" />
     </div>
   </div>
 )
 
-export function ContentSection({
-  bgClass = DEFAULT_BG_CLASSES,
-  containerClass = DEFAULT_CONTAINER_CLASSES,
-  images,
-  cardInfo,
-  dotPatternTop,
-  dotPatternBottom,
-  title,
-  content,
-  buttonText,
-  buttonHref,
-  buttonIcon,
-}: ContentSectionProps) {
-  const firstImage = getImageByIndex(images, 0)
-  const secondImage = getImageByIndex(images, 1)
+interface ContentSectionProps {
+  images?: ContentSectionBlockType['images']
+  cardInfo: ContentSectionBlockType['cardInfo']
+  badge?: ContentSectionBlockType['badge']
+  content: ContentSectionBlockType['content']
+  button: ContentSectionBlockType['button']
+}
+
+export function ContentSection({ images, cardInfo, badge, content, button }: ContentSectionProps) {
+  // Transformer les images du type généré vers un format utilisable
+  const getImageUrl = (imageItem: any): { src: string; alt: string } | undefined => {
+    if (!imageItem) return undefined
+    return {
+      src: typeof imageItem.image === 'object' ? (imageItem.image as Media).url || '' : '',
+      alt: imageItem.alt || '',
+    }
+  }
+
+  const firstImage = images?.[0] ? getImageUrl(images[0]) : undefined
+  const secondImage = images?.[1] ? getImageUrl(images[1]) : undefined
 
   return (
-    <section className={bgClass}>
-      <div className={containerClass}>
+    <section className={DEFAULT_BG_CLASSES}>
+      <div className={DEFAULT_CONTAINER_CLASSES}>
         <div className="mx-[-15px] !mt-[-50px] flex flex-wrap items-center lg:mx-[-20px] xl:mx-[-35px]">
           {/* Colonne images + card */}
           <div className="!relative !mt-[50px] w-full max-w-full flex-[0_0_auto] !px-[15px] lg:w-7/12 lg:!px-[20px] xl:w-7/12 xl:!px-[35px]">
             {/* DotPattern décoratif en haut */}
-            {dotPatternTop}
+            <DotPattern dotColor="bg-flamingo" className="-top-10 left-0" />
             <div className="mx-[-15px] !mt-[-25px] flex flex-wrap md:mx-[-12.5px] lg:mx-[-12.5px] xl:mx-[-12.5px]">
               <div className="!mt-[25px] w-full max-w-full flex-[0_0_auto] px-[12.5px] md:w-6/12 lg:w-6/12 xl:w-6/12">
                 <figure className="!relative rounded-xl md:!mt-10 lg:!mt-10 xl:!mt-10">
@@ -72,7 +76,14 @@ export function ContentSection({
           </div>
           {/* Colonne texte */}
           <div className="relative !mt-[50px] w-full max-w-full flex-[0_0_auto] !px-[15px] lg:w-5/12 lg:!px-[20px] xl:w-5/12 xl:!px-[35px]">
-            <h2 className="!mb-3 !leading-[1.3] font-bold">{title}</h2>
+            {badge && (
+              <Badge
+                className="border-flamingo-light text-muted-foreground mb-4"
+                variant={'outline'}
+              >
+                {badge}
+              </Badge>
+            )}
             <div className="richtext-content">
               <RichText
                 data={content}
@@ -81,18 +92,16 @@ export function ContentSection({
                 className="[&>*:first-child]:feature-paragraph [&>*:not(:first-child)]:text-muted-foreground [&>*:last-child]:mb-8"
               />
             </div>
-            {buttonText && buttonHref && (
+            {button?.text && button?.href && (
               <Button className="group !mt-8">
-                <Link href={buttonHref}>{buttonText}</Link>
-                {buttonIcon && (
+                <Link href={button.href}>{button.text}</Link>
+                {button.icon && button.icon !== 'none' && (
                   <span className="ml-2 text-lg transition-transform group-hover:translate-x-1">
-                    {buttonIcon}
+                    {getIconComponent(button.icon)}
                   </span>
                 )}
               </Button>
             )}
-            {/* DotPattern décoratif en bas */}
-            {dotPatternBottom}
           </div>
         </div>
       </div>

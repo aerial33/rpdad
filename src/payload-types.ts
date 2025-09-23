@@ -724,11 +724,25 @@ export interface ContentSectionBlock {
         id?: string | null;
       }[]
     | null;
-  cardInfo: {
-    value: string;
-    label: string;
-  };
-  title: string;
+  cardInfo?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Badge principal de la section
+   */
+  badge?: string | null;
   /**
    * Contenu principal de la section avec formatage riche
    */
@@ -752,34 +766,6 @@ export interface ContentSectionBlock {
     href: string;
     icon?: ('arrow-right' | 'arrow-left' | 'external-link' | 'download' | 'none') | null;
   };
-  dotPatterns?: {
-    /**
-     * Cochez pour configurer les motifs de points décoratifs
-     */
-    enablePatterns?: boolean | null;
-    top?: {
-      enabled?: boolean | null;
-      className?: string | null;
-      rows?: number | null;
-      cols?: number | null;
-      dotSize?: ('sm' | 'md' | 'lg') | null;
-      dotColor?: ('bg-flamingo' | 'bg-primary-dark' | 'bg-primary' | 'bg-secondary') | null;
-      gap?: ('sm' | 'md' | 'lg') | null;
-    };
-    bottom?: {
-      enabled?: boolean | null;
-      className?: string | null;
-      variant?: ('normal' | 'dense' | 'sparse') | null;
-      rows?: number | null;
-      cols?: number | null;
-      dotSize?: ('sm' | 'md' | 'lg') | null;
-      dotColor?: ('bg-flamingo' | 'bg-primary-dark' | 'bg-primary' | 'bg-secondary') | null;
-    };
-  };
-  /**
-   * Classes CSS personnalisées pour le background de la section
-   */
-  bgClass?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contentSection';
@@ -1187,13 +1173,8 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
         alt?: T;
         id?: T;
       };
-  cardInfo?:
-    | T
-    | {
-        value?: T;
-        label?: T;
-      };
-  title?: T;
+  cardInfo?: T;
+  badge?: T;
   content?: T;
   button?:
     | T
@@ -1202,34 +1183,6 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
         href?: T;
         icon?: T;
       };
-  dotPatterns?:
-    | T
-    | {
-        enablePatterns?: T;
-        top?:
-          | T
-          | {
-              enabled?: T;
-              className?: T;
-              rows?: T;
-              cols?: T;
-              dotSize?: T;
-              dotColor?: T;
-              gap?: T;
-            };
-        bottom?:
-          | T
-          | {
-              enabled?: T;
-              className?: T;
-              variant?: T;
-              rows?: T;
-              cols?: T;
-              dotSize?: T;
-              dotColor?: T;
-            };
-      };
-  bgClass?: T;
   id?: T;
   blockName?: T;
 }

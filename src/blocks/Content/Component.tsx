@@ -35,8 +35,17 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
             const { enableLink, link, richText, size } = col
 
             return (
-              <div className={getResponsiveClasses(size!)} key={index}>
-                {richText && <RichText data={richText} enableGutter={false} />}
+              <div
+                className={`${getResponsiveClasses(size!)} richtext-content border-flamingo border`}
+                key={index}
+              >
+                {richText && (
+                  <RichText
+                    data={richText}
+                    enableGutter={false}
+                    className="[&>*:first-child]:feature-paragraph [&>*:not(:first-child)]:text-muted-foreground [&>*:last-child]:mb-8"
+                  />
+                )}
 
                 {enableLink && <CMSLink {...link} />}
               </div>
