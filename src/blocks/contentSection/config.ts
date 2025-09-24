@@ -154,6 +154,76 @@ export const ContentSectionBlock: Block = {
         description: 'Contenu principal de la section avec formatage riche',
       },
     },
+
+    // Fonctionnalités avec icônes
+    {
+      name: 'features',
+      label: 'Fonctionnalités avec icônes',
+      type: 'array',
+      admin: {
+        condition: (_, { variant } = {}) =>
+          ['contentWithImage', 'contentWithGallery'].includes(variant),
+        description: 'Ajouter des fonctionnalités avec icônes sous le contenu principal',
+      },
+      minRows: 0,
+      maxRows: 6,
+      labels: {
+        singular: 'Fonctionnalité',
+        plural: 'Fonctionnalités',
+      },
+      fields: [
+        {
+          name: 'icon',
+          label: 'Icône',
+          type: 'group',
+          fields: [
+            {
+              name: 'image',
+              label: "Image de l'icône",
+              type: 'upload',
+              relationTo: 'media',
+              filterOptions: {
+                mimeType: { contains: 'image' },
+              },
+              required: false,
+              admin: {
+                description: 'Uploader une icône (SVG recommandé pour la qualité)',
+              },
+            },
+            {
+              name: 'alt',
+              label: 'Texte alternatif',
+              type: 'text',
+              required: false,
+              admin: {
+                description: 'Description accessible de l\'icône (ex: "Icône créativité")',
+                placeholder: 'ex: Icône créativité',
+              },
+            },
+          ],
+        },
+        {
+          name: 'title',
+          label: 'Titre',
+          type: 'text',
+          required: true,
+          admin: {
+            placeholder: 'ex: Creativity',
+          },
+        },
+        {
+          name: 'description',
+          label: 'Description',
+          type: 'textarea',
+          required: true,
+          admin: {
+            placeholder: 'ex: Curabitur blandit lacus porttitor ridiculus mus.',
+            rows: 3,
+          },
+        },
+      ],
+    },
+
     // Configuration du bouton
     {
       name: 'button',

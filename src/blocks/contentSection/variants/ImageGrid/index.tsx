@@ -6,7 +6,60 @@ import { ContentSectionBlock } from '@/payload-types'
 import { getPopulatedImageData } from '@/utilities/isImagePopulated'
 
 export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
-  const { content, multipleImages, imagePosition } = props
+  const { content, multipleImages, imagePosition, features } = props
+
+  // Composant pour afficher une icône
+  const IconComponent = ({ icon }: { icon: any }) => {
+    if (!icon?.image) {
+      return (
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-200">
+          <span className="text-gray-400">?</span>
+        </div>
+      )
+    }
+
+    const iconData = getPopulatedImageData(icon.image)
+    if (!iconData?.url) {
+      return (
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-200">
+          <span className="text-gray-400">?</span>
+        </div>
+      )
+    }
+
+    // Si l'icône est un SVG, utiliser un masque CSS pour pouvoir changer la couleur
+    if (iconData?.mimeType?.includes('svg')) {
+      return (
+        <div
+          className="text-primary-light h-8 w-8"
+          style={{
+            backgroundColor: 'currentColor',
+            WebkitMaskImage: `url(${iconData.url})`,
+            maskImage: `url(${iconData.url})`,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+          }}
+          aria-label={icon.alt || 'Icône'}
+        />
+      )
+    }
+
+    return (
+      <div className="flex h-8 w-8 items-center justify-center">
+        <MediaComponent
+          resource={iconData}
+          alt={icon.alt || 'Icône'}
+          htmlElement={null}
+          pictureClassName="w-full"
+          imgClassName="h-full w-full object-contain"
+        />
+      </div>
+    )
+  }
 
   // Composant pour afficher la grille d'images
   const ImageGridComponent = () => {
@@ -55,6 +108,21 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
   const ContentComponent = () => (
     <div className="richtext-content flex min-w-[250px] flex-col gap-4">
       {content && <RichText className="m-0" data={content} />}
+
+      {/* Fonctionnalités avec icônes */}
+      {features && features.length > 0 && (
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {features.map((feature, index) => (
+            <div key={index} className="flex items-start gap-3">
+              <IconComponent icon={feature.icon} />
+              <div>
+                <h4 className="font-semibold text-gray-900">{feature.title}</h4>
+                <p className="text-sm text-gray-600">{feature.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 

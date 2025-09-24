@@ -769,6 +769,26 @@ export interface ContentSectionBlock {
     };
     [k: string]: unknown;
   };
+  /**
+   * Ajouter des fonctionnalités avec icônes sous le contenu principal
+   */
+  features?:
+    | {
+        icon?: {
+          /**
+           * Uploader une icône (SVG recommandé pour la qualité)
+           */
+          image?: (number | null) | Media;
+          /**
+           * Description accessible de l'icône (ex: "Icône créativité")
+           */
+          alt?: string | null;
+        };
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
   button: {
     text: string;
     href: string;
@@ -1192,6 +1212,19 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
   cardInfo?: T;
   badge?: T;
   content?: T;
+  features?:
+    | T
+    | {
+        icon?:
+          | T
+          | {
+              image?: T;
+              alt?: T;
+            };
+        title?: T;
+        description?: T;
+        id?: T;
+      };
   button?:
     | T
     | {
