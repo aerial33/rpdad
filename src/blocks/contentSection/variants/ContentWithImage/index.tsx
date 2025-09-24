@@ -47,27 +47,15 @@ export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
   )
 
   return (
-    <div className="container flex flex-col gap-8 md:flex-row md:items-center md:justify-center">
-      {/* Gestion de la position de l'image */}
-      {imagePosition === 'Gauche' ? (
-        <>
-          <div className="md:w-1/2">
-            <ImageComponent />
-          </div>
-          <div className="md:w-1/2">
-            <ContentComponent />
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="md:w-1/2">
-            <ContentComponent />
-          </div>
-          <div className="md:w-1/2">
-            <ImageComponent />
-          </div>
-        </>
-      )}
+    <div
+      className={`container flex flex-col gap-8 py-20 md:items-center md:justify-center ${imagePosition === 'Gauche' ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+    >
+      <div className="md:w-1/2">
+        <ContentComponent />
+      </div>
+      <div className="md:w-1/2">
+        <ImageComponent />
+      </div>
     </div>
   )
 }
