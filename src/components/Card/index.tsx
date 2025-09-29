@@ -20,7 +20,7 @@ export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
   doc?: CardPostData
-  relationTo?: 'posts'
+  relationTo?: 'posts' | 'emplois'
   showCategories?: boolean
   title?: string
   variant?: 'default' | 'featured' | 'grid'

@@ -15,9 +15,9 @@ import {
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
-import editor from '@/access/editor'
 import { slugField } from '@/fields/slug'
 
+import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
@@ -29,10 +29,10 @@ import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
   access: {
-    create: editor,
-    delete: editor,
+    create: authenticated,
+    delete: authenticated,
     read: authenticatedOrPublished,
-    update: editor,
+    update: authenticated,
   },
   // This config controls what's populated by default when a post is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -48,8 +48,7 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    group: 'Contenus Dynamiques',
-    hideAPIURL: false,
+    group: 'Publications',
     livePreview: {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
@@ -68,6 +67,7 @@ export const Posts: CollectionConfig<'posts'> = {
         req,
       }),
     useAsTitle: 'title',
+    hideAPIURL: false,
   },
   fields: [
     {
@@ -93,7 +93,6 @@ export const Posts: CollectionConfig<'posts'> = {
             },
             {
               name: 'content',
-              label: "Contenu de l'article",
               type: 'richText',
               editor: lexicalEditor({
                 features: ({ defaultFeatures }) => {
@@ -107,11 +106,11 @@ export const Posts: CollectionConfig<'posts'> = {
                   ]
                 },
               }),
-
+              label: false,
               required: true,
             },
           ],
-          label: 'Content',
+          label: 'Contenu',
         },
         {
           fields: [
@@ -171,6 +170,16 @@ export const Posts: CollectionConfig<'posts'> = {
           ],
         },
       ],
+    },
+    {
+      name: 'isFeatured',
+      type: 'checkbox',
+      label: 'Article populaire',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Cocher pour afficher cet article dans la section "Articles populaires"',
+      },
     },
     {
       name: 'publishedAt',

@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    emplois: Emplois;
     media: Media;
     categories: Category;
     users: User;
@@ -85,6 +86,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    emplois: EmploisSelect<false> | EmploisSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -240,6 +242,10 @@ export interface Post {
     image?: (number | null) | Media;
     description?: string | null;
   };
+  /**
+   * Cocher pour afficher cet article dans la section "Articles populaires"
+   */
+  isFeatured?: boolean | null;
   publishedAt?: string | null;
   authors?: (number | User)[] | null;
   populatedAuthors?:
@@ -801,6 +807,117 @@ export interface ContentSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emplois".
+ */
+export interface Emplois {
+  id: number;
+  title: string;
+  subtitle?: string | null;
+  badgeText?: string | null;
+  featuredImage?: (number | null) | Media;
+  categories?: (number | Category)[] | null;
+  workTime?: ('full-time' | 'part-time' | 'flexible') | null;
+  location: string;
+  salary?: string | null;
+  organization?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  requiredSkills?:
+    | {
+        skill: string;
+        level?: ('beginner' | 'intermediate' | 'experienced' | 'expert') | null;
+        id?: string | null;
+      }[]
+    | null;
+  qualifications?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  benefits?:
+    | {
+        benefit: string;
+        id?: string | null;
+      }[]
+    | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  contactEmail?: string | null;
+  contactPhone?: string | null;
+  /**
+   * Décrivez comment postuler (documents requis, étapes, etc.)
+   */
+  applicationProcess?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  featuredJobs?: {
+    heading?: string | null;
+    subheading?: string | null;
+    badgeText?: string | null;
+    /**
+     * Vous pouvez ajouter jusqu'à 6 offres d'emploi en vedette
+     */
+    featuredJobs?:
+      | {
+          title: string;
+          image?: (number | null) | Media;
+          summary?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  status?: ('active' | 'filled' | 'expired') | null;
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -979,6 +1096,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'emplois';
+        value: number | Emplois;
       } | null)
     | ({
         relationTo: 'media';
@@ -1253,6 +1374,7 @@ export interface PostsSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
+  isFeatured?: T;
   publishedAt?: T;
   authors?: T;
   populatedAuthors?:
@@ -1266,6 +1388,69 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emplois_select".
+ */
+export interface EmploisSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  badgeText?: T;
+  featuredImage?: T;
+  categories?: T;
+  workTime?: T;
+  location?: T;
+  salary?: T;
+  organization?: T;
+  description?: T;
+  requiredSkills?:
+    | T
+    | {
+        skill?: T;
+        level?: T;
+        id?: T;
+      };
+  qualifications?: T;
+  benefits?:
+    | T
+    | {
+        benefit?: T;
+        id?: T;
+      };
+  startDate?: T;
+  endDate?: T;
+  contactEmail?: T;
+  contactPhone?: T;
+  applicationProcess?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  featuredJobs?:
+    | T
+    | {
+        heading?: T;
+        subheading?: T;
+        badgeText?: T;
+        featuredJobs?:
+          | T
+          | {
+              title?: T;
+              image?: T;
+              summary?: T;
+              id?: T;
+            };
+      };
+  status?: T;
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

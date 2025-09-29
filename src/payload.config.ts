@@ -14,6 +14,7 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { Categories } from './collections/Categories'
+import Emplois from './collections/Emplois'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
@@ -94,7 +95,7 @@ export default buildConfig({
     },
     push: process.env.NODE_ENV === 'development',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Emplois, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

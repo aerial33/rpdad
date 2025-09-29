@@ -5,35 +5,13 @@ import { cn } from '@/utilities/ui'
 
 export type Props = {
   posts: CardPostData[]
-  relationTo?: 'posts'
+  relationTo?: 'posts' | 'emplois'
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
   const { posts, relationTo = 'posts' } = props
   return (
     <div className={cn('container mt-12 flex flex-col lg:flex-row xl:ps-0')}>
-      {/* <div>
-        <div className="grid grid-cols-4 gap-x-4 gap-y-4 sm:grid-cols-8 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-8 xl:gap-x-8">
-          {posts?.map((result, index) => {
-            if (typeof result === 'object' && result !== null) {
-              return (
-                <div className="col-span-4" key={index}>
-                  <Card
-                    className="h-full"
-                    doc={result}
-                    relationTo="posts"
-                    showCategories
-                    variant="featured"
-                  />
-                </div>
-              )
-            }
-
-            return null
-          })}
-        </div>
-      </div> */}
-
       <div className="w-full lg:w-3/5 xl:w-2/3 xl:pe-20">
         <div className="blog classic-view">
           <article className="post !mb-8 border border-red-500">
