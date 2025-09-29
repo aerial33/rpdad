@@ -153,6 +153,9 @@
   --color-error: var(--error);
   --radius: 0.2rem;
 
+  /* Ombre personnalisée pour les cartes (Tailwind v4 token) */
+  --shadow-card: 0 0 0 0.05rem rgba(8, 60, 130, 0.06), 0 0 1.25rem rgba(30, 34, 40, 0.04);
+
   /* Exposition directe des nouvelles couleurs pour utilisation avancée */
   --color-primary-lightest: var(--color-primary-lightest);
   --color-primary-lighter: var(--color-primary-lighter);
@@ -270,7 +273,27 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+@layer utilities {
+  /* Utilitaires d'effet overlay et hover-scale pour les cartes */
+  .hover-scale {
+    --tw-translate-y: calc(var(--spacing) * 0);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+    overflow: hidden;
+  }
 
+  .overlay {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Animation de scale sur l'image interne lors du survol du parent .group */
+  .group:hover .hover-scale img {
+    scale: 1.02;
+    transition: scale 0.3s ease;
+  }
+}
 @utility container {
   margin-inline: auto;
   padding-inline: 1rem;

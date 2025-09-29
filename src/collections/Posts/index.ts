@@ -48,7 +48,8 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    hideAPIURL: true,
+    group: 'Contenus Dynamiques',
+    hideAPIURL: false,
     livePreview: {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
@@ -95,9 +96,9 @@ export const Posts: CollectionConfig<'posts'> = {
               label: "Contenu de l'article",
               type: 'richText',
               editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
+                features: ({ defaultFeatures }) => {
                   return [
-                    ...rootFeatures,
+                    ...defaultFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
