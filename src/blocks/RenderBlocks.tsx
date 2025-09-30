@@ -8,6 +8,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import type { Page } from '@/payload-types'
 
 import ContentSectionBlock from './contentSection/RenderContentSection'
+import { MapBlock } from './map/map-gironde'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -16,6 +17,7 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   contentSection: ContentSectionBlock,
+  map: MapBlock,
 }
 
 export const RenderBlocks: React.FC<{

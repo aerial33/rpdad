@@ -208,7 +208,7 @@ export interface Page {
         }[]
       | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | ContentSectionBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | ContentSectionBlock | MapBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -822,6 +822,17 @@ export interface ContentSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapBlock".
+ */
+export interface MapBlock {
+  title?: string | null;
+  description?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'map';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emplois".
  */
 export interface Emplois {
@@ -1236,6 +1247,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         contentSection?: T | ContentSectionBlockSelect<T>;
+        map?: T | MapBlockSelect<T>;
       };
   meta?:
     | T
@@ -1378,6 +1390,16 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
         icon?: T;
       };
   imagePosition?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapBlock_select".
+ */
+export interface MapBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   id?: T;
   blockName?: T;
 }
