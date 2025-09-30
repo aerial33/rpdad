@@ -1,5 +1,3 @@
-import type { Field } from 'payload'
-
 import {
   FixedToolbarFeature,
   HeadingFeature,
@@ -7,6 +5,7 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import type { Field } from 'payload'
 
 import { linkGroup } from '@/fields/linkGroup'
 
@@ -25,11 +24,11 @@ export const hero: Field = {
           value: 'none',
         },
         {
-          label: 'High Impact',
+          label: 'Image de fond',
           value: 'highImpact',
         },
         {
-          label: 'Medium Impact',
+          label: 'Impact Moyen',
           value: 'mediumImpact',
         },
         {
@@ -63,6 +62,14 @@ export const hero: Field = {
       }),
       label: false,
     },
+    {
+      name: 'badge',
+      type: 'text',
+      label: 'Badge',
+      admin: {
+        description: 'Texte du badge (optionnel)',
+      },
+    },
     linkGroup({
       overrides: {
         maxRows: 2,
@@ -76,6 +83,36 @@ export const hero: Field = {
       },
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'images',
+      type: 'array',
+      label: 'Images',
+      minRows: 3,
+      maxRows: 4,
+      admin: {
+        condition: (_, { type } = {}) => type === 'heroPrimary',
+        description: 'Sélectionner au moins 4 images',
+      },
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+          label: 'Image',
+        },
+        {
+          name: 'alt',
+          type: 'text',
+          label: 'Texte alternatif',
+        },
+        {
+          name: 'caption',
+          type: 'text',
+          label: 'Légende',
+        },
+      ],
     },
   ],
   label: false,

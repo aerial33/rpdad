@@ -213,32 +213,27 @@
 }
 
 .prose h1 {
-  font-weight: normal;
-  margin-bottom: 0.25em;
-  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  font-size: 2.25rem;
+  line-height: 1.2;
 }
 
 .prose h2 {
-  font-size: 1.25rem;
+  font-size: 1.875rem;
   font-weight: 600;
-}
-
-.prose-base h1 {
-  font-size: 2.5rem;
-}
-
-.prose-base h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
 }
 
 @media (min-width: 768px) {
-  .prose-md h1 {
-    font-size: 3.5rem;
+  .prose h1 {
+    font-size: 3rem;
   }
 
-  .prose-md h2 {
-    font-size: 1.5rem;
+  .prose h2 {
+    font-size: 2.25rem;
   }
 }
 
@@ -344,7 +339,7 @@ html[data-theme='light'] {
 }
 @layer components {
   .feature-paragraph {
-    @apply mb-3 text-xl leading-7 font-light text-gray-500 md:text-2xl md:leading-8;
+    @apply mb-3 text-xl leading-7 font-light text-gray-500 md:text-2xl md:leading-8 dark:text-white;
   }
   .text-stroke-2 {
     -webkit-text-stroke: 1px var(--color-primary);
@@ -368,7 +363,7 @@ html[data-theme='light'] {
   }
 
   .richtext-content {
-    @apply leading-relaxed text-gray-600;
+    @apply leading-relaxed text-gray-700 dark:text-white;
 
     /* Classes highlight personnalisées */
     .highlight-underline {
@@ -410,13 +405,13 @@ html[data-theme='light'] {
 
     /* Styles pour les titres h3 */
     h3 {
-      @apply mb-4 text-2xl leading-7 font-light text-gray-600 md:text-3xl md:leading-8;
+      @apply mb-4 text-2xl leading-7 font-light text-gray-600 md:text-3xl md:leading-8 dark:text-white;
       font-family: var(--font-nunito);
     }
 
     /* Styles pour les paragraphes */
     p {
-      @apply mb-4 text-base leading-7 text-gray-600;
+      @apply mb-4 text-base leading-7;
       font-family: var(--font-lexend-deca);
 
       &:last-child {

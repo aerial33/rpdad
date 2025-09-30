@@ -167,6 +167,10 @@ export interface Page {
       };
       [k: string]: unknown;
     } | null;
+    /**
+     * Texte du badge (optionnel)
+     */
+    badge?: string | null;
     links?:
       | {
           link: {
@@ -192,6 +196,17 @@ export interface Page {
         }[]
       | null;
     media?: (number | null) | Media;
+    /**
+     * Sélectionner au moins 4 images
+     */
+    images?:
+      | {
+          image: number | Media;
+          alt?: string | null;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | ContentSectionBlock)[];
   meta?: {
@@ -1186,6 +1201,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         type?: T;
         richText?: T;
+        badge?: T;
         links?:
           | T
           | {
@@ -1202,6 +1218,14 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        images?:
+          | T
+          | {
+              image?: T;
+              alt?: T;
+              caption?: T;
+              id?: T;
+            };
       };
   layout?:
     | T
