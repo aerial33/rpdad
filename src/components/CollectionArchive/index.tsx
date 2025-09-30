@@ -9,13 +9,14 @@ export type Props = {
   posts: CardPostData[]
   relationTo?: 'posts' | 'emplois'
   sidebarProps?: SidebarWidgetsProps
+  className?: string
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
-  const { posts, relationTo = 'posts', sidebarProps } = props
+  const { posts, relationTo = 'posts', sidebarProps, className } = props
 
   return (
-    <div className={cn('container mx-auto mt-12 px-4 sm:px-6 lg:px-8 xl:ps-0')}>
+    <div className={cn('container mx-auto px-4 sm:px-6 lg:px-8 xl:ps-0', className)}>
       <div className="mx-[-15px] flex flex-wrap lg:mx-[-20px] xl:mx-[-35px]">
         <div className="w-full max-w-full flex-[0_0_auto] !px-[15px] md:!px-[20px] lg:w-8/12 lg:!px-[20px] xl:w-8/12 xl:!px-[35px]">
           <div className="blog classic-view">

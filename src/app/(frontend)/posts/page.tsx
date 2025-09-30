@@ -6,7 +6,7 @@ import { Metadata } from 'next'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
-import { FadeLeft } from '@/components/motion/animations'
+import { FadeRight } from '@/components/motion/animations'
 import { Badge } from '@/components/ui/badge'
 import { getCachedSidebarProps } from '@/utilities/getSidebar'
 
@@ -39,28 +39,33 @@ export default async function Page() {
   return (
     <div className="mt-4 pb-24 md:mt-0">
       <PageClient />
-      <header className="from-flamingo-lighter to-flamingo-lightest relative z-10 bg-gradient-to-tr pt-16 shadow-xs md:py-20">
-        <div className="relative z-10 container mx-auto">
-          <div className="max-w-screen-md text-left">
-            <FadeLeft delay={0.1} duration={0.3}>
-              <div className="mb-8 flex flex-wrap items-center gap-3">
-                <Badge>
-                  {' '}
-                  <PageRange
-                    collection="posts"
-                    currentPage={posts.page}
-                    limit={12}
-                    totalDocs={posts.totalDocs}
-                  />
-                </Badge>
-              </div>
-              <h1 className="mb-10 text-3xl leading-tight font-bold text-balance md:text-4xl">
-                {"L'Actualité du réseau en gironde"}
-              </h1>
-            </FadeLeft>
+
+      <section className="from-flamingo-lighter to-flamingo-lightest relative bg-gradient-to-br pb-20">
+        <FadeRight className="mx-auto flex max-w-7xl justify-center gap-6 py-16 md:py-24">
+          <div className="flex flex-col px-4 py-6 sm:py-8 lg:items-center lg:px-0">
+            <Badge
+              variant="outline"
+              className="text-muted-foreground mb-4 border-gray-400 uppercase"
+            >
+              <PageRange
+                collection="posts"
+                currentPage={posts.page}
+                limit={12}
+                totalDocs={posts.totalDocs}
+              />
+            </Badge>
+            <h1 className="mb-10 text-3xl leading-tight font-bold text-balance text-gray-700 md:text-4xl">
+              {"L'Actualité du réseau en gironde"}
+            </h1>
+            <p className="text-muted-foreground text-[1.05rem] leading-[1.6] font-medium text-balance">
+              {"Le Réseau Public Départemental d'Aide à Domicile de la Gironde"}
+            </p>
           </div>
-        </div>
-      </header>
+          <div className="hidden grid-cols-2 grid-rows-2 gap-4 px-4 md:grid"></div>
+        </FadeRight>
+        {/* Diagonale en bas de section */}
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-white [clip-path:polygon(0_5rem,100%_0,100%_100%,0_100%)]"></div>
+      </section>
 
       {/* <div className="container mb-8">
         <PageRange
@@ -71,7 +76,11 @@ export default async function Page() {
         />
       </div> */}
 
-      <CollectionArchive posts={posts.docs} sidebarProps={sidebarProps} />
+      <CollectionArchive
+        posts={posts.docs}
+        sidebarProps={sidebarProps}
+        className="relative z-10 -mt-20"
+      />
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (
