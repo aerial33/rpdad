@@ -8,7 +8,7 @@ export const Categories: CollectionConfig = {
   access: {
     create: editor,
     delete: editor,
-    read: editor,
+    read: () => true, // Public read access
     update: editor,
   },
   admin: {

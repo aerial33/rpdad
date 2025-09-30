@@ -8,6 +8,7 @@ import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import { FadeLeft } from '@/components/motion/animations'
 import { Badge } from '@/components/ui/badge'
+import { getCachedSidebarProps } from '@/utilities/getSidebar'
 
 import PageClient from './page.client'
 
@@ -22,17 +23,9 @@ export default async function Page() {
     depth: 1,
     limit: 12,
     overrideAccess: false,
-    select: {
-      title: true,
-      slug: true,
-      categories: true,
-      meta: true,
-      publishedAt: true,
-      populatedAuthors: true,
-      authors: true,
-    },
   })
-
+  // Fetch sidebar data (featured posts + categories with count)
+  const sidebarProps = await getCachedSidebarProps('posts')()
   return (
     <div className="mt-4 pb-24 md:mt-0">
       <PageClient />
@@ -68,7 +61,7 @@ export default async function Page() {
         />
       </div> */}
 
-      <CollectionArchive posts={posts.docs} />
+      <CollectionArchive posts={posts.docs} sidebarProps={sidebarProps} />
 
       <div className="container">
         {posts.totalPages > 1 && posts.page && (

@@ -96,7 +96,7 @@ export const Card: React.FC<{
             <div
               className={`flex items-center justify-center bg-gray-200 ${variant === 'featured' ? 'h-64' : 'h-48'}`}
             >
-              No image 📷
+              {" Pas d'image 📷"}
             </div>
           )}
           {metaImage && typeof metaImage !== 'string' && (
