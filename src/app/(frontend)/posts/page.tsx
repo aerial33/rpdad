@@ -23,6 +23,16 @@ export default async function Page() {
     depth: 1,
     limit: 12,
     overrideAccess: false,
+    select: {
+      title: true,
+      slug: true,
+      categories: true,
+      meta: true,
+      publishedAt: true,
+      populatedAuthors: true,
+      authors: true,
+      heroImage: true,
+    },
   })
   // Fetch sidebar data (featured posts + categories with count)
   const sidebarProps = await getCachedSidebarProps('posts')()
