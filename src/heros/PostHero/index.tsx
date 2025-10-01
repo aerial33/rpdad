@@ -1,9 +1,10 @@
-import React from 'react'
 import { formatDateTime } from 'src/utilities/formatDateTime'
 
-import type { Post } from '@/payload-types'
+import React from 'react'
 
+import { Badge } from '@/components/ui/badge'
 import { Media } from '@/components/Media'
+import type { Post } from '@/payload-types'
 import { formatAuthors } from '@/utilities/formatAuthors'
 
 export const PostHero: React.FC<{
@@ -14,61 +15,51 @@ export const PostHero: React.FC<{
   const hasAuthors =
     populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
 
+  // Construire le texte des catégories
+  const categoriesText = categories
+    ?.map((category) => {
+      if (typeof category === 'object' && category !== null) {
+        return category.title || 'Untitled category'
+      }
+      return null
+    })
+    .filter(Boolean)
+    .join(', ')
+
   return (
-    <div className="relative -mt-[30.4rem] flex items-end">
-      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-white pb-8">
-        <div className="col-start-1 col-span-1 md:col-start-2 md:col-span-2">
-          <div className="uppercase text-sm mb-6">
-            {categories?.map((category, index) => {
-              if (typeof category === 'object' && category !== null) {
-                const { title: categoryTitle } = category
-
-                const titleToUse = categoryTitle || 'Untitled category'
-
-                const isLast = index === categories.length - 1
-
-                return (
-                  <React.Fragment key={index}>
-                    {titleToUse}
-                    {!isLast && <React.Fragment>, &nbsp;</React.Fragment>}
-                  </React.Fragment>
-                )
-              }
-              return null
-            })}
-          </div>
-
-          <div className="">
-            <h1 className="mb-6 text-balance text-3xl md:text-5xl lg:text-6xl text-left">
-              {title}
-            </h1>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-4 md:gap-16">
-            {hasAuthors && (
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1">
-                  <p className="text-sm">Author</p>
-
-                  <p>{formatAuthors(populatedAuthors)}</p>
-                </div>
-              </div>
-            )}
-            {publishedAt && (
-              <div className="flex flex-col gap-1">
-                <p className="text-sm">Date Published</p>
-
-                <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="min-h-[80vh] select-none">
-        {heroImage && typeof heroImage !== 'string' && (
-          <Media fill priority imgClassName="-z-10 object-cover object-top" resource={heroImage} />
+    <div className="w-full h-120 px-2 xl:max-w-screen-2xl mx-auto pt-12">
+      <div className="relative h-full aspect-w-16 aspect-h-13 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-5 rounded-3xl md:rounded-[40px] overflow-hidden z-0">
+        {/* Image avec Media component ou dégradé par défaut */}
+        {heroImage && typeof heroImage === 'object' ? (
+          <Media
+            resource={heroImage}
+            fill
+            imgClassName="h-full w-full rounded-3xl object-cover brightness-70 md:rounded-[40px]"
+            priority
+          />
+        ) : (
+          <div className="from-primary/80 to-primary absolute inset-0 rounded-3xl bg-gradient-to-br md:rounded-[40px]" />
         )}
-        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-linear-to-t from-black to-transparent" />
+        <div className="absolute inset-0 text-white bg-opacity-30 flex flex-col items-center justify-center">
+          {categoriesText && (
+            <Badge className="mb-4 text-white" variant="outline">
+              {categoriesText}
+            </Badge>
+          )}
+          <h1 className="inline-block align-middle text-5xl font-semibold md:text-7xl">
+            {title}
+          </h1>
+          {hasAuthors && (
+            <p className="mt-4 text-neutral-50 font-semibold text-xl">
+              {formatAuthors(populatedAuthors)}
+            </p>
+          )}
+          {publishedAt && (
+            <span className="block mt-4 text-neutral-50 max-w-lg text-center">
+              <time dateTime={publishedAt}>{formatDateTime(publishedAt)}</time>
+            </span>
+          )}
+        </div>
       </div>
     </div>
   )

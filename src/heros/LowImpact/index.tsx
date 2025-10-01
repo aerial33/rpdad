@@ -1,83 +1,44 @@
 import React from 'react'
 
-import type { Page } from '@/payload-types'
-
-import { DotPattern } from '@/components/DotPattern'
+import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
+import type { Page } from '@/payload-types'
 
-type LowImpactHeroType =
-  | {
-      children?: React.ReactNode
-      richText?: never
-    }
-  | (Omit<Page['hero'], 'richText'> & {
-      children?: never
-      richText?: Page['hero']['richText']
-    })
-
-export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children, richText }) => {
+export const LowImpactHero: React.FC<Page['hero']> = ({ badge, media, richText }) => {
   return (
-    <section className="from-flamingo-lighter to-flamingo-lightest relative rounded-b-4xl bg-gradient-to-t py-8 shadow md:py-16">
-      <div className="mx-auto flex max-w-7xl items-center justify-center">
-        <div className="hidden grid-cols-2 grid-rows-2 gap-4 px-4 lg:grid">
-          <DotPattern
-            className="col-span-1 row-start-1"
-            dotColor="bg-primary"
-            dotSize="md"
-            gap="sm"
-            rows={8}
-            cols={8}
-          />
-          <DotPattern
-            className="col-span-1 col-start-2 row-start-2"
-            dotColor="bg-flamingo"
-            dotSize="lg"
-            gap="sm"
-            rows={4}
-            cols={8}
-          />
-        </div>
-        <div className="mx-auto flex max-w-4xl  flex-col items-start px-4 py-6 sm:py-8 lg:items-center lg:px-0">
-          <Badge variant="outline" className="border-flamingo mb-4 uppercase">
-            <span className="font-bold">Le RPDAD</span>
-          </Badge>
-          {children ||
-            (richText && <RichText data={richText} className="max-w-xl" enableGutter={false} />)}
-          {/* <h1 className="text-foreground mb-4 max-w-4xl text-4xl font-bold text-balance lg:text-center lg:text-5xl lg:leading-tight">
-          {dynamicTitle}
-        </h1>
-        <p className="feature-paragraph text-balance lg:text-center">
-          {description}
-        </p> */}
-          {/* <div className="!mt-8 flex items-center gap-2">
-        <Button>Contactez-nous</Button>
-      </div> */}
-        </div>
-        <div className="hidden grid-cols-2 grid-rows-2 gap-4 px-4 md:grid">
-          <DotPattern
-            className="col-span-1 col-start-1 row-start-2"
-            dotColor="bg-flamingo"
-            gap="sm"
-            dotSize="lg"
-            rows={4}
-            cols={8}
-          />
-          <DotPattern
-            className="col-span-1 col-start-2 row-start-1"
-            dotColor="bg-primary"
-            gap="sm"
-            dotSize="md"
-            rows={8}
-            cols={8}
-          />
+    <section className="">
+      <div className="mx-auto w-full px-2 pt-12 xl:max-w-screen-2xl">
+        <div className="relative h-120 w-full overflow-hidden rounded-3xl md:rounded-[40px]">
+          {/* Image avec Media component ou dégradé par défaut */}
+          {media && typeof media === 'object' ? (
+            <Media
+              resource={media}
+              fill
+              imgClassName="h-full w-full rounded-3xl object-cover brightness-70 md:rounded-[40px]"
+              priority
+            />
+          ) : (
+            <div className="from-primary/80 to-primary absolute inset-0 rounded-3xl bg-gradient-to-br md:rounded-[40px]" />
+          )}
+
+          {/* Overlay avec contenu */}
+          <div className="richtext-content absolute inset-0 flex flex-col items-center justify-center text-center">
+            {badge && (
+              <Badge className="mb-4 border-white text-white" variant="outline">
+                {badge}
+              </Badge>
+            )}
+            {richText && (
+              <RichText
+                data={richText}
+                className="max-w-xl [&_h1]:align-middle [&_h1]:text-5xl [&_h1]:text-white [&_h1]:md:text-7xl [&_h2]:text-white [&_p]:text-white"
+                enableGutter={false}
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>
-    // <div className="container mt-16">
-    //   <div className="max-w-[48rem]">
-    //     {children || (richText && <RichText data={richText} enableGutter={false} />)}
-    //   </div>
-    // </div>
   )
 }

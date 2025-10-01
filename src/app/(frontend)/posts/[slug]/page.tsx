@@ -54,7 +54,7 @@ export default async function Post({ params: paramsPromise }: Args) {
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
-      //to do add component PostHero for this page
+
       <SingleContent post={post} />
       {post.relatedPosts && post.relatedPosts.length > 0 && (
         <div className="container border">
