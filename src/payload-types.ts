@@ -171,6 +171,10 @@ export interface Page {
      * Texte du badge (optionnel)
      */
     badge?: string | null;
+    /**
+     * Afficher une barre de recherche dans le hero
+     */
+    showSearch?: boolean | null;
     links?:
       | {
           link: {
@@ -197,7 +201,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
     /**
-     * Sélectionner au moins 4 images
+     * Sélectionner au moins 3 images
      */
     images?:
       | {
@@ -1213,6 +1217,7 @@ export interface PagesSelect<T extends boolean = true> {
         type?: T;
         richText?: T;
         badge?: T;
+        showSearch?: T;
         links?:
           | T
           | {

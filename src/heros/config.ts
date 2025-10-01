@@ -70,6 +70,16 @@ export const hero: Field = {
         description: 'Texte du badge (optionnel)',
       },
     },
+    {
+      name: 'showSearch',
+      type: 'checkbox',
+      label: 'Afficher la barre de recherche',
+      defaultValue: false,
+      admin: {
+        condition: (_, { type } = {}) => type === 'heroPrimary',
+        description: 'Afficher une barre de recherche dans le hero',
+      },
+    },
     linkGroup({
       overrides: {
         maxRows: 2,
@@ -92,7 +102,7 @@ export const hero: Field = {
       maxRows: 4,
       admin: {
         condition: (_, { type } = {}) => type === 'heroPrimary',
-        description: 'Sélectionner au moins 4 images',
+        description: 'Sélectionner au moins 3 images',
       },
       fields: [
         {

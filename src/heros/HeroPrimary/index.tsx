@@ -1,46 +1,41 @@
-import { ArrowRight } from 'lucide-react'
-
-import Image from 'next/image'
-
-import { DotPattern } from '@/components/DotPattern'
-import { CMSLink } from '@/components/Link'
+import { HeroSearch } from '@/components/HeroSearch'
 import { LogoTicker } from '@/components/LogoTicker'
-import { FadeLeft, FadeUp } from '@/components/motion/animations'
+import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
+import { FadeLeft, FadeUp } from '@/components/motion/animations'
 import { Badge } from '@/components/ui/badge'
 import { Page } from '@/payload-types'
-import Link from 'next/link'
+import { cn } from '@/utilities/ui'
 
-type HeroPrimaryType =
-  | {
-      children?: React.ReactNode
-      richText?: never
-      links?: never
-    }
-  | (Omit<Page['hero'], 'richText'> & {
-      children?: never
-      richText?: Page['hero']['richText']
-    })
-
-export const HeroPrimary: React.FC<HeroPrimaryType> = ({ children, richText, links }) => {
+export const HeroPrimary: React.FC<Page['hero']> = ({
+  richText,
+  links,
+  badge,
+  images,
+  showSearch,
+}) => {
   return (
-    <section className="-z-10  text-white lg:text-slate-800">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2">
-          <FadeLeft delay={0.3}>
+    <section className="-z-10 mt-4">
+      <div className="container mx-auto px-4 lg:px-0">
+        <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-8">
+          <FadeLeft delay={0.3} className="mt-8">
             <div className="flex flex-col gap-6">
-              <Badge variant="outline" className="text-flamingo w-fit">
-                <span className="text-muted-foreground">{'À propos de nous'}</span>
-                <Link href="/le-rpdad" className="ml-2 flex items-center gap-1">
-                  En savoir plus
-                  <ArrowRight className="h-3 w-3" />
-                </Link>
-              </Badge>
-              <div className="prose prose-lg">
-                {children || (richText && <RichText data={richText} enableGutter={false} />)}
+              {badge && (
+                <Badge variant="outline" className="text-muted-foreground border-muted-foreground">
+                  {badge}
+                </Badge>
+              )}
+              <div className="prose prose-xl richtext-content">
+                {richText && (
+                  <RichText
+                    data={richText}
+                    enableGutter={false}
+                    className="[&_h1]:text-gray-700 [&_p]:text-xl [&_p]:text-gray-500"
+                  />
+                )}
               </div>
 
-              <div className="mt-2 flex flex-wrap gap-4">
+              {/* <div className="mt-2 flex flex-wrap gap-4">
                 {Array.isArray(links) && links.length > 0 && (
                   <ul className="flex gap-4">
                     {links.map(({ link }, i) => {
@@ -52,68 +47,54 @@ export const HeroPrimary: React.FC<HeroPrimaryType> = ({ children, richText, lin
                     })}
                   </ul>
                 )}
-                {/* <Link href="/actualites">
-                <Button size="lg" className="cursor-pointer gap-2 text-white" variant="secondary">
-                  Notre réseau
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/offres-emploi">
-                <Button size="lg" variant="outline" className="gap-2">
-                  Les Offres de notre Réseau
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link> */}
-              </div>
+              </div> */}
+              {showSearch && <HeroSearch />}
               <LogoTicker />
             </div>
           </FadeLeft>
           <FadeUp delay={0.5}>
             <div className="relative grid grid-cols-2 gap-6">
-              <div className="bg-muted flex aspect-square items-center justify-center overflow-hidden rounded-full">
-                <Image
-                  src={'https://sandbox-tailwind-template.netlify.app/assets/img/photos/g5@2x.jpg'}
-                  alt="Hero Split 1"
-                  width={100}
-                  height={100}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="bg-muted row-span-2 flex aspect-[3/4] items-center justify-center overflow-hidden rounded-xl">
-                <Image
-                  src={
-                    'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                  }
-                  alt="Hero img2"
-                  width={100}
-                  height={100}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <DotPattern
-                variant="sparse"
-                dotColor="bg-picton-blue-light"
-                className="absolute right-0 bottom-0 z-10 overflow-hidden lg:-right-10 lg:bottom-30"
-              />
-              <div className="bg-muted flex aspect-square items-center justify-center overflow-hidden rounded-lg">
-                <Image
-                  src={'https://sandbox-tailwind-template.netlify.app/assets/img/photos/g6@2x.jpg'}
-                  alt="Hero Split 3"
-                  width={100}
-                  height={100}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <DotPattern
-                variant="sparse"
-                dotColor="bg-flamingo"
-                className="absolute -top-10 -left-5 -z-10 "
-              />
+              {images && images.length > 0 ? (
+                images.map((item, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'flex aspect-square items-center justify-center overflow-hidden rounded-full transition-transform',
+                      (index === 0 || index === images.length - 1) && 'scale-75',
+                    )}
+                  >
+                    {item.image ? (
+                      <Media
+                        resource={item.image}
+                        className="h-full w-full object-cover"
+                        imgClassName="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-gray-200" />
+                    )}
+                  </div>
+                ))
+              ) : (
+                // Template par défaut avec 4 placeholders gris
+                <>
+                  {[1, 2, 3, 4].map((i) => (
+                    <div
+                      key={i}
+                      className={cn(
+                        'flex aspect-square items-center justify-center overflow-hidden rounded-full transition-transform',
+                        (i === 1 || i === 4) && 'scale-75',
+                      )}
+                    >
+                      <div className="h-full w-full bg-gray-200" />
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </FadeUp>
         </div>
       </div>
-      <div className="bg-flamingo-lighter lg:from-primary lg:to-primary-dark absolute inset-0 top-[-188px] -bottom-4 -z-1 rounded-bl-[300px] lg:bg-gradient-to-tr shadow-2xl lg:left-[60%]"></div>
+      <div className="bg-flamingo-lighter lg:from-primary lg:to-primary-dark absolute inset-0 top-[-188px] -bottom-4 -z-1 rounded-bl-[300px] shadow-2xl lg:left-[60%] lg:bg-gradient-to-br"></div>
     </section>
   )
 }

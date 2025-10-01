@@ -11,15 +11,16 @@ export const LogoTicker = () => {
   return (
     <>
       <div className="mt-12">
-        <Badge variant="outline" className="text-md">
+        <Badge variant="outline" className="text-muted-foreground border-none text-lg">
           Nos Partenaires
         </Badge>
-      </div>
-      <div className="relative overflow-x-hidden p-4">
-        <div className="mb-4 flex items-center">
-          <LogoList list={logos} duration={70} />
-          <LogoList list={logos} duration={70} />
-          <LogoList list={logos} duration={70} />
+
+        <div className="relative overflow-x-hidden p-4">
+          <div className="mb-4 flex items-center">
+            <LogoList list={logos} duration={70} />
+            <LogoList list={logos} duration={70} />
+            <LogoList list={logos} duration={70} />
+          </div>
         </div>
       </div>
     </>
