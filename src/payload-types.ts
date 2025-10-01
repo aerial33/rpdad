@@ -172,9 +172,9 @@ export interface Page {
      */
     badge?: string | null;
     /**
-     * Afficher une barre de recherche dans le hero
+     * Choisir entre afficher des liens de navigation ou une barre de recherche
      */
-    showSearch?: boolean | null;
+    actionType?: ('links' | 'search' | 'none') | null;
     links?:
       | {
           link: {
@@ -1217,7 +1217,7 @@ export interface PagesSelect<T extends boolean = true> {
         type?: T;
         richText?: T;
         badge?: T;
-        showSearch?: T;
+        actionType?: T;
         links?:
           | T
           | {

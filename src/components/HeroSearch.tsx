@@ -25,10 +25,10 @@ export const HeroSearch: React.FC = () => {
         <SearchIcon className="text-muted-foreground absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
         <Input
           type="search"
-          placeholder="Rechercher service proche de chez vous"
+          placeholder="Rechercher un service proche de chez vous"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="border-flamingo-light focus-visible:ring-flamingo h-16 rounded-2xl pr-4 pl-12 text-base shadow-lg focus-visible:ring-2"
+          className="border-flamingo-light focus-visible:ring-flamingo h-16 rounded-2xl pr-4 pl-12 text-xs shadow-lg focus-visible:ring-2 md:text-base"
         />
         <button
           type="submit"

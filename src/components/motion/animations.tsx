@@ -4,9 +4,8 @@ import { motion } from 'framer-motion'
 
 import { ReactNode, useState } from 'react'
 
-import { cn } from '@/utilities/ui'
-
 import { Button } from '@/components/ui/button'
+import { cn } from '@/utilities/ui'
 
 export const Collapse = ({ title, children }: { title: string; children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -112,6 +111,102 @@ export const FadeLeft = ({
       initial="hidden"
       whileInView="visible"
       transition={{ duration, ease: 'easeIn', delay: delay }}
+      className={cn(className)}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export const ScaleFromCenter = ({
+  children,
+  delay = 0,
+  duration = 0.5,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+  duration?: number
+}) => {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, scale: 0 },
+        visible: { opacity: 1, scale: 1 },
+      }}
+      viewport={{ once: true }}
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration, ease: 'easeOut', delay }}
+      className={cn(className)}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export const ExpandFromCenter = ({
+  children,
+  delay = 0,
+  duration = 0.6,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+  duration?: number
+}) => {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, scale: 0, rotate: -10 },
+        visible: { opacity: 1, scale: 1, rotate: 0 },
+      }}
+      viewport={{ once: true }}
+      initial="hidden"
+      whileInView="visible"
+      transition={{
+        duration,
+        ease: [0.34, 1.56, 0.64, 1],
+        delay,
+      }}
+      className={cn(className)}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export const RevealFromCenter = ({
+  children,
+  delay = 0,
+  duration = 0.7,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+  duration?: number
+}) => {
+  return (
+    <motion.div
+      variants={{
+        hidden: {
+          opacity: 0,
+          scale: 0,
+          clipPath: 'circle(0% at 50% 50%)',
+        },
+        visible: {
+          opacity: 1,
+          scale: 1,
+          clipPath: 'circle(100% at 50% 50%)',
+        },
+      }}
+      viewport={{ once: true }}
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration, ease: 'easeIn', delay }}
       className={cn(className)}
     >
       {children}

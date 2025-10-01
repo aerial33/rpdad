@@ -5,15 +5,13 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Badge } from '@/components/ui/badge'
+import { cn } from '@/utilities/ui'
 
-export const LogoTicker = () => {
+export const LogoTicker = ({ className }: { className?: string }) => {
   return (
     <>
-      <div className="mt-12">
-        <Badge variant="outline" className="text-muted-foreground border-none text-lg">
-          Nos Partenaires
-        </Badge>
+      <div className={cn('mt-12', className)}>
+        <p className="lg:text-lg">Nos Partenaires</p>
 
         <div className="relative overflow-x-hidden p-4">
           <div className="mb-4 flex items-center">

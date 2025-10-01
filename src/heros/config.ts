@@ -17,7 +17,7 @@ export const hero: Field = {
       name: 'type',
       type: 'select',
       defaultValue: 'lowImpact',
-      label: 'Type',
+      label: '🧑🏻‍🎨 Type de Haut de Page',
       options: [
         {
           label: 'None',
@@ -71,18 +71,37 @@ export const hero: Field = {
       },
     },
     {
-      name: 'showSearch',
-      type: 'checkbox',
-      label: 'Afficher la barre de recherche',
-      defaultValue: false,
+      name: 'actionType',
+      type: 'radio',
+      label: "📍 Type d'action à afficher",
+      defaultValue: 'links',
       admin: {
         condition: (_, { type } = {}) => type === 'heroPrimary',
-        description: 'Afficher une barre de recherche dans le hero',
+        layout: 'horizontal',
+        description: 'Choisir entre afficher des liens de navigation ou une barre de recherche',
       },
+      options: [
+        {
+          label: 'Liens de navigation',
+          value: 'links',
+        },
+        {
+          label: 'Barre de recherche',
+          value: 'search',
+        },
+        {
+          label: 'Aucun',
+          value: 'none',
+        },
+      ],
     },
     linkGroup({
       overrides: {
         maxRows: 2,
+        admin: {
+          condition: (_, { type, actionType } = {}) =>
+            type === 'heroPrimary' && actionType === 'links',
+        },
       },
     }),
     {
@@ -97,7 +116,7 @@ export const hero: Field = {
     {
       name: 'images',
       type: 'array',
-      label: 'Images',
+      label: '📷 Images',
       minRows: 3,
       maxRows: 4,
       admin: {
