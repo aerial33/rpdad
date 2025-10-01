@@ -33,7 +33,7 @@ export const Collapse = ({ title, children }: { title: string; children: React.R
 export const FadeUp = ({
   children,
   delay = 0,
-  duration = 0.6,
+  duration = 0.45,
   className,
 }: {
   children: ReactNode
@@ -47,14 +47,21 @@ export const FadeUp = ({
     <motion.div
       // ref={ref}
       variants={{
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: 48 },
         visible: { opacity: 1, y: 0 },
       }}
       viewport={{ once: true }}
       initial="hidden"
       whileInView="visible"
       // animate={isInView ? "visible" : "hidden"}
-      transition={{ duration, ease: 'easeIn', delay: delay }}
+      transition={{
+        type: 'spring',
+        stiffness: 80, // Anime: 80
+        damping: 10, // Anime: 10
+        mass: 1, // Anime: 1
+        duration: duration, // 450ms → 0.45s
+        delay: delay,
+      }}
       className={cn(className)}
     >
       {children}
@@ -82,7 +89,14 @@ export const FadeRight = ({
       viewport={{ once: true }}
       initial="hidden"
       whileInView="visible"
-      transition={{ duration, ease: 'easeIn', delay: delay }}
+      transition={{
+        type: 'spring',
+        stiffness: 80, // Anime: 80
+        damping: 10, // Anime: 10
+        mass: 1, // Anime: 1
+        duration: duration, // 450ms → 0.45s
+        delay: delay,
+      }}
       className={cn(className)}
     >
       {children}
@@ -110,7 +124,14 @@ export const FadeLeft = ({
       viewport={{ once: true }}
       initial="hidden"
       whileInView="visible"
-      transition={{ duration, ease: 'easeIn', delay: delay }}
+      transition={{
+        type: 'spring',
+        stiffness: 80, // Anime: 80
+        damping: 10, // Anime: 10
+        mass: 1, // Anime: 1
+        duration: duration, // 450ms → 0.45s
+        delay: delay,
+      }}
       className={cn(className)}
     >
       {children}
@@ -166,11 +187,7 @@ export const ExpandFromCenter = ({
       viewport={{ once: true }}
       initial="hidden"
       whileInView="visible"
-      transition={{
-        duration,
-        ease: [0.34, 1.56, 0.64, 1],
-        delay,
-      }}
+      transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1], delay }}
       className={cn(className)}
     >
       {children}
@@ -181,7 +198,7 @@ export const ExpandFromCenter = ({
 export const RevealFromCenter = ({
   children,
   delay = 0,
-  duration = 0.7,
+  duration = 0.5,
   className,
 }: {
   children: ReactNode
@@ -206,7 +223,7 @@ export const RevealFromCenter = ({
       viewport={{ once: true }}
       initial="hidden"
       whileInView="visible"
-      transition={{ duration, ease: 'easeIn', delay }}
+      transition={{ duration: duration, ease: [0.22, 1, 0.36, 1], delay }}
       className={cn(className)}
     >
       {children}

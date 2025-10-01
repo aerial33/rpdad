@@ -3,7 +3,7 @@ import { CMSLink } from '@/components/Link'
 import { LogoTicker } from '@/components/LogoTicker'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
-import { ExpandFromCenter, FadeLeft } from '@/components/motion/animations'
+import { ExpandFromCenter, FadeUp } from '@/components/motion/animations'
 import { Badge } from '@/components/ui/badge'
 import { Page } from '@/payload-types'
 import { cn } from '@/utilities/ui'
@@ -16,10 +16,10 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
   actionType,
 }) => {
   return (
-    <section className="-z-10 mt-4">
+    <section className="-z-10 mt-4 min-h-screen lg:min-h-0">
       <div className="container mx-auto px-4 xl:px-0">
         <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-8">
-          <FadeLeft delay={0.3} className="mt-8">
+          <FadeUp delay={0.3} className="mt-8">
             <div className="flex flex-col gap-6">
               {badge && (
                 <Badge variant="outline" className="text-muted-foreground border-muted-foreground">
@@ -54,10 +54,10 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
               {actionType === 'search' && <HeroSearch />}
               <LogoTicker className="lg:text-muted-foreground rounded-xl bg-white/20 p-3 text-white backdrop-blur-sm" />
             </div>
-          </FadeLeft>
+          </FadeUp>
 
           {/* Mobile: afficher seulement la première image avec forme arrondie */}
-          <div className="absolute inset-0 top-[-188px] -bottom-4 -z-1 overflow-hidden shadow-2xl sm:rounded-bl-[300px] lg:hidden">
+          <div className="absolute inset-0 -z-1 h-screen overflow-hidden shadow-2xl sm:rounded-bl-[300px] lg:hidden">
             {images?.[0]?.image && (
               <Media
                 resource={images[0].image}
@@ -73,8 +73,8 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
               {images && images.length > 0 ? (
                 images.map((item, index) => (
                   <ExpandFromCenter
-                    delay={0.3}
-                    duration={0.6}
+                    delay={0.45 + index * 0.1}
+                    duration={0.5}
                     key={index}
                     className={cn(
                       'flex aspect-square items-center justify-center overflow-hidden rounded-full transition-transform',
