@@ -24,11 +24,14 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     pictureClassName,
     imgClassName,
     priority,
+    quality = 100,
     resource,
     size: sizeFromProps,
     src: srcFromProps,
     loading: loadingFromProps,
   } = props
+
+  const [imageError, setImageError] = React.useState(false)
 
   let width: number | undefined
   let height: number | undefined
@@ -56,6 +59,17 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
         .join(', ')
 
+  if (imageError) {
+    return (
+      <div
+        className={cn('bg-gray-200 flex items-center justify-center', imgClassName)}
+        style={{ width: !fill ? width : undefined, height: !fill ? height : undefined }}
+      >
+        <span className="text-gray-400 text-sm">Image non disponible</span>
+      </div>
+    )
+  }
+
   return (
     <picture className={cn(pictureClassName)}>
       <NextImage
@@ -66,11 +80,12 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         placeholder="blur"
         blurDataURL={placeholderBlur}
         priority={priority}
-        quality={100}
+        quality={quality}
         loading={loading}
         sizes={sizes}
         src={src}
         width={!fill ? width : undefined}
+        onError={() => setImageError(true)}
       />
     </picture>
   )

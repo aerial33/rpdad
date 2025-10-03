@@ -61,8 +61,10 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
             {images?.[0]?.image && (
               <Media
                 resource={images[0].image}
-                className="h-full w-full object-cover"
                 imgClassName="h-full w-full object-cover brightness-60 object-left"
+                priority={true}
+                quality={90}
+                size="100vw"
               />
             )}
           </div>
@@ -84,8 +86,10 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
                     {item.image ? (
                       <Media
                         resource={item.image}
-                        className="h-full w-full object-cover"
                         imgClassName="h-full w-full object-cover"
+                        loading="lazy"
+                        quality={75}
+                        size="(max-width: 1024px) 50vw, 25vw"
                       />
                     ) : (
                       <div className="h-full w-full bg-gray-200" />
