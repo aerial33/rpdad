@@ -1,3 +1,7 @@
+'use client'
+
+import React from 'react'
+
 import { HeroSearch } from '@/components/HeroSearch'
 import { CMSLink } from '@/components/Link'
 import { LogoTicker } from '@/components/LogoTicker'
@@ -15,6 +19,12 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
   images,
   actionType,
 }) => {
+  const [imageLoaded, setImageLoaded] = React.useState<Record<number, boolean>>({})
+
+  const handleImageLoad = (index: number) => {
+    setImageLoaded((prev) => ({ ...prev, [index]: true }))
+  }
+
   return (
     <section className="-z-10 mt-4 min-h-screen lg:min-h-0">
       <div className="container mx-auto px-4 xl:px-0">
@@ -73,29 +83,56 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
           <div className="hidden self-start lg:block">
             <div className="relative grid grid-cols-2 gap-6">
               {images && images.length > 0 ? (
-                images.map((item, index) => (
-                  <ExpandFromCenter
-                    delay={0.45 + index * 0.1}
-                    duration={0.5}
-                    key={index}
-                    className={cn(
-                      'flex aspect-square items-center justify-center overflow-hidden rounded-full transition-transform',
-                      (index === 0 || index === images.length - 1) && 'scale-75',
-                    )}
-                  >
-                    {item.image ? (
-                      <Media
-                        resource={item.image}
-                        imgClassName="h-full w-full object-cover"
-                        loading="lazy"
-                        quality={75}
-                        size="(max-width: 1024px) 50vw, 25vw"
-                      />
-                    ) : (
-                      <div className="h-full w-full bg-gray-200" />
-                    )}
-                  </ExpandFromCenter>
-                ))
+                images.map((item, index) => {
+                  const isPriority = index < 2 // Les 2 premières images en priorité
+
+                  return (
+                    <ExpandFromCenter
+                      delay={0.15 + index * 0.06}
+                      duration={0.35}
+                      key={index}
+                      className={cn(
+                        'flex aspect-square items-center justify-center overflow-hidden rounded-full transition-transform',
+                        (index === 0 || index === images.length - 1) && 'scale-75',
+                      )}
+                    >
+                      <div className="relative h-full w-full">
+                        {/* Skeleton placeholder */}
+                        {!imageLoaded[index] && (
+                          <div className="absolute inset-0 animate-pulse rounded-full bg-gray-300">
+                            <svg
+                              className="h-10 w-10 text-gray-200 dark:text-gray-600"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 20 18"
+                            >
+                              <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                            </svg>
+                          </div>
+                        )}
+
+                        {item.image ? (
+                          <Media
+                            resource={item.image}
+                            className="h-full w-full object-cover"
+                            imgClassName={cn(
+                              'h-full object-cover transition-opacity duration-300',
+                              imageLoaded[index] ? 'opacity-100' : 'opacity-0',
+                            )}
+                            priority={isPriority}
+                            loading={isPriority ? 'eager' : 'lazy'}
+                            quality={75}
+                            size="(max-width: 1024px) 50vw, 25vw"
+                            onLoad={() => handleImageLoad(index)}
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-gray-200" />
+                        )}
+                      </div>
+                    </ExpandFromCenter>
+                  )
+                })
               ) : (
                 // Template par défaut avec 4 placeholders gris
                 <>
