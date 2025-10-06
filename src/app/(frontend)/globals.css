@@ -148,6 +148,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-foret: oklch(0.6146 0.0976 164.27);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);

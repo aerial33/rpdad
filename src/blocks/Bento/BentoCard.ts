@@ -17,6 +17,23 @@ export const BentoCard: Block = {
       label: 'Titre de la section',
     },
     {
+      name: 'sousTitre',
+      type: 'text',
+      label: 'Sous-titre de la section',
+    },
+    {
+      name: 'bgColor',
+      type: 'radio',
+      label: 'Couleur de fond de section',
+      defaultValue: 'bg-white',
+      options: [
+        { label: '⚪ Blanc', value: 'bg-white' },
+        { label: '⚫ Gris', value: 'bg-neutral-100' },
+        { label: '🍑 Peche', value: 'bg-flamingo-lightest' },
+        { label: '🟢 Vert', value: 'bg-chateau-lightest' },
+      ],
+    },
+    {
       name: 'cards',
       type: 'array',
       label: 'Cartes Bento',

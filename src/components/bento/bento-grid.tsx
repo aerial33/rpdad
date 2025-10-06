@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 
 import Link from 'next/link'
 
+import { CARD_LAYOUTS } from '@/blocks/Bento/layouts'
 import type { BentoCardBlock, Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
@@ -19,36 +20,74 @@ type SingleCard = NonNullable<BentoCardBlock['cards']>[number]
 interface BentoCardProps extends Omit<SingleCard, 'id' | 'image'> {
   image?: string | number | MediaType | null // Media object, string ou number ID depuis PayloadCMS
   className?: string // Classes CSS Tailwind pour le design
+  cardIndex?: number // Index de la card pour appliquer le layout correspondant
 }
 
-const BentoCard = ({ title, className, image, description, link, tag }: BentoCardProps) => {
+const BentoCard = ({
+  title,
+  className,
+  image,
+  description,
+  link,
+  tag,
+  cardIndex = 0,
+}: BentoCardProps) => {
   // Extraire href et label depuis la structure link PayloadCMS
   const href = link?.url
   const label = link?.label
 
-  return (
-    <div className={cn('relative col-span-4 h-full rounded-[40px] p-6', className)}>
-      <div className="ml-4 flex w-full max-w-md flex-1 flex-col items-center justify-center gap-6">
-        <div className="flex flex-col items-center justify-center py-6">
-          {tag && (
-            <Badge variant="outline" className="mb-2 ml-auto block text-xs font-medium">
-              {tag}
-            </Badge>
-          )}
-          <h3 className="mb-2 max-w-sm text-left text-2xl font-bold text-gray-700 lg:text-2xl">
-            {title}
-          </h3>
-          <p className="font-normal text-balance text-gray-500">{description}</p>
-        </div>
-        {image && (
-          <Media resource={image} alt={title || 'Image'} className="mt-4 max-w-md" loading="lazy" />
-        )}
-      </div>
+  // Récupérer la configuration de layout pour cette card
+  const layout = CARD_LAYOUTS[cardIndex] || CARD_LAYOUTS[0]
+
+  // Rendu de l'image avec le layout configuré
+  const imageElement = image && (
+    <Media
+      resource={image}
+      alt={title || 'Image'}
+      className={cn(layout?.imageWrapperClass)}
+      loading="lazy"
+    />
+  )
+
+  // Rendu du contenu texte
+  const contentElement = (
+    <div className={layout?.contentWrapperClass}>
+      {tag && (
+        <Badge variant="outline" className={layout?.badgeClass}>
+          {tag}
+        </Badge>
+      )}
+      <h3 className={layout?.titleClass}>{title}</h3>
+      <p className={layout?.descriptionClass}>{description}</p>
       {href && label && (
-        <Link href={href} className="hover:text-primary mt-4 font-medium">
+        <Link href={href} className={layout?.linkClass}>
           {`${label} →`}
         </Link>
       )}
+    </div>
+  )
+
+  return (
+    <div className={cn('relative col-span-4 h-full rounded-[40px] shadow-lg', className)}>
+      <div className={layout?.cardInnerClass}>
+        {/* Ordre des éléments selon la position de l'image */}
+        {layout?.imagePosition === 'top' && imageElement}
+        {layout?.imagePosition === 'left' && (
+          <>
+            {imageElement}
+            {contentElement}
+          </>
+        )}
+        {(layout?.imagePosition === 'bottom' ||
+          layout?.imagePosition === 'right' ||
+          layout?.imagePosition === 'absolute-top-right' ||
+          layout?.imagePosition === 'background') && (
+          <>
+            {contentElement}
+            {layout.imagePosition !== 'background' && imageElement}
+          </>
+        )}
+      </div>
     </div>
   )
 }

@@ -850,6 +850,8 @@ export interface MapBlock {
  */
 export interface BentoCardBlock {
   title?: string | null;
+  sousTitre?: string | null;
+  bgColor?: ('bg-white' | 'bg-neutral-100' | 'bg-flamingo-lightest' | 'bg-chateau-lightest') | null;
   cards?:
     | {
         title: string;
@@ -1462,6 +1464,8 @@ export interface MapBlockSelect<T extends boolean = true> {
  */
 export interface BentoCardBlockSelect<T extends boolean = true> {
   title?: T;
+  sousTitre?: T;
+  bgColor?: T;
   cards?:
     | T
     | {
