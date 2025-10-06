@@ -1,4 +1,3 @@
-//todo: add the cta and dynamic social media links
 'use client'
 
 import { Facebook, Instagram, Linkedin, SearchIcon, Youtube } from 'lucide-react'
@@ -14,10 +13,6 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 
 import { MobileMenu } from './Nav/MobileNav'
 import { NavbarMedium } from './Nav/NavMedium'
-
-//todo: add the cta and dynamic social media links
-
-//todo: add the cta and dynamic social media links
 
 //todo: add the cta and dynamic social media links
 
@@ -42,27 +37,27 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [headerTheme])
 
   return (
-    <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
-      <div className="py-4 flex justify-between items-center">
+    <header className="relative z-20" {...(theme ? { 'data-theme': theme } : {})}>
+      <div className="container flex items-center justify-between py-4">
         <div className="flex items-center space-x-12">
           <Link href="/">
             <RpdadLogo />
           </Link>
           <NavbarMedium data={data} />
         </div>
-        <div className="lg:flex hidden items-center gap-4">
+        <div className="hidden items-center gap-4 lg:flex">
           <ul className="text-foreground flex items-center space-x-4">
-            <li className="hover:text-primary ">
+            <li className="hover:text-primary">
               <a href="https://www.facebook.com/rpdadgironde" target="_blank">
                 <Facebook className="size-5" />
               </a>
             </li>
-            <li className="hover:text-primary ">
+            <li className="hover:text-primary">
               <a href="https://www.youtube.com/@RPDAD33" target="_blank">
                 <Youtube className="size-5" />
               </a>
             </li>
-            <li className="hover:text-primary ">
+            <li className="hover:text-primary">
               <a
                 href="https://www.linkedin.com/company/rpdad33/posts/?feedView=all"
                 target="_blank"
@@ -70,7 +65,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                 <Linkedin className="size-5" />
               </a>
             </li>
-            <li className="hover:text-primary ">
+            <li className="hover:text-primary">
               <a href="https://www.instagram.com/rpdad_33/" target="_blank">
                 <Instagram className="size-5" />
               </a>
@@ -78,7 +73,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           </ul>
           <Link href="/search">
             <span className="sr-only">Search</span>
-            <SearchIcon className="w-5 hover:text-primary font-medium text-foreground" />
+            <SearchIcon className="hover:text-primary text-foreground w-5 font-medium" />
           </Link>
         </div>
         <MobileMenu data={data} />

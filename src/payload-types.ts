@@ -192,7 +192,7 @@ export interface Page {
             url?: string | null;
             label: string;
             /**
-             * Choose how the link should be rendered.
+             * Choisir comment le lien doit être rendu.
              */
             appearance?: ('default' | 'outline') | null;
           };
@@ -212,7 +212,16 @@ export interface Page {
         }[]
       | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | ContentSectionBlock | MapBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | ContentSectionBlock
+    | MapBlock
+    | BentoCardBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -448,7 +457,7 @@ export interface CallToActionBlock {
           url?: string | null;
           label: string;
           /**
-           * Choose how the link should be rendered.
+           * Choisir comment le lien doit être rendu.
            */
           appearance?: ('default' | 'outline') | null;
         };
@@ -498,7 +507,7 @@ export interface ContentBlock {
           url?: string | null;
           label: string;
           /**
-           * Choose how the link should be rendered.
+           * Choisir comment le lien doit être rendu.
            */
           appearance?: ('default' | 'outline') | null;
         };
@@ -834,6 +843,44 @@ export interface MapBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'map';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BentoCardBlock".
+ */
+export interface BentoCardBlock {
+  title?: string | null;
+  cards?:
+    | {
+        title: string;
+        description: string;
+        tag?: string | null;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choisir comment le lien doit être rendu.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bentoCard';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1253,6 +1300,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         contentSection?: T | ContentSectionBlockSelect<T>;
         map?: T | MapBlockSelect<T>;
+        bentoCard?: T | BentoCardBlockSelect<T>;
       };
   meta?:
     | T
@@ -1405,6 +1453,34 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
 export interface MapBlockSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BentoCardBlock_select".
+ */
+export interface BentoCardBlockSelect<T extends boolean = true> {
+  title?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        tag?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        image?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

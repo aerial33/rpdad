@@ -7,6 +7,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import type { Page } from '@/payload-types'
 
+import { BentoGridBlock } from './Bento/Component'
 import ContentSectionBlock from './contentSection/RenderContentSection'
 import { MapBlock } from './map/map-gironde'
 
@@ -17,6 +18,7 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   contentSection: ContentSectionBlock,
+  bentoCard: BentoGridBlock,
   map: MapBlock,
 }
 
