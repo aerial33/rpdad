@@ -251,7 +251,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
       <FAQSection />
 
       {/* Section Call to Action */}
-      <section className="from-primary to-secondary bg-gradient-to-r py-20 lg:py-32">
+      {/* <section className="from-primary to-secondary bg-gradient-to-r py-20 lg:py-32">
         <div className="container mx-auto px-4 text-center">
           <div className="mx-auto max-w-3xl text-white">
             <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
@@ -276,7 +276,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }
