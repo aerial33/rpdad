@@ -10,8 +10,8 @@ import { ContentSectionBlock as ContentWithCard } from './variants/contentWithCa
 export const TextMediaSectionBlock: React.FC<ContentSectionBlockType> = (props) => {
   const { variant } = props
 
-  console.log('RenderContentSection - Props:', props)
-  console.log('RenderContentSection - Variant:', variant)
+  // console.log('RenderContentSection - Props:', props)
+  // console.log('RenderContentSection - Variant:', variant)
 
   const variants: Record<string, React.FC<any>> = {
     basicContent: BasicContent,

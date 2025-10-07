@@ -41,7 +41,7 @@ export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
 
   // Composant pour le contenu texte
   const ContentComponent = () => (
-    <div className="richtext-content flex min-w-[250px] flex-col gap-4">
+    <div className="richtext-content [&_p]:lg:text-muted-foreground flex min-w-[250px] flex-col gap-4 text-gray-500 [&_h2]:text-gray-700 [&_h3]:text-gray-600 [&_p]:text-xl">
       {content && <RichText className="m-0" data={content} />}
     </div>
   )
