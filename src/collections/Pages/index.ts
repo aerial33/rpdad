@@ -10,6 +10,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import editor from '@/access/editor'
 import { BentoCard } from '@/blocks/Bento/BentoCard'
+import { FeatureCollection } from '@/blocks/FeatureCollection/config'
 import { ContentSectionBlock } from '@/blocks/contentSection/config'
 import { map } from '@/blocks/map/config'
 import { slugField } from '@/fields/slug'
@@ -88,6 +89,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 ContentSectionBlock,
                 map,
                 BentoCard,
+                FeatureCollection,
               ],
               required: true,
               admin: {

@@ -2,6 +2,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 
 import { Media as MediaComponent } from '@/components/Media'
 // import type { ContentWithImage as ContentWithImageProps } from '@/payload-types'
+import { FadeUp } from '@/components/motion/animations'
 import { ContentSectionBlock } from '@/payload-types'
 import { getPopulatedImageData } from '@/utilities/isImagePopulated'
 
@@ -25,7 +26,7 @@ export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
     }
 
     return (
-      <div className="relative overflow-hidden rounded-lg">
+      <div className="relative overflow-hidden rounded-[40px] shadow-lg">
         {/* <Image
           src={imageData.url}
           alt={imageData.alt || 'Image'}
@@ -47,7 +48,8 @@ export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
   )
 
   return (
-    <div
+    <FadeUp
+      delay={0.5}
       className={`container flex flex-col gap-8 py-20 md:items-center md:justify-center ${imagePosition === 'Gauche' ? 'md:flex-row-reverse' : 'md:flex-row'}`}
     >
       <div className="md:w-1/2">
@@ -56,6 +58,6 @@ export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
       <div className="md:w-1/2">
         <ImageComponent />
       </div>
-    </div>
+    </FadeUp>
   )
 }

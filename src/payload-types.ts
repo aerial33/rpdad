@@ -221,6 +221,7 @@ export interface Page {
     | ContentSectionBlock
     | MapBlock
     | BentoCardBlock
+    | FeatureCollectionBlock
   )[];
   meta?: {
     title?: string | null;
@@ -887,6 +888,30 @@ export interface BentoCardBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCollectionBlock".
+ */
+export interface FeatureCollectionBlock {
+  title: string;
+  subtitle?: string | null;
+  badgeText?: string | null;
+  buttonText?: string | null;
+  buttonLink?: string | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureCollection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emplois".
  */
 export interface Emplois {
@@ -1304,6 +1329,7 @@ export interface PagesSelect<T extends boolean = true> {
         contentSection?: T | ContentSectionBlockSelect<T>;
         map?: T | MapBlockSelect<T>;
         bentoCard?: T | BentoCardBlockSelect<T>;
+        featureCollection?: T | FeatureCollectionBlockSelect<T>;
       };
   meta?:
     | T
@@ -1482,6 +1508,24 @@ export interface BentoCardBlockSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCollectionBlock_select".
+ */
+export interface FeatureCollectionBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  badgeText?: T;
+  buttonText?: T;
+  buttonLink?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
   id?: T;
   blockName?: T;
 }
