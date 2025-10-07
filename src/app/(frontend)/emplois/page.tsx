@@ -6,6 +6,7 @@ import type { Metadata } from 'next/types'
 
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
+import { EmploiShowcase } from '@/components/ShowCaseEmploi/EmploiShowcase'
 
 import PageClient from './page.client'
 
@@ -43,9 +44,7 @@ export default async function Page() {
     <div>
       <PageClient />
 
-      <h1>Offres d'emploi</h1>
-
-      {/* <EmploiShowcase emplois={emplois.docs} totalDocs={emplois.totalDocs} /> */}
+      <EmploiShowcase emplois={emplois.docs} totalDocs={emplois.totalDocs} />
 
       {/* Pagination Section */}
       {emplois.totalPages && emplois.totalPages > 1 && emplois.page && (

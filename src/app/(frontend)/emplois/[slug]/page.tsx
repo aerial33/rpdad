@@ -6,12 +6,14 @@ import { cache } from 'react'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 
+import BlogSection from '@/components/BlogContent/content-emploi'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
+// import { BlogSection } from '@/components/blog-content/content-emploi'
+import { EmploiHero } from '@/heros/EmploiHero'
 // import { EmploiHero } from '@/heros/EmploiHero'
 import { generateMeta } from '@/utilities/generateMeta'
 
-// import { BlogSection } from '@/components/blog-content/content-emploi'
 import PageClient from './page.client'
 
 export async function generateStaticParams() {
@@ -57,9 +59,9 @@ export default async function Emploi({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      {/* <EmploiHero emploi={emploi} /> */}
+      <EmploiHero emploi={emploi} />
 
-      {/* <BlogSection emploi={emploi} /> */}
+      <BlogSection emploi={emploi} />
     </>
   )
 }
