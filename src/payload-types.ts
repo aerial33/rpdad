@@ -425,7 +425,8 @@ export interface User {
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
-  richText?: {
+  title?: string | null;
+  description?: {
     root: {
       type: string;
       children: {
@@ -440,30 +441,16 @@ export interface CallToActionBlock {
     };
     [k: string]: unknown;
   } | null;
-  links?:
+  imageTitle?: (number | null) | Media;
+  buttons?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choisir comment le lien doit être rendu.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
+        label: string;
+        url: string;
+        style?: ('primary' | 'secondary' | 'outline') | null;
         id?: string | null;
       }[]
     | null;
+  backgroundImage?: (number | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -1323,22 +1310,18 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "CallToActionBlock_select".
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
-  richText?: T;
-  links?:
+  title?: T;
+  description?: T;
+  imageTitle?: T;
+  buttons?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
+        label?: T;
+        url?: T;
+        style?: T;
         id?: T;
       };
+  backgroundImage?: T;
   id?: T;
   blockName?: T;
 }

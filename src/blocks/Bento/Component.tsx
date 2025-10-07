@@ -1,5 +1,6 @@
 import BackgroundSection from '@/components/BackgroundSection/BackgroundSection'
 import { BentoCard, BentoGrid } from '@/components/bento/bento-grid'
+import { FadeUp } from '@/components/motion/animations'
 import { BentoCardBlock } from '@/payload-types'
 
 import { DEFAULT_BENTO_CARDS } from './constants'
@@ -47,13 +48,15 @@ export const BentoGridBlock: React.FC<BentoCardBlock> = (props) => {
             </p>
           </div>
         )}
-        <BentoGrid
-          className={'mx-auto h-auto max-w-7xl px-0 lg:grid-cols-4 lg:grid-rows-3 xl:grid-rows-2'}
-        >
-          {features?.map((feature, index) => (
-            <BentoCard key={`${feature.title}-${index}`} {...feature} />
-          ))}
-        </BentoGrid>
+        <FadeUp delay={0.5}>
+          <BentoGrid
+            className={'mx-auto h-auto max-w-7xl px-0 lg:grid-cols-4 lg:grid-rows-3 xl:grid-rows-2'}
+          >
+            {features?.map((feature, index) => (
+              <BentoCard key={`${feature.title}-${index}`} {...feature} />
+            ))}
+          </BentoGrid>
+        </FadeUp>
       </section>
     </>
   )
