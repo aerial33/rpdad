@@ -18,9 +18,7 @@ const SocialsList: FC<SocialsListProps> = ({
   socials = socialsDemo,
 }) => {
   return (
-    <nav
-      className={`nc-SocialsList text-neutral-6000 flex space-x-3 text-2xl dark:text-neutral-300 ${className}`}
-    >
+    <nav className={`text-neutral-6000 flex space-x-3 text-2xl ${className}`}>
       {socials.map((item, i) => (
         <a
           key={i}

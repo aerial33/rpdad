@@ -1,49 +1,69 @@
 import { GlobeAltIcon } from '@heroicons/react/24/outline'
 
+import Image from 'next/image'
 import Link from 'next/link'
 
+import logoAndernos from '@/../public/logoAndernos.png'
+import headerMembresImg from '@/graphics/headersImg/header-members.svg'
+import type { Media as MediaType } from '@/payload-types'
+
+import { Media } from '../Media'
 import SocialsList from '../SocialsList/SocialsList'
-import VerifyIcon from '../VerifyIcon'
 
 interface MembresContentProps {
   service?: string
+  avatar?: MediaType | null
   // Futurs props à définir...
 }
 
-export const MembresContent = ({ service }: MembresContentProps) => {
+export const MembresContent = ({ service, avatar }: MembresContentProps) => {
   return (
     <>
       <div className="w-full">
-        <div className="relative h-40 w-full md:h-60 2xl:h-72">
-          <div className="absolute inset-0 border bg-gradient-to-r from-neutral-200 to-neutral-300 dark:from-neutral-700 dark:to-neutral-800" />
+        <div className="relative h-52 w-full md:h-72 2xl:h-90">
+          <Media
+            src={headerMembresImg}
+            alt="Header membres"
+            fill
+            imgClassName="object-cover object-[center_5%]"
+            priority
+          />
         </div>
         <div className="container -mt-10 lg:-mt-16">
-          <div className="relative flex flex-col rounded-3xl bg-white p-5 shadow-xl md:flex-row md:rounded-[40px] lg:p-8 dark:border dark:border-neutral-700 dark:bg-neutral-900">
+          <div className="relative flex flex-col rounded-3xl bg-white p-5 shadow-xl md:flex-row md:rounded-[40px] lg:p-8">
             <div className="mt-12 w-32 flex-shrink-0 sm:mt-0 lg:w-40">
-              <div className="wil-avatar relative z-0 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-200 text-xl font-semibold text-neutral-100 uppercase shadow-2xl ring-4 ring-white lg:h-36 lg:w-36 lg:text-2xl dark:bg-neutral-700 dark:ring-0">
-                {/* Placeholder - à remplacer par une vraie image */}
+              <div className="wil-avatar relative z-0 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-xl font-semibold uppercase shadow-2xl ring-4 ring-white lg:h-36 lg:w-36 lg:text-2xl">
+                {avatar ? (
+                  <Media
+                    resource={avatar}
+                    alt="Avatar du service"
+                    fill
+                    imgClassName="object-contain p-2"
+                  />
+                ) : (
+                  <Image
+                    src={logoAndernos}
+                    alt="Logo Andernos (exemple)"
+                    fill
+                    className="object-contain p-2"
+                  />
+                )}
               </div>
             </div>
 
             {/*  */}
             <div className="flex-grow pt-5 md:pt-1 lg:ml-6 xl:ml-12">
-              <div className="max-w-screen-sm space-y-3.5">
-                <h2 className="inline-flex items-center text-2xl font-semibold sm:text-3xl lg:text-4xl">
-                  <span>Dony Herrera</span>
-                  <VerifyIcon className="ml-2" iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8" />
+              <div className="max-w-screen-sm space-y-3">
+                <h2 className="items-center text-2xl font-medium sm:text-3xl">
+                  {" Service d'aide et d'accompagnement à Domicile du CCAS D'ANDERNOS-LES-BAINS"}
                 </h2>
-                <span className="block text-sm text-neutral-500 dark:text-neutral-400">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro autem totam iure
-                  quibusdam asperiores numquam quae animi assumenda necessitatibus consectetur.
-                </span>
+
                 <a
                   href="#"
-                  className="flex cursor-pointer items-center space-x-2.5 truncate text-xs font-medium text-neutral-500 rtl:space-x-reverse dark:text-neutral-400"
+                  className="flex cursor-pointer items-center space-x-2.5 truncate text-xs font-medium text-neutral-500 rtl:space-x-reverse"
                 >
                   <GlobeAltIcon className="h-4 w-4 flex-shrink-0" />
-                  <span className="truncate text-neutral-700 dark:text-neutral-300">
-                    https://example.com/me
-                  </span>
+                  <span className="truncate text-neutral-700">https://example.com/me</span>
                 </a>
                 <SocialsList itemClass="block w-7 h-7" />
               </div>

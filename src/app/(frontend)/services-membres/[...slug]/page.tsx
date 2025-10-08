@@ -15,7 +15,7 @@ export default async function ServiceMembrePage({ params }: { params: Promise<{ 
   const serviceName = service?.name || `CCAS/CIAS ${decodedSlug}`
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="pb-8">
       <MembresContent service={serviceName} />
     </div>
   )
