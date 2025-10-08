@@ -29,9 +29,11 @@ export async function generateStaticParams() {
     },
   })
 
-  const params = emplois.docs.map(({ slug }) => {
-    return { slug }
-  })
+  const params = emplois.docs
+    .filter(({ slug }) => typeof slug === 'string')
+    .map(({ slug }) => ({
+      slug: slug as string,
+    }))
 
   return params
 }

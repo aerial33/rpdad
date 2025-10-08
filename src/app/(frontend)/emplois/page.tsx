@@ -24,17 +24,10 @@ export default async function Page() {
     select: {
       title: true,
       slug: true,
-      category: true,
-      location: true,
-      organization: true,
-      status: true,
-      publishedAt: true,
-      featuredImage: true,
-      meta: true,
     },
     where: {
-      status: {
-        equals: 'active',
+      _status: {
+        equals: 'published',
       },
     },
     sort: '-publishedAt',

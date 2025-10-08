@@ -17,6 +17,9 @@ import type { CollectionConfig } from 'payload'
 import { Banner } from '@/blocks/Banner/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { slugField } from '@/fields/slug'
+// import { slugField } from '@/fields/slug'
+
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
@@ -30,25 +33,29 @@ export const Emplois: CollectionConfig = {
     read: anyone,
     update: authenticated,
   },
-  hooks: {
-    afterChange: [revalidateEmploi],
-    afterDelete: [revalidateDelete],
-  },
-  versions: {
-    drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
-      schedulePublish: true,
-    },
-    maxPerDoc: 50,
-  },
 
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'categories', 'location', 'status', 'publishedAt'],
+    defaultColumns: ['title', 'publishedAt'],
     group: 'Publications',
     hideAPIURL: false,
+    livePreview: {
+      url: ({ data, req }) => {
+        const path = generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'emplois',
+          req,
+        })
+
+        return path
+      },
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'emplois',
+        req,
+      }),
   },
   fields: [
     {
@@ -64,67 +71,17 @@ export const Emplois: CollectionConfig = {
           label: 'Informations générales',
           fields: [
             {
-              name: 'subtitle',
-              type: 'text',
-              label: 'Sous-titre',
-            },
-            {
-              name: 'badgeText',
-              type: 'text',
-              label: 'Texte du badge',
-              defaultValue: 'Emploi',
-            },
-            {
-              name: 'featuredImage',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Image principale',
-            },
-            {
-              name: 'categories',
-              type: 'relationship',
-              hasMany: true,
-              relationTo: 'categories',
-              label: 'Catégories',
-            },
-            {
-              name: 'workTime',
-              type: 'select',
-              label: 'Temps de travail',
-              options: [
-                {
-                  label: 'Temps plein',
-                  value: 'full-time',
-                },
-                {
-                  label: 'Temps partiel',
-                  value: 'part-time',
-                },
-                {
-                  label: 'Horaires flexibles',
-                  value: 'flexible',
-                },
-              ],
-              defaultValue: 'full-time',
-            },
-            {
-              name: 'location',
-              type: 'text',
-              required: true,
-              label: 'Lieu',
-            },
-            {
-              name: 'salary',
-              type: 'text',
-              label: 'Salaire',
-            },
-            {
-              name: 'organization',
+              name: 'Organisme',
               type: 'text',
               label: 'Organisation',
             },
+          ],
+        },
+        {
+          label: 'Contenu',
+          fields: [
             {
-              name: 'description',
+              name: 'content',
               type: 'richText',
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
@@ -137,126 +94,9 @@ export const Emplois: CollectionConfig = {
                   ]
                 },
               }),
-              label: 'Description du poste',
-              required: true,
-            },
-          ],
-        },
-        {
-          label: 'Profil recherché',
-          fields: [
-            {
-              name: 'requiredSkills',
-              type: 'array',
-              label: 'Compétences requises',
-              fields: [
-                {
-                  name: 'skill',
-                  type: 'text',
-                  required: true,
-                  label: 'Compétence',
-                },
-                {
-                  name: 'level',
-                  type: 'select',
-                  label: 'Niveau requis',
-                  options: [
-                    {
-                      label: 'Débutant',
-                      value: 'beginner',
-                    },
-                    {
-                      label: 'Intermédiaire',
-                      value: 'intermediate',
-                    },
-                    {
-                      label: 'Expérimenté',
-                      value: 'experienced',
-                    },
-                    {
-                      label: 'Expert',
-                      value: 'expert',
-                    },
-                  ],
-                  defaultValue: 'intermediate',
-                },
-              ],
+              label: 'Contenu de la page',
               admin: {
-                initCollapsed: true,
-              },
-            },
-            {
-              name: 'qualifications',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h3', 'h4'] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                  ]
-                },
-              }),
-              label: 'Qualifications et expérience requises',
-            },
-            {
-              name: 'benefits',
-              type: 'array',
-              label: 'Avantages du poste',
-              fields: [
-                {
-                  name: 'benefit',
-                  type: 'text',
-                  required: true,
-                  label: 'Avantage',
-                },
-              ],
-              admin: {
-                initCollapsed: true,
-              },
-            },
-          ],
-        },
-        {
-          label: 'Informations pratiques',
-          fields: [
-            {
-              name: 'startDate',
-              type: 'date',
-              label: 'Date de début',
-            },
-            {
-              name: 'endDate',
-              type: 'date',
-              label: 'Date de fin de candidature',
-            },
-            {
-              name: 'contactEmail',
-              type: 'email',
-              label: 'Email de contact',
-            },
-            {
-              name: 'contactPhone',
-              type: 'text',
-              label: 'Téléphone de contact',
-            },
-            {
-              name: 'applicationProcess',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h3', 'h4'] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                  ]
-                },
-              }),
-              label: 'Processus de candidature',
-              admin: {
-                description: 'Décrivez comment postuler (documents requis, étapes, etc.)',
+                description: 'Contenu principal qui sera affiché dans le body de la page',
               },
             },
           ],
@@ -287,85 +127,6 @@ export const Emplois: CollectionConfig = {
       ],
     },
     {
-      name: 'featuredJobs',
-      type: 'group',
-      label: 'Section emplois en vedette',
-      admin: {
-        position: 'sidebar',
-      },
-      fields: [
-        {
-          name: 'heading',
-          type: 'text',
-          defaultValue: "Offres d'emploi",
-          label: 'Titre principal',
-        },
-        {
-          name: 'subheading',
-          type: 'text',
-          defaultValue: "Retrouvez nos dernières offres d'emploi disponibles",
-          label: 'Sous-titre',
-        },
-        {
-          name: 'badgeText',
-          type: 'text',
-          defaultValue: 'Emploi',
-          label: 'Texte du badge',
-        },
-        {
-          name: 'featuredJobs',
-          type: 'array',
-          label: 'Emplois en vedette',
-          fields: [
-            {
-              name: 'title',
-              type: 'text',
-              required: true,
-              label: 'Titre du poste',
-            },
-            {
-              name: 'image',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Image',
-            },
-            {
-              name: 'summary',
-              type: 'textarea',
-              label: 'Résumé',
-            },
-          ],
-          admin: {
-            initCollapsed: false,
-            description: "Vous pouvez ajouter jusqu'à 6 offres d'emploi en vedette",
-          },
-        },
-      ],
-    },
-    {
-      name: 'status',
-      type: 'select',
-      defaultValue: 'active',
-      options: [
-        {
-          label: 'Active',
-          value: 'active',
-        },
-        {
-          label: 'Pourvue',
-          value: 'filled',
-        },
-        {
-          label: 'Expirée',
-          value: 'expired',
-        },
-      ],
-      label: 'Statut',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
       name: 'publishedAt',
       type: 'date',
       label: 'Date de publication',
@@ -378,6 +139,19 @@ export const Emplois: CollectionConfig = {
     },
     ...slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateEmploi],
+    afterDelete: [revalidateDelete],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
+    maxPerDoc: 50,
+  },
 }
 
 export default Emplois
