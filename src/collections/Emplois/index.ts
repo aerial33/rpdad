@@ -20,6 +20,7 @@ import { slugField } from '@/fields/slug'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { revalidateDelete, revalidateEmploi } from './hooks/revalidateEmploi'
 
 export const Emplois: CollectionConfig = {
   slug: 'emplois',
@@ -28,6 +29,19 @@ export const Emplois: CollectionConfig = {
     delete: authenticated,
     read: anyone,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateEmploi],
+    afterDelete: [revalidateDelete],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+      schedulePublish: true,
+    },
+    maxPerDoc: 50,
   },
 
   admin: {
