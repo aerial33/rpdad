@@ -70,6 +70,7 @@ export interface Config {
     pages: Page;
     posts: Post;
     emplois: Emplois;
+    membres: Membre;
     media: Media;
     categories: Category;
     users: User;
@@ -87,6 +88,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     emplois: EmploisSelect<false> | EmploisSelect<true>;
+    membres: MembresSelect<false> | MembresSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -917,65 +919,11 @@ export interface FeatureCollectionBlock {
 export interface Emplois {
   id: number;
   title: string;
-  subtitle?: string | null;
-  badgeText?: string | null;
-  featuredImage?: (number | null) | Media;
-  categories?: (number | Category)[] | null;
-  workTime?: ('full-time' | 'part-time' | 'flexible') | null;
-  location: string;
-  salary?: string | null;
-  organization?: string | null;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  requiredSkills?:
-    | {
-        skill: string;
-        level?: ('beginner' | 'intermediate' | 'experienced' | 'expert') | null;
-        id?: string | null;
-      }[]
-    | null;
-  qualifications?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  benefits?:
-    | {
-        benefit: string;
-        id?: string | null;
-      }[]
-    | null;
-  startDate?: string | null;
-  endDate?: string | null;
-  contactEmail?: string | null;
-  contactPhone?: string | null;
+  Organisme?: string | null;
   /**
-   * Décrivez comment postuler (documents requis, étapes, etc.)
+   * Contenu principal qui sera affiché dans le body de la page
    */
-  applicationProcess?: {
+  content?: {
     root: {
       type: string;
       children: {
@@ -998,23 +946,57 @@ export interface Emplois {
      */
     image?: (number | null) | Media;
   };
-  featuredJobs?: {
-    heading?: string | null;
-    subheading?: string | null;
-    badgeText?: string | null;
-    /**
-     * Vous pouvez ajouter jusqu'à 6 offres d'emploi en vedette
-     */
-    featuredJobs?:
-      | {
-          title: string;
-          image?: (number | null) | Media;
-          summary?: string | null;
-          id?: string | null;
-        }[]
-      | null;
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "membres".
+ */
+export interface Membre {
+  id: number;
+  name: string;
+  logo?: (number | null) | Media;
+  adresse?: string | null;
+  informations?: {
+    contact?: {
+      tel?: string | null;
+      mail?: string | null;
+    };
+    horaires?: string | null;
+    astreinte?: string | null;
+    website?: string | null;
   };
-  status?: ('active' | 'filled' | 'expired') | null;
+  /**
+   * Contenu principal qui sera affich� dans le body de la page
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
   publishedAt?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
@@ -1206,6 +1188,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'emplois';
         value: number | Emplois;
+      } | null)
+    | ({
+        relationTo: 'membres';
+        value: number | Membre;
       } | null)
     | ({
         relationTo: 'media';
@@ -1568,34 +1554,8 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface EmploisSelect<T extends boolean = true> {
   title?: T;
-  subtitle?: T;
-  badgeText?: T;
-  featuredImage?: T;
-  categories?: T;
-  workTime?: T;
-  location?: T;
-  salary?: T;
-  organization?: T;
-  description?: T;
-  requiredSkills?:
-    | T
-    | {
-        skill?: T;
-        level?: T;
-        id?: T;
-      };
-  qualifications?: T;
-  benefits?:
-    | T
-    | {
-        benefit?: T;
-        id?: T;
-      };
-  startDate?: T;
-  endDate?: T;
-  contactEmail?: T;
-  contactPhone?: T;
-  applicationProcess?: T;
+  Organisme?: T;
+  content?: T;
   meta?:
     | T
     | {
@@ -1603,22 +1563,42 @@ export interface EmploisSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
-  featuredJobs?:
+  publishedAt?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "membres_select".
+ */
+export interface MembresSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  adresse?: T;
+  informations?:
     | T
     | {
-        heading?: T;
-        subheading?: T;
-        badgeText?: T;
-        featuredJobs?:
+        contact?:
           | T
           | {
-              title?: T;
-              image?: T;
-              summary?: T;
-              id?: T;
+              tel?: T;
+              mail?: T;
             };
+        horaires?: T;
+        astreinte?: T;
+        website?: T;
       };
-  status?: T;
+  content?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   publishedAt?: T;
   slug?: T;
   slugLock?: T;
@@ -2149,6 +2129,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'emplois';
           value: number | Emplois;
+        } | null)
+      | ({
+          relationTo: 'membres';
+          value: number | Membre;
         } | null);
     global?: string | null;
     user?: (number | null) | User;

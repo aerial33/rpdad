@@ -16,6 +16,7 @@ import { Header } from './Header/config'
 import { Categories } from './collections/Categories'
 import Emplois from './collections/Emplois'
 import { Media } from './collections/Media'
+import { Membres } from './collections/Membres'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
@@ -95,7 +96,7 @@ export default buildConfig({
     },
     push: process.env.NODE_ENV === 'development',
   }),
-  collections: [Pages, Posts, Emplois, Media, Categories, Users],
+  collections: [Pages, Posts, Emplois, Membres, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
