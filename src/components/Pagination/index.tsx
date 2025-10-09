@@ -19,7 +19,7 @@ export const Pagination: React.FC<{
   className?: string
   page: number
   totalPages: number
-  collection?: 'posts' | 'emplois'
+  collection?: 'posts' | 'emplois' | 'membres'
 }> = (props) => {
   const router = useRouter()
 

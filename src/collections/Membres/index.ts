@@ -66,7 +66,7 @@ export const Membres: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Informations générales',
+          label: '🏫 Informations générales',
           fields: [
             {
               name: 'logo',
@@ -128,7 +128,7 @@ export const Membres: CollectionConfig = {
           ],
         },
         {
-          label: 'Contenu',
+          label: '🖋️ Contenu',
           fields: [
             {
               name: 'content',
@@ -152,7 +152,7 @@ export const Membres: CollectionConfig = {
           ],
         },
         {
-          label: 'SEO',
+          label: '🌐 SEO',
           name: 'meta',
           fields: [
             OverviewField({
@@ -187,7 +187,7 @@ export const Membres: CollectionConfig = {
         },
       },
     },
-    ...slugField(),
+    ...slugField('name'),
   ],
   hooks: {
     afterChange: [revalidateMembre],
