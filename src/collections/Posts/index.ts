@@ -110,7 +110,7 @@ export const Posts: CollectionConfig<'posts'> = {
               required: true,
             },
           ],
-          label: 'Contenu',
+          label: '✍️ Contenu',
         },
         {
           fields: [
@@ -140,11 +140,11 @@ export const Posts: CollectionConfig<'posts'> = {
               relationTo: 'categories',
             },
           ],
-          label: 'Meta',
+          label: '🏷️ Meta',
         },
         {
           name: 'meta',
-          label: 'SEO',
+          label: '🔍 SEO',
           fields: [
             OverviewField({
               titlePath: 'meta.title',

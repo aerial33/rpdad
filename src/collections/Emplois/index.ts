@@ -68,7 +68,7 @@ export const Emplois: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Informations générales',
+          label: '🏫 Informations générales',
           fields: [
             {
               name: 'Organisme',
@@ -78,7 +78,7 @@ export const Emplois: CollectionConfig = {
           ],
         },
         {
-          label: 'Contenu',
+          label: '🖋️ Contenu',
           fields: [
             {
               name: 'content',
@@ -102,7 +102,7 @@ export const Emplois: CollectionConfig = {
           ],
         },
         {
-          label: 'SEO',
+          label: '🌐 SEO',
           name: 'meta',
           fields: [
             OverviewField({
