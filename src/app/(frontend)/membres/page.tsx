@@ -3,8 +3,10 @@ import { getPayload } from 'payload'
 
 import type { Metadata } from 'next/types'
 
+import { Breadcrumbs } from '@/components/Breadcrumbs/Breadcrumbs'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
+import { Badge } from '@/components/ui/badge'
 
 import PageClient from './page.client'
 
@@ -34,11 +36,14 @@ export default async function Page() {
   })
   console.log(membres)
   return (
-    <div>
+    <div className="flex-1">
       <PageClient />
 
       {/* TODO: Create MembreShowcase component similar to EmploiShowcase */}
       <div className="container mx-auto px-4 py-12">
+        <Badge className="border-muted-foreground mb-8" variant="outline">
+          <Breadcrumbs breadcrumbs={[{ name: 'Accueil', link: '/' }, { name: 'Membres' }]} />
+        </Badge>
         <h1 className="mb-8 text-4xl font-bold">Nos Membres</h1>
         <p className="text-muted-foreground mb-8">
           Découvrez les {membres.totalDocs} membres du réseau RPDAD en Gironde
@@ -46,12 +51,16 @@ export default async function Page() {
         {/* Temporary list - replace with MembreShowcase component */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {membres.docs.map((membre) => (
-            <div key={membre.id} className="rounded-lg border p-6">
+            <a
+              key={membre.id}
+              href={`/membres/${membre.slug}`}
+              className="rounded-lg border p-6 transition-shadow hover:shadow-md"
+            >
               <h3 className="font-semibold">{membre.name}</h3>
               {membre.adresse && (
                 <p className="text-muted-foreground mt-2 text-sm">{membre.adresse}</p>
               )}
-            </div>
+            </a>
           ))}
         </div>
       </div>

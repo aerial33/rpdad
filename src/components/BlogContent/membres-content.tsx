@@ -1,22 +1,24 @@
-import { GlobeAltIcon } from '@heroicons/react/24/outline'
+import {
+  ClockIcon,
+  EnvelopeIcon,
+  GlobeAltIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from '@heroicons/react/24/outline'
 
 import Image from 'next/image'
-import Link from 'next/link'
 
-import logoAndernos from '@/../public/logoAndernos.png'
 import headerMembresImg from '@/graphics/headersImg/header-members.svg'
-import type { Media as MediaType } from '@/payload-types'
+import type { Membre } from '@/payload-types'
 
+import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs'
+import { CMSLink } from '../Link'
 import { Media } from '../Media'
+import RichText from '../RichText'
 import SocialsList from '../SocialsList/SocialsList'
+import { Badge } from '../ui/badge'
 
-interface MembresContentProps {
-  service?: string
-  avatar?: MediaType | null
-  // Futurs props à définir...
-}
-
-export const MembresContent = ({ service, avatar }: MembresContentProps) => {
+export const MembresContent = (membre: Membre) => {
   return (
     <>
       <div className="w-full">
@@ -30,22 +32,22 @@ export const MembresContent = ({ service, avatar }: MembresContentProps) => {
           />
         </div>
         <div className="container -mt-10 lg:-mt-16">
-          <div className="relative flex flex-col rounded-3xl bg-white p-5 shadow-xl md:flex-row md:rounded-[40px] lg:p-8">
+          <div className="relative mb-16 flex flex-col rounded-3xl bg-white p-5 shadow-xl md:flex-row md:rounded-[40px] lg:mb-8 lg:p-8">
             <div className="mt-12 w-32 flex-shrink-0 sm:mt-0 lg:w-40">
               <div className="wil-avatar relative z-0 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-xl font-semibold uppercase shadow-2xl ring-4 ring-white lg:h-36 lg:w-36 lg:text-2xl">
-                {avatar ? (
+                {membre.logo && typeof membre.logo === 'object' ? (
                   <Media
-                    resource={avatar}
-                    alt="Avatar du service"
+                    resource={membre.logo}
+                    alt={`Logo ${membre.name}`}
                     fill
                     imgClassName="object-contain p-2"
                   />
                 ) : (
                   <Image
-                    src={logoAndernos}
-                    alt="Logo Andernos (exemple)"
+                    src={''}
+                    alt="Logo par défaut"
                     fill
-                    className="object-contain p-2"
+                    className="bg-gray-400 object-contain p-2"
                   />
                 )}
               </div>
@@ -53,18 +55,22 @@ export const MembresContent = ({ service, avatar }: MembresContentProps) => {
 
             {/*  */}
             <div className="flex-grow pt-5 md:pt-1 lg:ml-6 xl:ml-12">
-              <div className="max-w-screen-sm space-y-3">
-                <h2 className="items-center text-2xl font-medium sm:text-3xl">
-                  {" Service d'aide et d'accompagnement à Domicile du CCAS D'ANDERNOS-LES-BAINS"}
+              <div className="w-full space-y-4">
+                <h2 className="mb-4 w-full items-center text-2xl font-medium text-gray-600 sm:text-4xl">
+                  {"Service d'Aide et d' Accompagnement à Domicile du CCAS: "} {membre.name}
                 </h2>
 
-                <a
-                  href="#"
-                  className="flex cursor-pointer items-center space-x-2.5 truncate text-xs font-medium text-neutral-500 rtl:space-x-reverse"
-                >
-                  <GlobeAltIcon className="h-4 w-4 flex-shrink-0" />
-                  <span className="truncate text-neutral-700">https://example.com/me</span>
-                </a>
+                {membre.informations?.website && (
+                  <CMSLink
+                    type="custom"
+                    url={membre.informations.website}
+                    newTab
+                    className="flex cursor-pointer items-center space-x-2.5 truncate text-xs font-medium text-neutral-500 rtl:space-x-reverse"
+                  >
+                    <GlobeAltIcon className="h-4 w-4 flex-shrink-0" />
+                    <span className="truncate text-neutral-700">{membre.informations.website}</span>
+                  </CMSLink>
+                )}
                 <SocialsList itemClass="block w-7 h-7" />
               </div>
             </div>
@@ -104,130 +110,145 @@ export const MembresContent = ({ service, avatar }: MembresContentProps) => {
       </div>
 
       <section>
-        <div className="container mx-auto flex max-w-7xl flex-col items-center pt-4 pb-8 md:flex-row md:pt-8 md:pb-10 lg:pb-16">
-          <aside className="top-20 mb-8 w-full self-start pt-8 md:sticky md:mr-8 md:w-fit md:min-w-[16rem] md:flex-1 lg:max-w-[18rem] lg:shrink-0 2xl:w-full">
-            <div className="mb-8 flex w-full max-w-fit shrink-0 flex-col md:mb-10">
-              <div className="hidden w-full md:mt-1 md:block">
-                {/* Liens sociaux - à garder si nécessaire */}
-              </div>
+        <div className="container mx-auto flex flex-col items-center pt-4 pb-8 md:pt-8 md:pb-10 lg:flex-row lg:justify-between lg:pb-16 xl:px-0">
+          {membre.content && (
+            <div className="border-foret border-l-3 pl-4 md:pl-8 lg:pl-16">
+              <Badge className="border-muted-foreground mb-8" variant="outline">
+                <Breadcrumbs
+                  breadcrumbs={[
+                    { name: 'Accueil', link: '/' },
+                    { name: 'Membres', link: '/membres' },
+                    { name: membre.name },
+                  ]}
+                />
+              </Badge>
+              <RichText
+                className="prose prose-sm md:prose-lg richtext-content mx-auto max-w-4xl"
+                data={membre.content}
+                enableGutter={false}
+              />
             </div>
-            <div className="border-border theme-dark:border-zinc-700 theme-dark:bg-zinc-600 flex flex-col rounded-xl border bg-zinc-100 py-6 md:py-8">
-              <div className="theme-dark:text-zinc-100 mb-6 px-6 leading-5 font-medium md:mb-4.5">
-                {service}
+          )}
+          <aside className="top-20 mb-8 w-full self-start pt-8 lg:sticky lg:ml-8 lg:max-w-[20rem] lg:shrink-0 2xl:w-full">
+            <div className="flex flex-col rounded-3xl bg-zinc-100 py-8 shadow-lg md:rounded-[40px]">
+              {/* Logo and Name */}
+              <div className="mb-6 flex flex-col items-center px-6">
+                {membre.logo && typeof membre.logo === 'object' ? (
+                  <div className="relative mb-4 h-20 w-20 overflow-hidden rounded-full bg-white shadow-xl ring-2 ring-white">
+                    <Media
+                      resource={membre.logo}
+                      alt={`Logo ${membre.name}`}
+                      fill
+                      imgClassName="object-contain p-2"
+                    />
+                  </div>
+                ) : null}
+                <h3 className="theme-dark:text-zinc-100 text-center text-xl leading-tight font-bold">
+                  {membre.name}
+                </h3>
               </div>
-              <div className="mb-5 px-6 last:mb-0">
-                <div className="theme-dark:text-zinc-400 overflow-hidden text-xs text-zinc-600 md:text-sm">
-                  Une plateforme d&apos;astreinte téléphonique prend le relai en dehors des heures
-                  d&apos;ouverture au public, ainsi que les week-end et jours fériés
+
+              {/* Divider */}
+              {membre.informations?.astreinte && (
+                <div className="theme-dark:border-zinc-700 mb-6 border-t border-zinc-300" />
+              )}
+              {membre.adresse && (
+                <div className="mb-6 px-6">
+                  <div className="mb-2 flex items-center gap-2">
+                    <MapPinIcon className="theme-dark:text-zinc-400 h-5 w-5 text-zinc-500" />
+                    <div className="theme-dark:text-zinc-200 text-sm font-semibold text-zinc-800">
+                      Adresse
+                    </div>
+                  </div>
+                  <div className="theme-dark:text-zinc-400 ml-7 text-sm leading-relaxed text-zinc-600">
+                    {membre.adresse}
+                  </div>
                 </div>
-              </div>
-              <div className="mb-5 px-6 last:mb-0">
-                <div className="theme-dark:text-zinc-200 mb-2 text-xs font-semibold">
-                  Horaire d&apos;accueil
+              )}
+
+              {(membre.informations?.contact?.tel || membre.informations?.contact?.mail) && (
+                <div className="mb-6 px-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <PhoneIcon className="theme-dark:text-zinc-400 h-5 w-5 text-zinc-500" />
+                    <div className="theme-dark:text-zinc-200 text-sm font-semibold text-zinc-800">
+                      Contact
+                    </div>
+                  </div>
+                  <div className="theme-dark:text-zinc-400 ml-7 space-y-2 text-sm text-zinc-600">
+                    {membre.informations.contact.tel && (
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">Tél:</span>
+                        <a
+                          href={`tel:${membre.informations.contact.tel}`}
+                          className="theme-dark:hover:text-zinc-200 hover:text-zinc-900"
+                        >
+                          {membre.informations.contact.tel}
+                        </a>
+                      </div>
+                    )}
+                    {membre.informations.contact.mail && (
+                      <div className="flex items-center gap-2">
+                        <EnvelopeIcon className="h-4 w-4 flex-shrink-0" />
+                        <a
+                          href={`mailto:${membre.informations.contact.mail}`}
+                          className="theme-dark:hover:text-zinc-200 truncate hover:text-zinc-900"
+                        >
+                          {membre.informations.contact.mail}
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="theme-dark:text-zinc-400 overflow-hidden text-xs text-zinc-600 md:text-sm">
-                  Du lundi au vendredi de 8h00 à 12h00 et de 14h00 à 18h00
-                  <br />
-                  Le vendredi de 8h00 à 12h00 et de 14h00 à 17h00
+              )}
+
+              {/* Divider */}
+              {membre.informations?.astreinte && (
+                <div className="theme-dark:border-zinc-700 mb-6 border-t border-zinc-300" />
+              )}
+
+              {membre.informations?.horaires && (
+                <div className="mb-6 px-6">
+                  <div className="mb-2 flex items-center gap-2">
+                    <ClockIcon className="theme-dark:text-zinc-400 h-5 w-5 text-zinc-500" />
+                    <div className="theme-dark:text-zinc-200 text-sm font-semibold text-zinc-800">
+                      Horaire d&apos;accueil
+                    </div>
+                  </div>
+                  <div className="theme-dark:text-zinc-400 ml-7 text-sm leading-relaxed text-zinc-600">
+                    {membre.informations.horaires}
+                  </div>
                 </div>
-              </div>
-              <div className="border-border theme-dark:border-zinc-700 mb-5 border-t px-6 pt-5 last:mb-0">
-                <div className="theme-dark:text-zinc-200 mb-2 text-xs font-semibold">Adresse</div>
-                <div className="theme-dark:text-zinc-400 overflow-hidden text-xs text-zinc-600 md:text-sm">
-                  {service}, Gironde
+              )}
+              {membre.informations?.astreinte && (
+                <div className="mb-6 px-6">
+                  <div className="theme-dark:text-zinc-400 rounded-lg bg-white/50 p-3 text-sm leading-relaxed text-zinc-700">
+                    {membre.informations.astreinte}
+                  </div>
                 </div>
-              </div>
-              <div className="mb-5 px-6 last:mb-0">
-                <div className="theme-dark:text-zinc-200 mb-2 text-xs font-semibold">
-                  Hôtel de ville
+              )}
+
+              {membre.informations?.website && (
+                <div className="px-6">
+                  <div className="mb-2 flex items-center gap-2">
+                    <GlobeAltIcon className="theme-dark:text-zinc-400 h-5 w-5 text-zinc-500" />
+                    <div className="theme-dark:text-zinc-200 text-sm font-semibold text-zinc-800">
+                      Site Internet
+                    </div>
+                  </div>
+                  <div className="theme-dark:text-zinc-400 ml-7 text-sm text-zinc-600">
+                    <CMSLink
+                      type="custom"
+                      url={membre.informations.website}
+                      newTab
+                      className="theme-dark:hover:text-zinc-200 break-all underline hover:text-zinc-900"
+                    >
+                      {membre.informations.website}
+                    </CMSLink>
+                  </div>
                 </div>
-                <div className="theme-dark:text-zinc-400 overflow-hidden text-xs text-zinc-600 md:text-sm">
-                  7 rue Pierre Pauilhac – 33740 ARES
-                </div>
-              </div>
-              <div className="mb-5 px-6 last:mb-0">
-                <div className="theme-dark:text-zinc-200 mb-2 text-xs font-semibold">
-                  Site Internet
-                </div>
-                <div className="theme-dark:text-zinc-400 overflow-hidden text-xs text-zinc-600 md:text-sm">
-                  <Link
-                    href="#"
-                    className="hover:text-foreground theme-dark:hover:text-zinc-300 underline"
-                  >
-                    www.ville-ares.fr
-                  </Link>
-                </div>
-              </div>
+              )}
             </div>
           </aside>
-          <article className="prose prose-sm theme-dark:prose-invert mx-auto pt-8">
-            <h1>Service d&apos;Aide et d&apos;Accompagnement à Domicile du {service}</h1>
-            <h2>Le mot d&apos;accueil</h2>
-            <p>
-              Vous venez de rejoindre le Service d&apos;Aide et d&apos;Accompagnement à Domicile
-              d&apos;Arès. Vous allez ainsi bénéficier des services de nos agents qualifiés. Nous
-              vous remercions de la confiance que vous nous accordez et vous souhaitons la bienvenue
-              !
-            </p>
-            <p>
-              Rester chez soi le plus longtemps et dans les meilleures conditions possible est le
-              vœu le plus cher de chacun d&apos;entre-nous. Pour répondre à ce besoin, avec beaucoup
-              de dévouement les dix aides à domicile de notre service sont en mesure d&apos;apporter
-              leur soutien aussi bien pratique que psychologique à toutes personnes pouvant
-              bénéficier de ce service : retraités, et (ou) personnes en situation de handicap,
-              bénéficiaires de l&apos;ARDH (Aide au Retour à Domicile après Hospitalisation).
-              Compenser la perte d&apos;autonomie, maintenir le lien social, préserver les repères
-              de la personne, tels sont les objectifs essentiels de notre service afin
-              d&apos;assurer un maintien à domicile de qualité et le plus pérenne possible.
-            </p>
-            <h2>Le service</h2>
-            <p>
-              Ce service intervient auprès de personnes retraitées ou en situation de handicap qui
-              rencontrent des difficultés dans l&apos;accomplissement des actes essentiels de la vie
-              courante. Dix aides à domicile apportent soutien aussi bien pratique que psychologique
-              aux personnes bénéficiant de ce service et ce afin d&apos;assurer le plus longtemps
-              possible leur maintien à domicile.
-            </p>
-
-            <h3>Vos interlocuteurs</h3>
-            <p>
-              Une responsable de service est à votre écoute pour répondre à toutes vos questions.
-            </p>
-            <ul>
-              <li>Une responsable équipe administrative...</li>
-              <li>Un agent qualifié est à votre écoute pour répondre à toutes vos questions.</li>
-            </ul>
-
-            <h3>Le champ d&apos;intervention</h3>
-            <p>
-              Selon les plans d&apos;aide définis, et à l&apos;exception d&apos;actes relevant de
-              soins médicaux :
-            </p>
-            <ul>
-              <li>Entretien du logement et travaux ménagers</li>
-              <li>Entretien du linge et repassage</li>
-              <li>Courses de proximité (uniquement sur la commune)</li>
-              <li>
-                Aide à la promenade et transports de personnes ayant des difficultés de déplacement
-                vers les lieux de vie sociale
-              </li>
-              <li>Activités de stimulation de la mémoire, temps de parole et d&apos;écoute</li>
-              <li>Soutien à l&apos;aidant</li>
-            </ul>
-            <p>
-              Organisme de service à la personne enregistré sous le numéro SAP263300113 auprès de la
-              DIRRECTE
-            </p>
-            <h3>Le mode d&apos;intervention</h3>
-            <p>
-              Le service est assuré par des aides à domicile qualifiées et expérimentées. Elles sont
-              accompagnées dans leur travail par un responsable de service.
-            </p>
-            <p>
-              Besoin d&apos;informations complémentaires ? Consultez la page du service sur la
-              plateforme SAAD du Département de la Gironde CLIQUER ICI
-            </p>
-          </article>
         </div>
       </section>
     </>
