@@ -7,6 +7,7 @@ import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 
 import MembresContent from '@/components/BlogContent/membres-content'
+import { Breadcrumbs } from '@/components/Breadcrumbs/Breadcrumbs'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -45,6 +46,20 @@ export default async function Membre({ params: paramsPromise }: Args) {
   const url = '/membres/' + slug
   const membre = await queryMembreBySlug({ slug })
 
+  const breadcrumbs = [
+    {
+      link: '/',
+      name: 'Accueil',
+    },
+    {
+      link: '/membres',
+      name: 'Membres',
+    },
+    {
+      name: membre?.name || '',
+    },
+  ]
+
   if (!membre) return <PayloadRedirects url={url} />
 
   return (
@@ -53,8 +68,10 @@ export default async function Membre({ params: paramsPromise }: Args) {
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
+      <p className="text-sm">Breadcrumb</p>
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       {/* TODO: Replace with actual membre content component */}
-      <MembresContent />
+      <MembresContent {...membre} />
     </div>
   )
 }
