@@ -25,6 +25,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
+  const isHomePage = pathname === '/'
 
   useEffect(() => {
     setHeaderTheme(null)
@@ -45,8 +46,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           </Link>
           <NavbarMedium data={data} />
         </div>
-        <div className="hidden items-center gap-4 lg:flex">
-          <ul className="text-foreground flex items-center space-x-4">
+        <div
+          className={`hidden items-center gap-4 lg:flex ${isHomePage ? 'text-white' : 'text-foreground'}`}
+        >
+          <ul className="flex items-center space-x-4">
             <li className="hover:text-primary">
               <a href="https://www.facebook.com/rpdadgironde" target="_blank">
                 <Facebook className="size-5" />
@@ -73,7 +76,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           </ul>
           <Link href="/search">
             <span className="sr-only">Search</span>
-            <SearchIcon className="hover:text-primary text-foreground w-5 font-medium" />
+            <SearchIcon className="hover:text-primary w-5 font-medium" />
           </Link>
         </div>
         <MobileMenu data={data} />

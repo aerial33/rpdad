@@ -129,7 +129,7 @@ export const MembresContent = (membre: Membre) => {
               />
             </div>
           )}
-          <aside className="top-20 mb-8 w-full self-start pt-8 lg:sticky lg:ml-8 lg:max-w-[20rem] lg:shrink-0 2xl:w-full">
+          <aside className="top-20 mb-8 w-full self-start pt-8 lg:sticky lg:ml-8 lg:max-w-[24rem] lg:shrink-0 2xl:w-full">
             <div className="flex flex-col rounded-3xl bg-zinc-100 py-8 shadow-lg md:rounded-[40px]">
               {/* Logo and Name */}
               <div className="mb-6 flex flex-col items-center px-6">
