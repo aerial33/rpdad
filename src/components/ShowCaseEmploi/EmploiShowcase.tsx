@@ -122,18 +122,11 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                     />
                   </div>
                   <span className="absolute top-3 left-4 z-10">
-                    {emploi.categories &&
-                      Array.isArray(emploi.categories) &&
-                      emploi.categories.length > 0 && (
-                        <Badge
-                          variant="default"
-                          className="bg-primary-lighter text-primary text-xs"
-                        >
-                          {typeof emploi.categories[0] === 'object'
-                            ? emploi.categories[0].title
-                            : emploi.categories[0]}
-                        </Badge>
-                      )}
+                    {emploi.typeContrat && (
+                      <Badge variant="default" className="bg-primary-lighter text-primary text-xs">
+                        {emploi.typeContrat.toUpperCase()}
+                      </Badge>
+                    )}
                   </span>
                   <CardTitle className="mt-4 line-clamp-2 text-xl">{emploi.title}</CardTitle>
                 </CardHeader>
@@ -145,11 +138,11 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                   </CardDescription>
 
                   <div className="my-6 flex-shrink-0 space-y-2">
-                    {emploi.organization && (
+                    {emploi.organisme?.nom && (
                       <div className="text-muted-foreground flex items-center gap-4 text-sm">
                         <div className="flex items-center gap-2">
                           <Building2 className="h-4 w-4" />
-                          <span className="truncate">{emploi.organization}</span>
+                          <span className="truncate">{emploi.organisme.nom}</span>
                         </div>
                         {emploi.publishedAt && (
                           <>
@@ -162,10 +155,10 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                         )}
                       </div>
                     )}
-                    {emploi.location && (
+                    {emploi.organisme?.lieu && (
                       <div className="text-muted-foreground flex items-center gap-2 text-sm">
                         <MapPin className="h-4 w-4" />
-                        <span className="truncate">{emploi.location}</span>
+                        <span className="truncate">{emploi.organisme.lieu}</span>
                       </div>
                     )}
                   </div>

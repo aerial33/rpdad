@@ -19,18 +19,17 @@ const MediaDisplayEmploi: FC<MediaDisplayEmploiProps> = ({
   emploi,
   isHover = false,
 }) => {
-  const { featuredImage } = emploi
+  const { image } = emploi
 
-  // Vérifier si featuredImage est un objet Media complet
-  const isImagePopulated =
-    featuredImage && typeof featuredImage === 'object' && 'url' in featuredImage
+  // Vérifier si image est un objet Media complet
+  const isImagePopulated = image && typeof image === 'object' && 'url' in image
 
   // Vérifier si c'est une vidéo
   const isVideo =
-    featuredImage &&
-    typeof featuredImage === 'object' &&
-    'mimeType' in featuredImage &&
-    featuredImage.mimeType?.includes('video')
+    image &&
+    typeof image === 'object' &&
+    'mimeType' in image &&
+    image.mimeType?.includes('video')
 
   // Vérifier si c'est une galerie (pour l'instant, on ne gère que les images simples)
   const isGallery = false // À implémenter si nécessaire
@@ -56,7 +55,7 @@ const MediaDisplayEmploi: FC<MediaDisplayEmploiProps> = ({
     if (mediaType === 'video' && isVideo && isHover) {
       return (
         <MediaVideoEmploi
-          resource={featuredImage}
+          resource={image}
           isHover={isHover}
           className="absolute inset-0 z-20"
         />
@@ -91,7 +90,7 @@ const MediaDisplayEmploi: FC<MediaDisplayEmploiProps> = ({
     <div className={`nc-MediaDisplayEmploi relative ${className}`}>
       {/* Image de fond - TOUJOURS affichée (même pour les vidéos comme image de présentation) */}
       {mediaType !== 'gallery' && isImagePopulated && (
-        <MediaComponent resource={featuredImage} fill className="object-cover" />
+        <MediaComponent resource={image} fill className="object-cover" />
       )}
 
       {/* Contenu superposé (vidéo, icônes, etc.) */}

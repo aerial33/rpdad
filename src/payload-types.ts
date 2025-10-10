@@ -861,7 +861,8 @@ export interface BentoCardBlock {
         title: string;
         description: string;
         tag?: string | null;
-        link: {
+        enableLink?: boolean | null;
+        link?: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?:
@@ -1524,6 +1525,7 @@ export interface BentoCardBlockSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         tag?: T;
+        enableLink?: T;
         link?:
           | T
           | {

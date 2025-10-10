@@ -58,8 +58,19 @@ export const BentoCard: Block = {
           type: 'text',
           label: 'Tag (optionnel)',
         },
+        {
+          name: 'enableLink',
+          type: 'checkbox',
+          label: 'Activer un lien',
+          defaultValue: true,
+        },
         link({
           appearances: ['default', 'outline'],
+          overrides: {
+            admin: {
+              condition: (_, siblingData) => siblingData?.enableLink === true,
+            },
+          },
         }),
         {
           name: 'image',

@@ -1,16 +1,20 @@
-import type { Emplois, Media } from '@/payload-types'
+import type { Media } from '@/payload-types'
 
 // Type simplifié unique pour tous les emplois
 export interface EmploiItem {
   id: number
   title: string
   slug?: string | null
-  subtitle?: string | null
-  categories?: Emplois['categories']
-  location?: string | null
-  organization?: string | null
   publishedAt?: string | null
-  featuredImage?: (number | null) | Media
+  image?: (number | null) | Media
+  organisme?: {
+    nom?: string | null
+    lieu?: string | null
+  }
+  typeContrat?: 'cdi' | 'cdd' | null
+  workTime?: 'full-time' | 'part-time' | 'flexible' | null
+  statusOffre?: 'active' | 'filled' | 'expired' | null
+  datePourvoir?: string | null
   meta?: {
     description?: string | null
   }

@@ -11,17 +11,14 @@ export const EmploiHero: React.FC<{
   emploi: Emplois
 }> = ({ emploi }) => {
   const {
-    categories,
-    featuredImage,
-    location,
-    organization,
+    image,
+    organisme,
     publishedAt,
-    salary,
     title,
     workTime,
-    status,
-    startDate,
-    endDate,
+    statusOffre,
+    datePourvoir,
+    typeContrat,
   } = emploi
 
   const getWorkTimeLabel = (workTime: string) => {
@@ -34,14 +31,14 @@ export const EmploiHero: React.FC<{
   }
   // console.log('categories from EmploiHero', categories)
 
-  const getStatusBadge = (status: string) => {
+  const getStatusBadge = (statusOffre: string) => {
     const statusConfig = {
       active: { label: 'Active', color: 'bg-green-500' },
       filled: { label: 'Pourvue', color: 'bg-gray-500' },
       expired: { label: 'Expirée', color: 'bg-red-500' },
     }
-    const config = statusConfig[status as keyof typeof statusConfig] || {
-      label: status,
+    const config = statusConfig[statusOffre as keyof typeof statusConfig] || {
+      label: statusOffre,
       color: 'bg-gray-500',
     }
     return (
@@ -49,6 +46,11 @@ export const EmploiHero: React.FC<{
         {config.label}
       </Badge>
     )
+  }
+
+  const getTypeContratLabel = (type?: string | null) => {
+    if (!type) return null
+    return type.toUpperCase()
   }
 
   return (
@@ -59,18 +61,11 @@ export const EmploiHero: React.FC<{
             {/* Badges de statut */}
             <FadeUp delay={0.3} duration={0.6}>
               <div className="flex flex-wrap items-center gap-3 mb-8">
-                {categories && categories.length > 0 && (
-                  <>
-                    {categories.map((category, index) => (
-                      <Badge
-                        key={index}
-                        variant="outline"
-                        className=" text-white font-medium backdrop-blur-sm"
-                      >
-                        {typeof category === 'object' ? category.title : category}
-                      </Badge>
-                    ))}
-                  </>
+                {statusOffre && getStatusBadge(statusOffre)}
+                {typeContrat && (
+                  <Badge variant="outline" className=" text-white font-medium backdrop-blur-sm">
+                    {getTypeContratLabel(typeContrat)}
+                  </Badge>
                 )}
                 {workTime && (
                   <Badge variant="outline" className=" text-white font-medium  backdrop-blur-sm">
@@ -96,14 +91,14 @@ export const EmploiHero: React.FC<{
         {/* FEATURED IMAGE */}
         <div className="mt-8 md:mt-0 md:absolute md:top-0 md:end-0 md:bottom-0 md:w-1/2 lg:w-2/5">
           <FadeUp delay={0.2} duration={0.8}>
-            {featuredImage && typeof featuredImage !== 'string' && (
+            {image && typeof image !== 'string' && (
               <Media
                 fill
                 videoClassName="md:rounded-l-3xl object-cover  h-full w-full"
                 imgClassName="md:rounded-l-3xl object-cover h-full w-full md:brightness-100 brightness-60"
                 priority
                 className="object-cover object-center"
-                resource={featuredImage}
+                resource={image}
               />
             )}
           </FadeUp>
