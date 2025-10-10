@@ -141,8 +141,13 @@ export const Emplois: CollectionConfig = {
                   fields: [
                     {
                       name: 'description',
-                      type: 'textarea',
+                      type: 'richText',
                       label: 'Informations supplémentaires',
+                      editor: lexicalEditor({
+                        features: ({ rootFeatures }) => {
+                          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
+                        },
+                      }),
                       admin: {
                         description: "Information indicatif de l'organisme pour l'offre d'emploi",
                       },
@@ -168,9 +173,9 @@ export const Emplois: CollectionConfig = {
               name: 'content',
               type: 'richText',
               editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
+                features: ({ defaultFeatures }) => {
                   return [
-                    ...rootFeatures,
+                    ...defaultFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
                     BlocksFeature({ blocks: [Banner, MediaBlock] }),
                     FixedToolbarFeature(),

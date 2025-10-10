@@ -15,6 +15,8 @@ import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import type { Emplois } from '@/payload-types'
 
+import { FadeUp } from '../motion/animations'
+
 export const BlogSection = ({ emploi }: { emploi: Emplois }) => {
   const getWorkTimeLabel = (workTime: string) => {
     const workTimeMap = {
@@ -53,10 +55,10 @@ export const BlogSection = ({ emploi }: { emploi: Emplois }) => {
 
   return (
     <section>
-      <div className="container mx-auto flex flex-col items-center pt-4 pb-8 md:pt-8 md:pb-10 lg:flex-row lg:justify-between lg:pb-16 xl:px-0">
+      <FadeUp className="py4 container mx-auto flex flex-col items-center md:pt-8 md:pb-10 lg:flex-row lg:justify-between lg:pb-16 xl:px-0">
         {emploi.content && (
-          <div className="">
-            <Badge className="border-muted-foreground mb-8" variant="outline">
+          <div className="self-start">
+            <Badge className="border-muted-foreground mb-8 hidden md:block" variant="outline">
               <Breadcrumbs
                 breadcrumbs={[
                   { name: 'Accueil', link: '/' },
@@ -169,8 +171,12 @@ export const BlogSection = ({ emploi }: { emploi: Emplois }) => {
             {/* Informations supplémentaires */}
             {emploi.organisme?.description && (
               <div className="mb-6 px-6">
-                <div className="theme-dark:text-zinc-400 rounded-lg bg-white/50 p-3 text-sm leading-relaxed text-zinc-700">
-                  {emploi.organisme.description}
+                <div className="theme-dark:text-zinc-400 rounded-lg border border-zinc-300 bg-white/50 p-3 text-sm leading-relaxed text-zinc-700">
+                  <RichText
+                    className="prose-sm prose"
+                    data={emploi.organisme.description}
+                    enableGutter={false}
+                  />
                 </div>
               </div>
             )}
@@ -258,7 +264,7 @@ export const BlogSection = ({ emploi }: { emploi: Emplois }) => {
             )}
           </div>
         </aside>
-      </div>
+      </FadeUp>
     </section>
   )
 }

@@ -1,6 +1,14 @@
 'use client'
 
-import { ArrowRight, Building2, Calendar, MapPin } from 'lucide-react'
+import {
+  ArrowRight,
+  Building2,
+  Calendar,
+  Handshake,
+  MapPin,
+  Sparkles,
+  UsersRound,
+} from 'lucide-react'
 
 import { useEffect, useState } from 'react'
 
@@ -12,9 +20,8 @@ import { Media } from '@/components/Media'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { displayDate } from '@/utilities/formatDateTime'
 
-import { FAQSection } from './FAQSection'
-import { TestimonialSection } from './TestimonialSection'
 import type { EmploiShowcaseProps } from './types'
 
 export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) {
@@ -24,15 +31,6 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
   useEffect(() => {
     setIsRendered(true)
   }, [])
-
-  const formatDate = (dateString: string | null | undefined) => {
-    if (!dateString) return 'Date non spécifiée'
-    return new Date(dateString).toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    })
-  }
 
   // Fonction pour extraire le texte du contenu Lexical
   const extractTextFromLexical = (content: any): string => {
@@ -127,9 +125,9 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
             <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               {"Le Réseau Public Départemental d'Aide à Domicile de la Gironde"}
             </h2>
-            <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+            <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
               {
-                "Nous accompagnons près de 5000 personnes âgées et personnes en situation de handicap qui choisissent de vivre à domicile. Grâce à nos agents de la fonction publique, nous aidons et soutenons nos bénéficiaires dans les actes de la vie quotidienne, en favorisant une coopération étroite avec l'ensemble des acteurs intervenant à leurs côtés."
+                'C’est près de 1200 agents, les métiers sont variés : aide à domicile, auxiliaire de vie, responsable de SAD, responsable de secteur, agent administratif…, voici nos offres'
               }
             </p>
           </div>
@@ -188,7 +186,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                             <span className="text-muted-foreground mx-[6px] font-medium">·</span>
                             <span className="text-muted-foreground flex items-center gap-2 text-sm">
                               <Calendar className="h-4 w-4" />
-                              {formatDate(emploi.publishedAt)}
+                              {displayDate(emploi.publishedAt)}
                             </span>
                           </>
                         )}
@@ -234,8 +232,8 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <Building2 className="text-primary h-8 w-8" />
+              <div className="bg-flamingo/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                <Building2 className="text-flamingo h-8 w-8" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Notre mission</h3>
               <p className="text-muted-foreground text-sm">
@@ -244,8 +242,8 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <MapPin className="text-primary h-8 w-8" />
+              <div className="bg-chateau/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                <UsersRound className="text-chateau h-8 w-8" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Service centré sur vous</h3>
               <p className="text-muted-foreground text-sm">
@@ -254,7 +252,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
             </div>
             <div className="text-center">
               <div className="bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <Calendar className="text-primary h-8 w-8" />
+                <Sparkles className="text-primary h-8 w-8" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Innovation et qualité</h3>
               <p className="text-muted-foreground text-sm">
@@ -263,8 +261,8 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <ArrowRight className="text-primary h-8 w-8" />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-300/10">
+                <Handshake className="h-8 w-8 text-yellow-300" />
               </div>
               <h3 className="mb-2 text-xl font-semibold">Partenariats locaux</h3>
               <p className="text-muted-foreground text-sm">
@@ -275,12 +273,8 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
           </div>
         </div>
       </section>
-
-      {/* Section Témoignages */}
-      <TestimonialSection />
-
-      {/* Section FAQ */}
-      <FAQSection />
+      {/* <TestimonialSection /> */}
+      {/* <FAQSection /> */}
 
       {/* Section Call to Action */}
       {/* <section className="from-primary to-secondary bg-gradient-to-r py-20 lg:py-32">

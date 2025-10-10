@@ -1,4 +1,4 @@
-import { formatDateTime } from 'src/utilities/formatDateTime'
+import { displayDate } from 'src/utilities/formatDateTime'
 
 import React from 'react'
 
@@ -29,7 +29,7 @@ export const EmploiHero: React.FC<{
 
   return (
     <>
-      <section className="from-primary to-primary-dark relative z-10 bg-gradient-to-r pt-16 md:py-20 lg:py-28">
+      <section className="from-primary to-primary-dark relative z-10 bg-gradient-to-l pt-16 md:py-20 lg:py-28">
         <div className="relative z-10 container mx-auto">
           <div className="max-w-screen-md">
             {/* Badges de statut */}
@@ -55,7 +55,7 @@ export const EmploiHero: React.FC<{
                 <div className="mt-8 flex items-center gap-4">
                   <p className="text-sm font-medium text-white/80">Publié le</p>
                   <time className="font-semibold text-white" dateTime={publishedAt}>
-                    {formatDateTime(publishedAt)}
+                    {displayDate(publishedAt)}
                   </time>
                 </div>
               )}

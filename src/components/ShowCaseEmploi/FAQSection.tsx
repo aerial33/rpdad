@@ -1,14 +1,17 @@
 'use client'
+
+import { ChevronDown } from 'lucide-react'
+
+import { useState } from 'react'
+
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
-import { ChevronDown } from 'lucide-react'
-import { useState } from 'react'
 
 const faqData = [
   {
-    question: 'Quelles sont les conditions pour rejoindre le RPDAD ?',
+    question: 'En quoi consiste le travail d’aide à domicile ?',
     answer:
-      "Pour rejoindre notre équipe, nous recherchons des personnes motivées, avec ou sans expérience. Une formation dans le secteur social ou médico-social est appréciée mais pas obligatoire. Nous proposons des formations d'accompagnement pour tous nos nouveaux collaborateurs.",
+      'Vous accompagnez des personnes âgées et/ou en situation de handicap afin qu’elles puissent continuer à vivre chez elles dans de bonnes conditions. Concrètement, vous pouvez :• les accompagner dans les gestes du quotidien (toilette, habillage, repas)  • réaliser des tâches ménagères (entretien du logement, linge, courses) • leur apporter un soutien social (discussions, écoute, présence bienveillante) Votre rôle est à la fois pratique, humain et rassurant pour les personnes que vous aidez.',
   },
   {
     question: 'Quels types de contrats proposez-vous ?',
@@ -49,38 +52,38 @@ export function FAQSection() {
   return (
     <section className="py-20 lg:py-32">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="mb-16 text-center">
           <Badge className="mb-4" variant="outline">
             F.A.Q
           </Badge>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-700 md:text-4xl lg:text-5xl">
             Questions Fréquentes
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
             Trouvez les réponses aux questions les plus courantes sur nos offres d'emploi et notre
             organisation.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="mx-auto max-w-4xl">
           <div className="space-y-4">
             {faqData.map((faq, index) => {
               const isOpen = openItems.includes(index)
               return (
                 <Card
                   key={index}
-                  className={`border-0 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300 ${
-                    isOpen ? 'shadow-lg ring-2 ring-primary/10' : 'hover:shadow-md'
+                  className={`border-0 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 ${
+                    isOpen ? 'ring-primary/10 shadow-lg ring-2' : 'hover:shadow-md'
                   }`}
                 >
                   <CardContent className="p-0">
                     <button
                       onClick={() => toggleItem(index)}
-                      className="w-full text-left p-6 hover:bg-muted/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg group"
+                      className="hover:bg-muted/20 focus:ring-primary/20 group w-full rounded-lg p-6 text-left transition-all duration-200 focus:ring-2 focus:outline-none"
                     >
                       <div className="flex items-center justify-between">
                         <h3
-                          className={`text-lg font-semibold pr-8 transition-colors duration-200 ${
+                          className={`pr-8 text-lg font-semibold transition-colors duration-200 ${
                             isOpen ? 'text-primary' : 'text-foreground group-hover:text-primary'
                           }`}
                         >

@@ -21,7 +21,7 @@ export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
             <ChevronRightIcon className="h-4 w-4" />
           </p>
         ) : (
-          <p className="text-sm" key={index}>
+          <p className="text-sm truncate max-w-[200px] sm:max-w-none" key={index}>
             {breadcrump.name.toLowerCase()}
           </p>
         ),
