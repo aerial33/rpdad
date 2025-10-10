@@ -7,13 +7,13 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// import ReactPlayer from 'react-player'
+import { Media } from '@/components/Media'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 import { FAQSection } from './FAQSection'
-// import ReactPlayer from 'react-player'
-import MediaDisplayEmploi from './MediaDisplayEmploi'
 import { TestimonialSection } from './TestimonialSection'
 import type { EmploiShowcaseProps } from './types'
 
@@ -32,6 +32,44 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
       month: 'long',
       year: 'numeric',
     })
+  }
+
+  // Fonction pour extraire le texte du contenu Lexical
+  const extractTextFromLexical = (content: any): string => {
+    if (!content || !content.root || !content.root.children) {
+      return ''
+    }
+
+    const extractTextFromNode = (node: any): string => {
+      if (node.type === 'text') {
+        return node.text || ''
+      }
+
+      if (node.children && Array.isArray(node.children)) {
+        return node.children.map(extractTextFromNode).join(' ')
+      }
+
+      return ''
+    }
+
+    return content.root.children.map(extractTextFromNode).join(' ').trim()
+  }
+
+  // Fonction pour obtenir la description
+  const getDescription = (emploi: any): string => {
+    // Priorité 1: meta.description
+    if (emploi.meta?.description) {
+      return emploi.meta.description
+    }
+
+    // Priorité 2: extraire du contenu Lexical
+    if (emploi.content) {
+      const text = extractTextFromLexical(emploi.content)
+      return text.slice(0, 150) + (text.length > 150 ? '...' : '')
+    }
+
+    // Priorité 3: texte par défaut
+    return 'Découvrez cette opportunité professionnelle au sein de notre réseau.'
   }
 
   // const renderMainVideo = () => (
@@ -59,8 +97,8 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
           <Image
             alt="archive"
             fill
-            src="https://images.pexels.com/photos/3184352/pexels-photo-3184352.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-            className="h-full w-full rounded-3xl object-cover brightness-70 md:rounded-[40px]"
+            src="/img/rpdad-emploi.jpeg"
+            className="h-full w-full rounded-3xl object-cover object-[center_30%] brightness-60 md:rounded-[40px]"
             sizes="(max-width: 1280px) 100vw, 1536px"
           />
           <div className="bg-opacity-30 absolute inset-0 flex flex-col items-center justify-center text-white">
@@ -115,11 +153,13 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                   <div
                     className={`relative z-10 block aspect-video w-full flex-shrink-0 overflow-hidden rounded-t-3xl`}
                   >
-                    <MediaDisplayEmploi
-                      emploi={emploi}
-                      isHover={hoveredEmploi === emploi.id}
-                      className="h-full w-full"
-                    />
+                    {emploi.image && typeof emploi.image === 'object' && (
+                      <Media
+                        resource={emploi.image}
+                        fill
+                        imgClassName="object-cover object-[center_30%]"
+                      />
+                    )}
                   </div>
                   <span className="absolute top-3 left-4 z-10">
                     {emploi.typeContrat && (
@@ -133,8 +173,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
 
                 <CardContent className="flex flex-1 flex-col pt-0">
                   <CardDescription className="mb-4 line-clamp-3 flex-1 text-left">
-                    {emploi.meta?.description ||
-                      'Découvrez cette opportunité professionnelle au sein de notre réseau.'}
+                    {getDescription(emploi)}
                   </CardDescription>
 
                   <div className="my-6 flex-shrink-0 space-y-2">

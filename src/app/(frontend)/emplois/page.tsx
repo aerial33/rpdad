@@ -24,6 +24,12 @@ export default async function Page() {
     select: {
       title: true,
       slug: true,
+      image: true,
+      typeContrat: true,
+      publishedAt: true,
+      organisme: true,
+      meta: true,
+      content: true,
     },
     where: {
       _status: {
