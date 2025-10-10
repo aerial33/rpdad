@@ -17,8 +17,6 @@ import type { CollectionConfig } from 'payload'
 import { Banner } from '@/blocks/Banner/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { slugField } from '@/fields/slug'
-// import { slugField } from '@/fields/slug'
-
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 import { anyone } from '../../access/anyone'
@@ -36,7 +34,7 @@ export const Emplois: CollectionConfig = {
 
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'publishedAt'],
+    defaultColumns: ['title', 'statusOffre', 'publishedAt'],
     group: 'Publications',
     hideAPIURL: false,
     livePreview: {
@@ -65,15 +63,101 @@ export const Emplois: CollectionConfig = {
       label: "Titre de l'offre",
     },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: "Image de l'offre",
+      admin: {
+        description: "Image principale associée à l'offre d'emploi",
+      },
+    },
+    {
       type: 'tabs',
       tabs: [
         {
           label: '🏫 Informations générales',
           fields: [
             {
-              name: 'Organisme',
-              type: 'text',
-              label: 'Organisation',
+              name: 'organisme',
+              type: 'group',
+              label: 'Organisme',
+              fields: [
+                {
+                  name: 'nom',
+                  type: 'text',
+                  label: 'Nom',
+                  admin: {
+                    description: 'Nom de l’organisme qui gère cet emploi',
+                  },
+                },
+                {
+                  name: 'lieu',
+                  type: 'text',
+                  label: 'Adresse',
+                  admin: {
+                    description: 'Adresse de l’organisme',
+                  },
+                },
+                {
+                  type: 'collapsible',
+                  label: "☎️  Contact pour l'organisme",
+                  admin: {
+                    initCollapsed: true,
+                  },
+                  fields: [
+                    {
+                      name: 'contact',
+                      type: 'group',
+                      label: 'Contact',
+                      fields: [
+                        {
+                          name: 'nom',
+                          type: 'text',
+                          label: 'Nom du contact',
+                          admin: {
+                            description: 'Nom du contact de l’organisme',
+                          },
+                        },
+                        {
+                          name: 'telephone',
+                          type: 'text',
+                          label: 'Téléphone du contact',
+                        },
+                        {
+                          name: 'email',
+                          type: 'email',
+                          label: 'Email du contact',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  type: 'collapsible',
+                  label: "ℹ️  Informations sur l'offre",
+                  admin: {
+                    initCollapsed: false,
+                  },
+                  fields: [
+                    {
+                      name: 'description',
+                      type: 'textarea',
+                      label: 'Informations supplémentaires',
+                      admin: {
+                        description: "Information indicatif de l'organisme pour l'offre d'emploi",
+                      },
+                    },
+                    {
+                      name: 'lien',
+                      type: 'text',
+                      label: 'Lien',
+                      admin: {
+                        description: "Lien vers l'offre d'emploi",
+                      },
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
@@ -96,7 +180,7 @@ export const Emplois: CollectionConfig = {
               }),
               label: 'Contenu de la page',
               admin: {
-                description: 'Contenu principal qui sera affiché dans le body de la page',
+                description: "Contenu de l'offre à pourvoir ",
               },
             },
           ],
@@ -135,6 +219,84 @@ export const Emplois: CollectionConfig = {
         date: {
           pickerAppearance: 'dayAndTime',
         },
+      },
+    },
+    {
+      name: 'datePourvoir',
+      type: 'date',
+      label: 'Poste à pourvoir pour le',
+      admin: {
+        position: 'sidebar',
+        description: 'Date souhaitée pour le début du poste',
+        date: {
+          pickerAppearance: 'dayOnly',
+        },
+      },
+    },
+    {
+      name: 'typeContrat',
+      type: 'select',
+      label: 'Type de contrat',
+      options: [
+        {
+          label: 'CDI',
+          value: 'cdi',
+        },
+        {
+          label: 'CDD',
+          value: 'cdd',
+        },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: "Type de contrat proposé pour l'offre d'emploi",
+      },
+    },
+    {
+      name: 'workTime',
+      type: 'select',
+      label: 'Temps de travail',
+      options: [
+        {
+          label: 'Temps plein',
+          value: 'full-time',
+        },
+        {
+          label: 'Temps partiel',
+          value: 'part-time',
+        },
+        {
+          label: 'Horaires flexibles',
+          value: 'flexible',
+        },
+      ],
+      defaultValue: 'full-time',
+      admin: {
+        position: 'sidebar',
+        description: 'Durée de travail pour le poste',
+      },
+    },
+    {
+      name: 'statusOffre',
+      type: 'select',
+      defaultValue: 'active',
+      options: [
+        {
+          label: 'Active',
+          value: 'active',
+        },
+        {
+          label: 'Pourvue',
+          value: 'filled',
+        },
+        {
+          label: 'Expirée',
+          value: 'expired',
+        },
+      ],
+      label: "Statut de l'offre",
+      admin: {
+        position: 'sidebar',
       },
     },
     ...slugField(),

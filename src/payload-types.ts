@@ -919,9 +919,38 @@ export interface FeatureCollectionBlock {
 export interface Emplois {
   id: number;
   title: string;
-  Organisme?: string | null;
   /**
-   * Contenu principal qui sera affiché dans le body de la page
+   * Image principale associée à l'offre d'emploi
+   */
+  image?: (number | null) | Media;
+  organisme?: {
+    /**
+     * Nom de l’organisme qui gère cet emploi
+     */
+    nom?: string | null;
+    /**
+     * Adresse de l’organisme
+     */
+    lieu?: string | null;
+    contact?: {
+      /**
+       * Nom du contact de l’organisme
+       */
+      nom?: string | null;
+      telephone?: string | null;
+      email?: string | null;
+    };
+    /**
+     * Information indicatif de l'organisme pour l'offre d'emploi
+     */
+    description?: string | null;
+    /**
+     * Lien vers l'offre d'emploi
+     */
+    lien?: string | null;
+  };
+  /**
+   * Contenu de l'offre à pourvoir
    */
   content?: {
     root: {
@@ -947,6 +976,19 @@ export interface Emplois {
     image?: (number | null) | Media;
   };
   publishedAt?: string | null;
+  /**
+   * Date souhaitée pour le début du poste
+   */
+  datePourvoir?: string | null;
+  /**
+   * Type de contrat proposé pour l'offre d'emploi
+   */
+  typeContrat?: ('cdi' | 'cdd') | null;
+  /**
+   * Durée de travail pour le poste
+   */
+  workTime?: ('full-time' | 'part-time' | 'flexible') | null;
+  statusOffre?: ('active' | 'filled' | 'expired') | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1554,7 +1596,22 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface EmploisSelect<T extends boolean = true> {
   title?: T;
-  Organisme?: T;
+  image?: T;
+  organisme?:
+    | T
+    | {
+        nom?: T;
+        lieu?: T;
+        contact?:
+          | T
+          | {
+              nom?: T;
+              telephone?: T;
+              email?: T;
+            };
+        description?: T;
+        lien?: T;
+      };
   content?: T;
   meta?:
     | T
@@ -1564,6 +1621,10 @@ export interface EmploisSelect<T extends boolean = true> {
         image?: T;
       };
   publishedAt?: T;
+  datePourvoir?: T;
+  typeContrat?: T;
+  workTime?: T;
+  statusOffre?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
