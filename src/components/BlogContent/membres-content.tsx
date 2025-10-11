@@ -112,7 +112,7 @@ export const MembresContent = (membre: Membre) => {
       <section>
         <div className="container mx-auto flex flex-col items-center pt-4 pb-8 md:pt-8 md:pb-10 lg:flex-row lg:justify-between lg:pb-16 xl:px-0">
           {membre.content && (
-            <div className="border-foret border-l-3 pl-4 md:pl-8 lg:pl-16">
+            <div className="md:border-foret">
               <Badge className="border-muted-foreground mb-8" variant="outline">
                 <Breadcrumbs
                   breadcrumbs={[
@@ -123,7 +123,7 @@ export const MembresContent = (membre: Membre) => {
                 />
               </Badge>
               <RichText
-                className="prose prose-sm md:prose-lg richtext-content mx-auto max-w-4xl"
+                className="prose prose-sm md:prose-lg richtext-content md:border-chateau-light mx-auto max-w-4xl md:border-l-3 md:pl-4 lg:pl-8"
                 data={membre.content}
                 enableGutter={false}
               />
