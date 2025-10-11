@@ -3,7 +3,7 @@ import { getPayload } from 'payload'
 
 import type { Metadata } from 'next/types'
 
-import CardMembers from '@/components/ShowCaseMembers/CardMembers'
+import { MembreMapView } from '@/components/ShowCaseMembers/MembreMapView'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -32,28 +32,7 @@ export default async function TestCardPage() {
     sort: '-publishedAt',
   })
 
-  return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold">Test CardMembers - Vue Horizontale</h1>
-        <p className="text-muted-foreground">
-          Affichage des {membres.totalDocs} premiers membres en format horizontal
-        </p>
-      </div>
-
-      <div className="space-y-4">
-        {membres.docs.map((membre) => (
-          <CardMembers key={membre.id} membre={membre} />
-        ))}
-      </div>
-
-      {membres.docs.length === 0 && (
-        <div className="py-12 text-center">
-          <p className="text-muted-foreground text-lg">Aucun membre disponible pour le test.</p>
-        </div>
-      )}
-    </div>
-  )
+  return <MembreMapView membres={membres.docs} totalDocs={membres.totalDocs} />
 }
 
 export function generateMetadata(): Metadata {

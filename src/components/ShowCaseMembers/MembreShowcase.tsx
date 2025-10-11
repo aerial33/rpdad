@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 import { Badge } from '@/components/ui/badge'
 
-import { MembreCard } from './MembreCard'
+import { MembreMapView } from './MembreMapView'
 import type { MembreShowcaseProps } from './types'
 
 export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) {
@@ -47,19 +47,9 @@ export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) 
 
       {/* Section Présentation */}
       <section className="bg-muted/30 py-20">
-        <div className="container mx-auto px-4 text-left lg:text-center">
-          <div className="mb-16">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              Le Réseau Public Départemental d'Aide à Domicile de la Gironde
-            </h2>
-            <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
-              Un réseau de structures associatives engagées dans l'accompagnement et le soutien des
-              personnes à domicile partout en Gironde.
-            </p>
-          </div>
-
+        <div className="container mx-auto px-4 text-left">
           {/* LOOP CARDS */}
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {/* <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {membres.map((membre) => (
               <div
                 key={membre.id}
@@ -69,8 +59,8 @@ export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) 
                 <MembreCard membre={membre} />
               </div>
             ))}
-          </div>
-
+          </div> */}
+          <MembreMapView membres={membres} totalDocs={totalDocs} />
           {membres.length === 0 && (
             <div className="py-12 text-center">
               <p className="text-muted-foreground text-lg">
