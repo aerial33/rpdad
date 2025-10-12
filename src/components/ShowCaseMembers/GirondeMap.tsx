@@ -59,20 +59,22 @@ export const GirondeMap = ({
   const tooltipRef = useRef<HTMLDivElement>(null)
 
   // Générer les markers dynamiquement depuis les membres avec coordonnées
+  // IMPORTANT: D3-geo utilise [longitude, latitude] (pas [lat, lng])
   const markers: Marker[] = membres
     .filter((membre) => membre.coordinates?.lat && membre.coordinates?.lng)
     .map((membre) => ({
       id: membre.id,
       name: membre.name,
-      coordinates: [membre.coordinates!.lat, membre.coordinates!.lng] as [number, number],
+      coordinates: [membre.coordinates!.lng, membre.coordinates!.lat] as [number, number],
     }))
 
+  // Effet #1: Dessiner le fond de carte SVG statique (une seule fois)
   useEffect(() => {
     if (!svgRef.current) return
 
     const svg = d3.select(svgRef.current)
 
-    // Nettoyer le SVG
+    // Nettoyer uniquement au premier montage
     svg.selectAll('*').remove()
 
     // Configuration du SVG avec viewBox pour respecter les proportions originales
@@ -157,57 +159,87 @@ export const GirondeMap = ({
         .attr('fill', 'none')
     })
 
+    // Ne dessiner le SVG statique qu'une seule fois
+  }, []) // Dépendances vides = une seule fois au montage
+
+  // Effet #2: Gérer les markers dynamiques avec pattern D3 enter/update/exit
+  useEffect(() => {
+    if (!svgRef.current) return
+
+    const svg = d3.select(svgRef.current)
     const geoData = arronsdissementData as unknown as GeoData
 
-    // Configuration de la projection pour aligner avec le SVG (espace 497x630)
+    // Configuration de la projection Mercator pour aligner avec le SVG (viewBox 497x630)
+    // Cette projection transforme les coordonnées GPS [lng, lat] en coordonnées SVG [x, y]
     const projection = d3.geoMercator().fitSize([497, 630], geoData)
 
-    // Ajouter les marqueurs avec design moderne
-    const markerGroup = svg.append('g').attr('class', 'markers')
+    // Sélectionner/créer le groupe des markers
+    let markerGroup = svg.select<SVGGElement>('.markers')
+    if (markerGroup.empty()) {
+      markerGroup = svg.append('g').attr('class', 'markers')
+    }
 
-    // Groupe pour les labels des villes
-    const labelGroup = svg.append('g').attr('class', 'city-labels')
+    // Pattern D3: enter/update/exit pour les markers
+    const markerSelection = markerGroup
+      .selectAll<SVGGElement, Marker>('g.marker-group')
+      .data(markers, (d) => String(d.id)) // Key function pour identifier les markers
 
-    markerGroup
-      .selectAll('g')
-      .data(markers)
+    // EXIT: supprimer les markers obsolètes
+    markerSelection.exit().remove()
+
+    // ENTER: créer les nouveaux markers
+    const markerEnter = markerSelection
       .enter()
       .append('g')
       .attr('class', 'marker-group')
-      .attr('transform', (d) => {
-        const coords = projection([d.coordinates[1], d.coordinates[0]])
-        const x = coords ? coords[0] : 0
-        const y = coords ? coords[1] : 0
-        return `translate(${x}, ${y})`
-      })
       .style('cursor', 'pointer')
-      .each(function () {
-        const group = d3.select(this)
 
-        // Style uniforme pour tous les marqueurs (style du SVG)
-        const markerColors = {
-          gradient: '#B70E7E', // Couleur violette du SVG
-          halo: '#ffffff', // Couleur de contour du SVG
-        }
+    // Style uniforme pour tous les marqueurs (style du SVG)
+    const markerColors = {
+      gradient: '#B70E7E', // Couleur violette du SVG
+      halo: '#ffffff', // Couleur de contour du SVG
+    }
 
-        // Cercle extérieur (halo)
-        group
-          .append('circle')
-          .attr('r', 4)
-          .attr('fill', markerColors.halo)
-          .attr('opacity', 0.6)
-          .attr('class', 'marker-halo')
+    // Ajouter les cercles aux nouveaux markers avec animation d'entrée
+    markerEnter
+      .append('circle')
+      .attr('class', 'marker-halo')
+      .attr('r', 0) // Commence à 0 pour l'animation
+      .attr('fill', markerColors.halo)
+      .attr('opacity', 0) // Commence invisible
+      .transition()
+      .duration(600)
+      .delay((d, i) => i * 50) // Délai échelonné pour effet cascade
+      .ease(d3.easeBackOut) // Effet de rebond
+      .attr('r', 4)
+      .attr('opacity', 0.6)
 
-        // Cercle principal - style du SVG
-        group
-          .append('circle')
-          .attr('r', 6)
-          .attr('fill', 'none')
-          .attr('stroke', markerColors.gradient)
-          .attr('stroke-width', 4)
-          .attr('filter', 'url(#dropShadow)')
-          .attr('class', 'marker-main')
-      })
+    markerEnter
+      .append('circle')
+      .attr('class', 'marker-main')
+      .attr('r', 0) // Commence à 0 pour l'animation
+      .attr('fill', 'none')
+      .attr('stroke', markerColors.gradient)
+      .attr('stroke-width', 4)
+      .attr('filter', 'url(#dropShadow)')
+      .transition()
+      .duration(600)
+      .delay((d, i) => i * 50) // Même délai pour synchronisation
+      .ease(d3.easeBackOut) // Effet de rebond
+      .attr('r', 6)
+
+    // UPDATE + ENTER: fusionner et mettre à jour la position
+    const markerUpdate = markerEnter.merge(markerSelection)
+
+    markerUpdate.attr('transform', (d) => {
+      const coords = projection(d.coordinates)
+      const x = coords ? coords[0] : 0
+      const y = coords ? coords[1] : 0
+      return `translate(${x}, ${y})`
+    })
+
+    // Gestion des événements
+    markerUpdate
       .on('click', function (event, d) {
         if (onMarkerClick) {
           onMarkerClick(d)
@@ -216,7 +248,7 @@ export const GirondeMap = ({
       .on('mouseover', function (event, d) {
         // Afficher seulement le tooltip (pas d'animation sur le marker)
         if (tooltipRef.current && svgRef.current) {
-          const coords = projection([d.coordinates[1], d.coordinates[0]])
+          const coords = projection(d.coordinates)
           if (coords) {
             // Conversion coordonnées SVG → coordonnées écran
             const svg = svgRef.current
@@ -233,40 +265,62 @@ export const GirondeMap = ({
               // Positionnement et contenu du tooltip
               const offsetX = 18
               const offsetY = -10
-              tooltipRef.current.style.left = `${left + offsetX}px`
-              tooltipRef.current.style.top = `${top + offsetY}px`
-              tooltipRef.current.innerHTML = `
-                <div class="font-semibold text-sm">${d.name}</div>
-              `
 
-              // Afficher le tooltip
-              tooltipRef.current.style.display = 'block'
+              // Vérifier si le tooltip est déjà visible
+              const isVisible = tooltipRef.current.style.opacity === '1'
+
+              // Si visible, juste changer la position et le contenu (glissement fluide)
+              if (isVisible) {
+                tooltipRef.current.style.left = `${left + offsetX}px`
+                tooltipRef.current.style.top = `${top + offsetY}px`
+                tooltipRef.current.innerHTML = `
+                  <div class="font-semibold text-sm">${d.name}</div>
+                `
+              } else {
+                // Première apparition : animation complète
+                tooltipRef.current.style.left = `${left + offsetX}px`
+                tooltipRef.current.style.top = `${top + offsetY}px`
+                tooltipRef.current.innerHTML = `
+                  <div class="font-semibold text-sm">${d.name}</div>
+                `
+
+                // Afficher le tooltip avec transition smooth (slide + fade)
+                tooltipRef.current.offsetHeight // Force reflow
+                requestAnimationFrame(() => {
+                  if (tooltipRef.current) {
+                    tooltipRef.current.style.opacity = '1'
+                    tooltipRef.current.style.transform = 'translateY(0)'
+                  }
+                })
+              }
             }
           }
         }
       })
       .on('mouseout', function () {
-        // Masquer le tooltip uniquement
+        // Masquer le tooltip avec transition smooth (slide + fade)
         if (tooltipRef.current) {
-          tooltipRef.current.style.display = 'none'
+          tooltipRef.current.style.opacity = '0'
+          tooltipRef.current.style.transform = 'translateY(10px)'
         }
       })
 
-    // Ajouter les labels des villes (conditionnel)
+    // Gérer les labels des villes
     if (showLabels) {
-      labelGroup
-        .selectAll('text')
-        .data(markers)
+      let labelGroup = svg.select<SVGGElement>('.city-labels')
+      if (labelGroup.empty()) {
+        labelGroup = svg.append('g').attr('class', 'city-labels')
+      }
+
+      const labelSelection = labelGroup
+        .selectAll<SVGTextElement, Marker>('text')
+        .data(markers, (d) => String(d.id))
+
+      labelSelection.exit().remove()
+
+      const labelEnter = labelSelection
         .enter()
         .append('text')
-        .attr('x', (d) => {
-          const coords = projection([d.coordinates[1], d.coordinates[0]])
-          return coords ? coords[0] : 0
-        })
-        .attr('y', (d) => {
-          const coords = projection([d.coordinates[1], d.coordinates[0]])
-          return coords ? coords[1] - 20 : 0
-        })
         .attr('text-anchor', 'middle')
         .attr('font-family', 'system-ui, -apple-system, sans-serif')
         .attr('font-size', '11px')
@@ -277,16 +331,30 @@ export const GirondeMap = ({
         .attr('paint-order', 'stroke fill')
         .style('pointer-events', 'none')
         .style('user-select', 'none')
-        .text((d) => d.name)
         .style('opacity', 0.8)
-    }
-  }, [width, height, showLabels, onMarkerClick, markers])
+        .text((d) => d.name)
 
-  // Effet pour gérer la sélection uniquement
+      labelEnter
+        .merge(labelSelection)
+        .attr('x', (d) => {
+          const coords = projection(d.coordinates)
+          return coords ? coords[0] : 0
+        })
+        .attr('y', (d) => {
+          const coords = projection(d.coordinates)
+          return coords ? coords[1] - 20 : 0
+        })
+    } else {
+      svg.select('.city-labels').selectAll('*').remove()
+    }
+  }, [markers, showLabels, onMarkerClick])
+
+  // Effet #3: Gérer la sélection avec animations
   useEffect(() => {
     if (!svgRef.current) return
 
     const svg = d3.select(svgRef.current)
+    let animationRunning = true
 
     svg.selectAll('.marker-group').each(function (d: any) {
       const group = d3.select(this)
@@ -296,50 +364,56 @@ export const GirondeMap = ({
         group
           .select('.marker-halo')
           .transition()
-          .duration(300)
+          .duration(600)
           .ease(d3.easeCubicOut)
           .attr('r', 14)
           .attr('opacity', 0.9)
-          .attr('fill', '#6B0548') // Version plus sombre de #B70E7E
+          .attr('fill', 'white')
 
         group
           .select('.marker-main')
           .transition()
-          .duration(300)
+          .duration(600)
           .ease(d3.easeCubicOut)
           .attr('r', 9)
-          .attr('stroke', '#6B0548') // Version plus sombre de #B70E7E
+          .attr('stroke', '#6B0548')
           .attr('stroke-width', 5)
 
-        // Animation de pulsation continue et subtile
-        const pulseAnimation = () => {
+        // Animation de breathing subtile et organique
+        const breathingAnimation = () => {
+          if (!animationRunning) return // Arrêter si le composant est démonté
+
           group
             .select('.marker-halo')
             .transition()
-            .duration(800)
+            .duration(2000) // Pulsation lente et organique
             .ease(d3.easeSinInOut)
-            .attr('r', 16)
-            .attr('opacity', 1)
+            .attr('r', 15)
+            .attr('opacity', 0.95)
             .transition()
-            .duration(800)
+            .duration(2000)
             .ease(d3.easeSinInOut)
             .attr('r', 14)
-            .attr('opacity', 0.9)
-            .on('end', pulseAnimation) // Boucle infinie
+            .attr('opacity', 0.85)
+            .on('end', () => {
+              if (animationRunning) breathingAnimation()
+            })
 
           group
             .select('.marker-main')
             .transition()
-            .duration(800)
+            .duration(2000) // Synchronisé avec le halo
             .ease(d3.easeSinInOut)
-            .attr('r', 10)
+            .attr('r', 9.5)
+            .attr('stroke-width', 5.5)
             .transition()
-            .duration(800)
+            .duration(2000)
             .ease(d3.easeSinInOut)
             .attr('r', 9)
+            .attr('stroke-width', 5)
         }
 
-        pulseAnimation()
+        breathingAnimation()
       } else if (d.id !== hoveredMarkerId) {
         // Arrêter toute animation en cours et réinitialiser
         group.selectAll('*').interrupt()
@@ -363,9 +437,15 @@ export const GirondeMap = ({
           .attr('stroke-width', 4)
       }
     })
-  }, [selectedMarkerId])
 
-  // Effet séparé pour gérer le hover uniquement
+    // Cleanup: arrêter les animations quand l'effet est nettoyé
+    return () => {
+      animationRunning = false
+      svg.selectAll('.marker-group *').interrupt()
+    }
+  }, [selectedMarkerId, hoveredMarkerId])
+
+  // Effet #4: Gérer le hover
   useEffect(() => {
     if (!svgRef.current) return
 
@@ -412,7 +492,12 @@ export const GirondeMap = ({
           .attr('stroke-width', 4)
       }
     })
-  }, [hoveredMarkerId])
+
+    // Cleanup: interrompre les transitions en cours
+    return () => {
+      svg.selectAll('.marker-group *').interrupt()
+    }
+  }, [hoveredMarkerId, selectedMarkerId])
 
   return (
     <div className="relative w-full">
@@ -427,7 +512,13 @@ export const GirondeMap = ({
       <div
         ref={tooltipRef}
         className="pointer-events-none absolute z-10 rounded-lg border border-gray-200 bg-white p-2 text-xs shadow-lg md:p-3 md:text-sm"
-        style={{ display: 'none' }}
+        style={{
+          opacity: 0,
+          pointerEvents: 'none',
+          transform: 'translateY(10px)',
+          transition:
+            'opacity 300ms ease-out, transform 300ms ease-out, left 400ms cubic-bezier(0.4, 0, 0.2, 1), top 400ms cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
       >
         {/* Le contenu sera injecté dynamiquement */}
       </div>
