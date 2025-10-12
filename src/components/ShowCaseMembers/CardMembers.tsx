@@ -2,7 +2,7 @@
 
 import { Building2, Mail, MapPin, Phone } from 'lucide-react'
 
-import { FC } from 'react'
+import { forwardRef } from 'react'
 
 import Link from 'next/link'
 
@@ -13,15 +13,24 @@ import type { MembreShowcase } from './types'
 export interface CardMembersProps {
   membre: MembreShowcase
   className?: string
+  isHighlighted?: boolean
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 }
 
-const CardMembers: FC<CardMembersProps> = ({ membre, className = 'h-full' }) => {
-  const membreUrl = `/membres/${membre.slug || '#'}`
+const CardMembers = forwardRef<HTMLDivElement, CardMembersProps>(
+  ({ membre, className = 'h-full', isHighlighted = false, onMouseEnter, onMouseLeave }, ref) => {
+    const membreUrl = `/membres/${membre.slug || '#'}`
 
-  return (
-    <div
-      className={`group relative flex flex-row items-center border-neutral-200 transition-all duration-300 hover:shadow sm:rounded-3xl sm:border sm:bg-white/80 sm:p-4 sm:backdrop-blur-sm dark:border-neutral-700 sm:dark:bg-neutral-900/80 ${className}`}
-    >
+    return (
+      <div
+        ref={ref}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        className={`group relative flex flex-row items-center border-neutral-200 transition-all duration-300 hover:shadow sm:rounded-3xl sm:border sm:bg-white/80 sm:p-4 sm:backdrop-blur-sm ${
+          isHighlighted ? 'ring-2 ring-primary shadow-lg' : ''
+        } ${className}`}
+      >
       {/* Lien invisible sur toute la carte */}
       <Link href={membreUrl} className="absolute inset-0 z-0"></Link>
 
@@ -92,6 +101,9 @@ const CardMembers: FC<CardMembersProps> = ({ membre, className = 'h-full' }) => 
       </Link>
     </div>
   )
-}
+},
+)
+
+CardMembers.displayName = 'CardMembers'
 
 export default CardMembers

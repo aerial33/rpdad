@@ -10,6 +10,8 @@ import { useEffect, useRef } from 'react'
 
 import arronsdissementData from '@/components/geomap/arrondissements-gironde.json'
 
+import type { MembreShowcase } from './types'
+
 // Import des données géographiques des arrondissements
 
 // Interface définissant la structure des données géographiques
@@ -26,66 +28,44 @@ interface GeoData {
 }
 
 // Interface définissant la structure d'un marqueur
-interface Marker {
+export interface Marker {
+  id: string | number // ID du membre
   name: string // Nom du marqueur
   coordinates: [number, number] // Coordonnées [latitude, longitude]
 }
 
-// Interface définissant les props du composant Arrondissement
-interface ArrondissementProps {
-  // Données géographiques
+// Interface définissant les props du composant GirondeMap
+export interface GirondeMapProps {
   width?: number // Largeur du composant
   height?: number // Hauteur du composant
   showLabels?: boolean // Afficher les noms des villes (défaut: false)
   onMarkerClick?: (marker: Marker) => void // Callback au clic sur un marqueur
+  membres?: MembreShowcase[] // Liste des membres avec coordonnées (optionnel pour compatibilité)
+  selectedMarkerId?: string | number | null // ID du marker sélectionné
+  hoveredMarkerId?: string | number | null // ID du marker survolé (depuis card)
 }
 
-// Composant principal Arrondissement
-export const ShowCaseMembersMap = ({
+// Composant principal - Carte SVG de la Gironde
+export const GirondeMap = ({
   width = 800,
   height = 600,
   showLabels = false,
   onMarkerClick,
-}: ArrondissementProps) => {
+  membres = [],
+  selectedMarkerId = null,
+  hoveredMarkerId = null,
+}: GirondeMapProps) => {
   const svgRef = useRef<SVGSVGElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
 
-  // Données des marqueurs
-  const markers: Marker[] = [
-    { name: 'Blanquefort', coordinates: [44.916672, -0.63333] },
-    { name: 'Bruges', coordinates: [44.883, -0.61667] },
-    // { name: 'Eysines', coordinates: [44.883, -0.65] },
-    // { name: 'Floirac', coordinates: [44.83333, -0.53333] },
-    // { name: 'Le Bouscat', coordinates: [44.8667, -0.6167] },
-    // { name: 'Martignas sur Jalles', coordinates: [44.833, -0.76667] },
-    // { name: 'Landiras', coordinates: [44.5667, -0.41667] },
-    // { name: 'Saint Macaire', coordinates: [44.5652, -0.226334] },
-    // { name: "Saint Pierre d'Aurillac", coordinates: [44.57, -0.190465] },
-    { name: 'Bazas', coordinates: [44.433, -0.21667] },
-    // { name: 'Sud Gironde', coordinates: [44.44, -0.3] },
-    { name: 'Andernos', coordinates: [44.74, -1.1] },
-    { name: 'Ares', coordinates: [44.767, -1.1394] },
-    { name: 'Belin-Béliet', coordinates: [44.5, -0.7833] },
-    // { name: 'Le Barp', coordinates: [44.616, -0.7667] },
-    // { name: 'Le Teich', coordinates: [44.63, -1.01667] },
-    // { name: 'Salles', coordinates: [44.55, -0.8667] },
-    { name: 'Audenge', coordinates: [44.683, -1] },
-    // { name: 'Lanton', coordinates: [44.7, -1.03333] },
-    { name: 'Blaye', coordinates: [45.1333, -0.662] },
-    // { name: 'Nérigean', coordinates: [44.833, -0.2667] },
-    // { name: 'Vayres', coordinates: [44.9, -0.3167] },
-    // { name: 'Fronsac', coordinates: [44.9167, -0.26667] },
-    // { name: 'Guîtres', coordinates: [45.033, -0.18333] },
-    // { name: "Saint Seurin sur l'Isle", coordinates: [45.0167, 0.00166667] },
-    // { name: 'Sainte Terre', coordinates: [44.8289, -0.11667] },
-    // { name: 'Castillon la Bataille', coordinates: [44.85, -0.03333] },
-    // { name: 'Les Rives de la Laurence', coordinates: [44.8833, -0.4167] },
-    // { name: 'Créon', coordinates: [44.78, -0.35] },
-    // { name: 'Portes entre-2mers', coordinates: [44.73, -0.263369] },
-    // { name: 'Cestas', coordinates: [44.73, -0.683] },
-    { name: 'Cadaujac', coordinates: [44.75, -0.5333] },
-    { name: 'Canéjan', coordinates: [44.7667, -0.633] },
-  ]
+  // Générer les markers dynamiquement depuis les membres avec coordonnées
+  const markers: Marker[] = membres
+    .filter((membre) => membre.coordinates?.lat && membre.coordinates?.lng)
+    .map((membre) => ({
+      id: membre.id,
+      name: membre.name,
+      coordinates: [membre.coordinates!.lat, membre.coordinates!.lng] as [number, number],
+    }))
 
   useEffect(() => {
     if (!svgRef.current) return
@@ -193,6 +173,7 @@ export const ShowCaseMembersMap = ({
       .data(markers)
       .enter()
       .append('g')
+      .attr('class', 'marker-group')
       .attr('transform', (d) => {
         const coords = projection([d.coordinates[1], d.coordinates[0]])
         const x = coords ? coords[0] : 0
@@ -206,7 +187,7 @@ export const ShowCaseMembersMap = ({
         // Style uniforme pour tous les marqueurs (style du SVG)
         const markerColors = {
           gradient: '#B70E7E', // Couleur violette du SVG
-          halo: '#C53B97', // Couleur de contour du SVG
+          halo: '#ffffff', // Couleur de contour du SVG
         }
 
         // Cercle extérieur (halo)
@@ -214,7 +195,7 @@ export const ShowCaseMembersMap = ({
           .append('circle')
           .attr('r', 4)
           .attr('fill', markerColors.halo)
-          .attr('opacity', 0.2)
+          .attr('opacity', 0.6)
           .attr('class', 'marker-halo')
 
         // Cercle principal - style du SVG
@@ -233,27 +214,11 @@ export const ShowCaseMembersMap = ({
         }
       })
       .on('mouseover', function (event, d) {
-        const group = d3.select(this)
-
-        // Animation du halo
-        group.select('.marker-halo').transition().duration(200).attr('r', 16).attr('opacity', 0.5)
-
-        // Animation du cercle principal
-        group
-          .select('.marker-main')
-          .transition()
-          .duration(200)
-          .attr('r', 10)
-          .attr('filter', 'url(#glow)')
-
-        // Animation du point central
-        group.select('.marker-center').transition().duration(200).attr('r', 4)
-
-        // Afficher le tooltip avec positionnement précis
+        // Afficher seulement le tooltip (pas d'animation sur le marker)
         if (tooltipRef.current && svgRef.current) {
           const coords = projection([d.coordinates[1], d.coordinates[0]])
           if (coords) {
-            // Conversion coordonnées SVG -> coordonnées écran
+            // Conversion coordonnées SVG → coordonnées écran
             const svg = svgRef.current
             const pt = svg.createSVGPoint()
             pt.x = coords[0]
@@ -261,10 +226,7 @@ export const ShowCaseMembersMap = ({
             const screenCTM = svg.getScreenCTM()
             if (screenCTM) {
               const transformed = pt.matrixTransform(screenCTM)
-              // Position du SVG dans la page
-              // Position du conteneur parent (div relative)
               const parentRect = svg.parentElement?.getBoundingClientRect()
-              // Calcul de la position relative au parent (centré sur le marqueur)
               const left = transformed.x - (parentRect?.left || 0)
               const top = transformed.y - (parentRect?.top || 0) - 15
 
@@ -284,21 +246,7 @@ export const ShowCaseMembersMap = ({
         }
       })
       .on('mouseout', function () {
-        const group = d3.select(this)
-
-        // Retour à l'état normal
-        group.select('.marker-halo').transition().duration(200).attr('r', 4).attr('opacity', 0.3)
-
-        group
-          .select('.marker-main')
-          .transition()
-          .duration(200)
-          .attr('r', 6)
-          .attr('filter', 'url(#dropShadow)')
-
-        group.select('.marker-center').transition().duration(200).attr('r', 3)
-
-        // Masquer le tooltip
+        // Masquer le tooltip uniquement
         if (tooltipRef.current) {
           tooltipRef.current.style.display = 'none'
         }
@@ -332,7 +280,139 @@ export const ShowCaseMembersMap = ({
         .text((d) => d.name)
         .style('opacity', 0.8)
     }
-  }, [width, height, showLabels, onMarkerClick])
+  }, [width, height, showLabels, onMarkerClick, markers])
+
+  // Effet pour gérer la sélection uniquement
+  useEffect(() => {
+    if (!svgRef.current) return
+
+    const svg = d3.select(svgRef.current)
+
+    svg.selectAll('.marker-group').each(function (d: any) {
+      const group = d3.select(this)
+
+      if (d.id === selectedMarkerId) {
+        // Appliquer le style sélectionné avec couleur plus sombre
+        group
+          .select('.marker-halo')
+          .transition()
+          .duration(300)
+          .ease(d3.easeCubicOut)
+          .attr('r', 14)
+          .attr('opacity', 0.9)
+          .attr('fill', '#6B0548') // Version plus sombre de #B70E7E
+
+        group
+          .select('.marker-main')
+          .transition()
+          .duration(300)
+          .ease(d3.easeCubicOut)
+          .attr('r', 9)
+          .attr('stroke', '#6B0548') // Version plus sombre de #B70E7E
+          .attr('stroke-width', 5)
+
+        // Animation de pulsation continue et subtile
+        const pulseAnimation = () => {
+          group
+            .select('.marker-halo')
+            .transition()
+            .duration(800)
+            .ease(d3.easeSinInOut)
+            .attr('r', 16)
+            .attr('opacity', 1)
+            .transition()
+            .duration(800)
+            .ease(d3.easeSinInOut)
+            .attr('r', 14)
+            .attr('opacity', 0.9)
+            .on('end', pulseAnimation) // Boucle infinie
+
+          group
+            .select('.marker-main')
+            .transition()
+            .duration(800)
+            .ease(d3.easeSinInOut)
+            .attr('r', 10)
+            .transition()
+            .duration(800)
+            .ease(d3.easeSinInOut)
+            .attr('r', 9)
+        }
+
+        pulseAnimation()
+      } else if (d.id !== hoveredMarkerId) {
+        // Arrêter toute animation en cours et réinitialiser
+        group.selectAll('*').interrupt()
+
+        group
+          .select('.marker-halo')
+          .transition()
+          .duration(200)
+          .ease(d3.easeCubicIn)
+          .attr('r', 4)
+          .attr('opacity', 0.6)
+          .attr('fill', '#ffffff') // Blanc
+
+        group
+          .select('.marker-main')
+          .transition()
+          .duration(200)
+          .ease(d3.easeCubicIn)
+          .attr('r', 6)
+          .attr('stroke', '#B70E7E') // Couleur normale
+          .attr('stroke-width', 4)
+      }
+    })
+  }, [selectedMarkerId])
+
+  // Effet séparé pour gérer le hover uniquement
+  useEffect(() => {
+    if (!svgRef.current) return
+
+    const svg = d3.select(svgRef.current)
+
+    svg.selectAll('.marker-group').each(function (d: any) {
+      const group = d3.select(this)
+
+      if (d.id === hoveredMarkerId && d.id !== selectedMarkerId) {
+        // Appliquer le pulse hover (sauf si sélectionné)
+        group
+          .select('.marker-halo')
+          .transition()
+          .duration(300)
+          .ease(d3.easeCubicOut)
+          .attr('r', 12)
+          .attr('opacity', 0.85)
+
+        group
+          .select('.marker-main')
+          .transition()
+          .duration(300)
+          .ease(d3.easeCubicOut)
+          .attr('r', 10)
+          .attr('stroke-width', 5)
+      } else if (d.id !== selectedMarkerId && hoveredMarkerId !== null) {
+        // Réinitialiser les autres non-sélectionnés avec couleur normale
+        group
+          .select('.marker-halo')
+          .transition()
+          .duration(200)
+          .ease(d3.easeCubicIn)
+          .attr('r', 4)
+          .attr('opacity', 0.6)
+          .attr('fill', '#ffffff') // Blanc
+
+        group
+          .select('.marker-main')
+          .transition()
+          .duration(200)
+          .ease(d3.easeCubicIn)
+          .attr('r', 6)
+          .attr('stroke', '#B70E7E') // Couleur normale
+          .attr('stroke-width', 4)
+      }
+    })
+  }, [hoveredMarkerId])
 
   return (
     <div className="relative w-full">

@@ -3,7 +3,7 @@ import { getPayload } from 'payload'
 
 import type { Metadata } from 'next/types'
 
-import { MembreMapView } from '@/components/ShowCaseMembers/MembreMapView'
+import { MembreMapLayout } from '@/components/ShowCaseMembers/MembreMapLayout'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -14,7 +14,7 @@ export default async function TestCardPage() {
   const membres = await payload.find({
     collection: 'membres',
     depth: 1,
-    limit: 5,
+    limit: 50,
     overrideAccess: false,
     select: {
       name: true,
@@ -23,6 +23,8 @@ export default async function TestCardPage() {
       adresse: true,
       informations: true,
       publishedAt: true,
+      coordinates: true,
+      zone: true,
     },
     where: {
       _status: {
@@ -32,7 +34,7 @@ export default async function TestCardPage() {
     sort: '-publishedAt',
   })
 
-  return <MembreMapView membres={membres.docs} totalDocs={membres.totalDocs} />
+  return <MembreMapLayout membres={membres.docs} totalDocs={membres.totalDocs} />
 }
 
 export function generateMetadata(): Metadata {

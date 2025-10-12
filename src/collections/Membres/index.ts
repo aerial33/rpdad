@@ -85,6 +85,51 @@ export const Membres: CollectionConfig = {
               label: 'Adresse',
             },
             {
+              name: 'coordinates',
+              type: 'group',
+              label: 'Coordonnées géographiques',
+              admin: {
+                description:
+                  'Coordonnées GPS pour afficher le membre sur la carte interactive (format décimal)',
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'lat',
+                      type: 'number',
+                      label: 'Latitude',
+                      admin: {
+                        width: '50%',
+                        placeholder: '44.8378',
+                        description: 'Exemple: 44.8378 (Bordeaux)',
+                      },
+                    },
+                    {
+                      name: 'lng',
+                      type: 'number',
+                      label: 'Longitude',
+                      admin: {
+                        width: '50%',
+                        placeholder: '-0.5792',
+                        description: 'Exemple: -0.5792 (Bordeaux)',
+                      },
+                    },
+                  ],
+                },
+                {
+                  name: 'zone',
+                  type: 'text',
+                  label: 'Zone géographique',
+                  admin: {
+                    description: 'Nom de la ville ou arrondissement (ex: Bordeaux, Arcachon)',
+                    placeholder: 'Bordeaux',
+                  },
+                },
+              ],
+            },
+            {
               name: 'informations',
               type: 'group',
               label: 'Informations de contact',

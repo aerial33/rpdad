@@ -1019,6 +1019,23 @@ export interface Membre {
   name: string;
   logo?: (number | null) | Media;
   adresse?: string | null;
+  /**
+   * Coordonnées GPS pour afficher le membre sur la carte interactive (format décimal)
+   */
+  coordinates?: {
+    /**
+     * Exemple: 44.8378 (Bordeaux)
+     */
+    lat?: number | null;
+    /**
+     * Exemple: -0.5792 (Bordeaux)
+     */
+    lng?: number | null;
+    /**
+     * Nom de la ville ou arrondissement (ex: Bordeaux, Arcachon)
+     */
+    zone?: string | null;
+  };
   informations?: {
     contact?: {
       tel?: string | null;
@@ -1655,6 +1672,13 @@ export interface MembresSelect<T extends boolean = true> {
   name?: T;
   logo?: T;
   adresse?: T;
+  coordinates?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+        zone?: T;
+      };
   informations?:
     | T
     | {

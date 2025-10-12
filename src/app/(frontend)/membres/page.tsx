@@ -27,6 +27,8 @@ export default async function Page() {
       adresse: true,
       informations: true,
       publishedAt: true,
+      coordinates: true,
+      zone: true,
     },
     where: {
       _status: {

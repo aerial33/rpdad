@@ -13,12 +13,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 import type { MembreCardProps } from './types'
 
+//todo rework the card to use the new Card component
+
 export function MembreCard({ membre }: MembreCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
     <Card
-      className="group flex h-full flex-col overflow-hidden rounded-3xl border-red-500 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+      className="group flex h-full flex-col overflow-hidden rounded-3xl bg-white/80 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

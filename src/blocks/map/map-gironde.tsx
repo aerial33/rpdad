@@ -45,7 +45,7 @@ export function MapBlock(props: MapBlockType) {
   return (
     <section className="relative py-8">
       <BackgroundSection />
-      <div className="container relative z-10 mb-8 grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="relative z-10 container mb-8 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <FadeUp className="p-2 md:p-4">
           <Badge
             variant={'outline'}

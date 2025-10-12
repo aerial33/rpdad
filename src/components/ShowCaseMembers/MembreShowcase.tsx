@@ -8,7 +8,8 @@ import Image from 'next/image'
 
 import { Badge } from '@/components/ui/badge'
 
-import { MembreMapView } from './MembreMapView'
+import BackgroundSection from '../BackgroundSection/BackgroundSection'
+import { MembreMapLayout } from './MembreMapLayout'
 import type { MembreShowcaseProps } from './types'
 
 export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) {
@@ -17,7 +18,7 @@ export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) 
   return (
     <div className="">
       {/* HEADER */}
-      <div className="mx-auto h-120 w-full px-2 pt-12 xl:max-w-screen-2xl">
+      <div className="mx-auto mb-16 h-120 w-full px-2 pt-12 xl:max-w-screen-2xl">
         <div className="aspect-w-16 aspect-h-13 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-5 relative z-0 h-full overflow-hidden rounded-3xl md:rounded-[40px]">
           <Image
             alt="Nos membres RPDAD"
@@ -46,10 +47,10 @@ export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) 
       {/* ====================== END HEADER ====================== */}
 
       {/* Section Présentation */}
-      <section className="bg-muted/30 py-20">
-        <div className="container mx-auto px-4 text-left">
-          {/* LOOP CARDS */}
-          {/* <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <section className="bg-muted/30 relative py-8">
+        <BackgroundSection />
+        {/* LOOP CARDS */}
+        {/* <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {membres.map((membre) => (
               <div
                 key={membre.id}
@@ -60,15 +61,12 @@ export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) 
               </div>
             ))}
           </div> */}
-          <MembreMapView membres={membres} totalDocs={totalDocs} />
-          {membres.length === 0 && (
-            <div className="py-12 text-center">
-              <p className="text-muted-foreground text-lg">
-                Aucun membre disponible pour le moment.
-              </p>
-            </div>
-          )}
-        </div>
+        <MembreMapLayout membres={membres} totalDocs={totalDocs} />
+        {membres.length === 0 && (
+          <div className="py-12 text-center">
+            <p className="text-muted-foreground text-lg">Aucun membre disponible pour le moment.</p>
+          </div>
+        )}
       </section>
 
       {/* Section Valeurs */}
