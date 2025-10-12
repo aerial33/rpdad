@@ -67,6 +67,11 @@ export const Pages: CollectionConfig<'pages'> = {
       name: 'title',
       type: 'text',
       required: true,
+      admin: {
+        components: {
+          Cell: '@/components/Admin/Fields/Cell.tsx#TitleCell',
+        },
+      },
     },
     {
       type: 'tabs',

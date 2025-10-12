@@ -61,6 +61,11 @@ export const Emplois: CollectionConfig = {
       type: 'text',
       required: true,
       label: "Titre de l'offre",
+      admin: {
+        components: {
+          Cell: '@/components/Admin/Fields/Cell.tsx#TitleCell',
+        },
+      },
     },
     {
       name: 'image',

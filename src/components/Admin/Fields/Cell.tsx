@@ -6,6 +6,8 @@ import Link from 'next/link'
 
 import { getServerSideURL } from '@/utilities/getURL'
 
+import './Cell.css'
+
 export const EmailCell = (props: DefaultCellComponentProps) => {
   const { cellData } = props
 
@@ -28,7 +30,7 @@ export const TitleCell = (props: DefaultCellComponentProps) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-book-dashed"
+      className="lucide lucide-book-dashed status-icon-draft"
     >
       <path d="M12 17h1.5" />
       <path d="M12 22h1.5" />
@@ -55,7 +57,7 @@ export const TitleCell = (props: DefaultCellComponentProps) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-book-check"
+      className="lucide lucide-book-check status-icon-published"
     >
       <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
       <path d="m9 9.5 2 2 4-4" />
@@ -73,7 +75,7 @@ export const TitleCell = (props: DefaultCellComponentProps) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-clock"
+      className="lucide lucide-clock status-icon-scheduled"
     >
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />

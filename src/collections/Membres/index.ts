@@ -61,6 +61,11 @@ export const Membres: CollectionConfig = {
       type: 'text',
       required: true,
       label: 'Nom du membre',
+      admin: {
+        components: {
+          Cell: '@/components/Admin/Fields/Cell.tsx#TitleCell',
+        },
+      },
     },
     {
       type: 'tabs',
