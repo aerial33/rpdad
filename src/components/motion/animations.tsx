@@ -230,3 +230,36 @@ export const RevealFromCenter = ({
     </motion.div>
   )
 }
+
+export const FAQCollapse = ({
+  isOpen,
+  children,
+  duration = 0.3,
+}: {
+  isOpen: boolean
+  children: React.ReactNode
+  duration?: number
+}) => {
+  return (
+    <motion.div
+      initial={false}
+      animate={{
+        height: isOpen ? 'auto' : 0,
+        opacity: isOpen ? 1 : 0,
+      }}
+      transition={{
+        height: {
+          duration: duration,
+          ease: [0.4, 0, 0.2, 1], // easeInOut cubic-bezier optimisé
+        },
+        opacity: {
+          duration: duration * 0.8,
+          ease: 'easeOut',
+        },
+      }}
+      className="overflow-hidden"
+    >
+      {children}
+    </motion.div>
+  )
+}

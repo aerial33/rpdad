@@ -1,9 +1,11 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 
 import { useState } from 'react'
 
+import { FAQCollapse } from '@/components/motion/animations'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -144,10 +146,9 @@ export function FAQSection() {
                         >
                           {faq.question}
                         </h3>
-                        <div
-                          className={`transition-transform duration-300 ease-in-out ${
-                            isOpen ? 'rotate-180' : 'rotate-0'
-                          }`}
+                        <motion.div
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                         >
                           <ChevronDown
                             className={`h-5 w-5 flex-shrink-0 transition-colors duration-200 ${
@@ -156,19 +157,16 @@ export function FAQSection() {
                                 : 'text-muted-foreground group-hover:text-primary'
                             }`}
                           />
-                        </div>
+                        </motion.div>
                       </div>
                     </button>
-                    <div
-                      className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                        isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                      }`}
-                    >
+                    <FAQCollapse isOpen={isOpen} duration={0.3}>
                       <div className="px-6 pb-6">
-                        <div
-                          className={`border-t pt-4 transition-all duration-200 ${
-                            isOpen ? 'delay-150' : ''
-                          }`}
+                        <motion.div
+                          initial={false}
+                          animate={{ opacity: isOpen ? 1 : 0 }}
+                          transition={{ duration: 0.2, delay: isOpen ? 0.15 : 0 }}
+                          className="border-t pt-4"
                         >
                           {typeof faq.answer === 'string' ? (
                             <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
@@ -188,9 +186,9 @@ export function FAQSection() {
                               ))}
                             </div>
                           )}
-                        </div>
+                        </motion.div>
                       </div>
-                    </div>
+                    </FAQCollapse>
                   </CardContent>
                 </Card>
               )

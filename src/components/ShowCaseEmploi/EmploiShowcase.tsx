@@ -97,7 +97,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
           <Image
             alt="archive"
             fill
-            src="/img/rpdad-emploi.jpeg"
+            src="/img/rpdad-emploi.webp"
             className="h-full w-full rounded-3xl object-cover object-[center_30%] brightness-60 md:rounded-[40px]"
             sizes="(max-width: 1280px) 100vw, 1536px"
           />
