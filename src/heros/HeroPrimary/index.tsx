@@ -26,7 +26,7 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
   }
 
   return (
-    <section className="-z-10 mt-4 min-h-screen lg:min-h-0">
+    <section className="relative -z-10 mt-4 min-h-screen lg:min-h-0">
       <div className="container mx-auto px-4 xl:px-0">
         <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-8">
           <FadeUp delay={0.3} className="mt-8">

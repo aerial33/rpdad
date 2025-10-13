@@ -45,7 +45,13 @@ export const HistoryAboutBlock: React.FC<HistoryAboutBlockType> = ({
                 {link?.label && (
                   <Button variant="default" className="group mt-4">
                     <Link
-                      href={link.type === 'custom' ? link.url || '#' : link.reference?.value || '#'}
+                      href={
+                        link.type === 'custom'
+                          ? link.url || '#'
+                          : typeof link.reference?.value === 'object' && link.reference.value?.slug
+                            ? `/${link.reference.value.slug}`
+                            : '#'
+                      }
                       target={link.newTab ? '_blank' : undefined}
                       rel={link.newTab ? 'noopener noreferrer' : undefined}
                       className="group flex items-center"

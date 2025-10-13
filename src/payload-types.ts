@@ -225,6 +225,7 @@ export interface Page {
     | BentoCardBlock
     | FeatureCollectionBlock
     | FeatureCardsBlock
+    | HistoryAboutBlock
   )[];
   meta?: {
     title?: string | null;
@@ -937,6 +938,69 @@ export interface FeatureCardsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HistoryAboutBlock".
+ */
+export interface HistoryAboutBlock {
+  title: string;
+  /**
+   * Description de la section historique avec formatage riche
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  link: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choisir comment le lien doit être rendu.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  timelineItems: {
+    date: string;
+    title: string;
+    description: string;
+    id?: string | null;
+  }[];
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'historyAbout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emplois".
  */
 export interface Emplois {
@@ -1414,6 +1478,7 @@ export interface PagesSelect<T extends boolean = true> {
         bentoCard?: T | BentoCardBlockSelect<T>;
         featureCollection?: T | FeatureCollectionBlockSelect<T>;
         featureCards?: T | FeatureCardsBlockSelect<T>;
+        historyAbout?: T | HistoryAboutBlockSelect<T>;
       };
   meta?:
     | T
@@ -1621,6 +1686,35 @@ export interface FeatureCollectionBlockSelect<T extends boolean = true> {
 export interface FeatureCardsBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
+  bgColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HistoryAboutBlock_select".
+ */
+export interface HistoryAboutBlockSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  timelineItems?:
+    | T
+    | {
+        date?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
   bgColor?: T;
   id?: T;
   blockName?: T;

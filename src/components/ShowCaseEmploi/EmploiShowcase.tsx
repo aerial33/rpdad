@@ -168,7 +168,9 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                       </Badge>
                     )}
                   </span>
-                  <CardTitle className="mt-4 line-clamp-2 text-xl">{emploi.title}</CardTitle>
+                  <CardTitle className="mt-4 line-clamp-2 text-center text-xl">
+                    {emploi.title}
+                  </CardTitle>
                 </CardHeader>
 
                 <CardContent className="flex flex-1 flex-col pt-0">
