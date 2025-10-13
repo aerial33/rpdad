@@ -40,7 +40,7 @@ export default async function Page() {
   })
 
   return (
-    <div>
+    <div className="animation-appear">
       <PageClient />
 
       <EmploiShowcase emplois={emplois.docs} totalDocs={emplois.totalDocs} />

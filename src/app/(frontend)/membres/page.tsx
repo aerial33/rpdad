@@ -39,7 +39,7 @@ export default async function Page() {
   })
 
   return (
-    <div className="flex-1">
+    <div className="animation-appear flex-1">
       <PageClient />
 
       {/* MembreShowcase Component */}

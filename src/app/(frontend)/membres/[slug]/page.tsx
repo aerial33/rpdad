@@ -48,7 +48,7 @@ export default async function Membre({ params: paramsPromise }: Args) {
   if (!membre) return <PayloadRedirects url={url} />
 
   return (
-    <div className="pb-8">
+    <div className="animation-appear pb-8">
       <PageClient />
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
