@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { displayDate } from '@/utilities/formatDateTime'
 
+import { TestimonialSection } from './TestimonialSection'
 import type { EmploiShowcaseProps } from './types'
 
 export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) {
@@ -273,7 +274,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
           </div>
         </div>
       </section>
-      {/* <TestimonialSection /> */}
+      <TestimonialSection />
       {/* <FAQSection /> */}
 
       {/* Section Call to Action */}
