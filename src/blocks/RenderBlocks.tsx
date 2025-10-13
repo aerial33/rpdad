@@ -8,6 +8,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import type { Page } from '@/payload-types'
 
 import { BentoGridBlock } from './Bento/Component'
+import { FeatureCardsBlock } from './FeatureCards/component'
 import { FeatureCollectionBlockComponent } from './FeatureCollection/Component'
 import ContentSectionBlock from './contentSection/RenderContentSection'
 import { MapBlock } from './map/map-gironde'
@@ -21,6 +22,7 @@ const blockComponents = {
   contentSection: ContentSectionBlock,
   bentoCard: BentoGridBlock,
   featureCollection: FeatureCollectionBlockComponent,
+  featureCards: FeatureCardsBlock,
   map: MapBlock,
 }
 

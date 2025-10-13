@@ -224,6 +224,7 @@ export interface Page {
     | MapBlock
     | BentoCardBlock
     | FeatureCollectionBlock
+    | FeatureCardsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -915,6 +916,27 @@ export interface FeatureCollectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCardsBlock".
+ */
+export interface FeatureCardsBlock {
+  title: string;
+  subtitle?: string | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emplois".
  */
 export interface Emplois {
@@ -1391,6 +1413,7 @@ export interface PagesSelect<T extends boolean = true> {
         map?: T | MapBlockSelect<T>;
         bentoCard?: T | BentoCardBlockSelect<T>;
         featureCollection?: T | FeatureCollectionBlockSelect<T>;
+        featureCards?: T | FeatureCardsBlockSelect<T>;
       };
   meta?:
     | T
@@ -1588,6 +1611,17 @@ export interface FeatureCollectionBlockSelect<T extends boolean = true> {
   categories?: T;
   limit?: T;
   selectedDocs?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCardsBlock_select".
+ */
+export interface FeatureCardsBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  bgColor?: T;
   id?: T;
   blockName?: T;
 }

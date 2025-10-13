@@ -1,7 +1,5 @@
 import { ReactNode } from 'react'
 
-import Link from 'next/link'
-
 import { CARD_LAYOUTS } from '@/blocks/Bento/layouts'
 import type { BentoCardBlock, Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
@@ -59,11 +57,11 @@ const BentoCard = ({
       )}
       <h3 className={layout?.titleClass}>{title}</h3>
       <p className={layout?.descriptionClass}>{description}</p>
-      {href && label && (
+      {/* {href && label && (
         <Link href={href} className={layout?.linkClass}>
           {`${label} →`}
         </Link>
-      )}
+      )} */}
     </div>
   )
 
