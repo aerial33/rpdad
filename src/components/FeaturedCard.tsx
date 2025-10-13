@@ -14,7 +14,7 @@ interface FeatureCardProps {
 
 export function FeatureCard({
   number,
-  numberBgClass = 'bg-picton-blue-lighter text-picton-blue',
+  numberBgClass = 'bg-blue-lighter text-blue',
   title,
   description,
   className = '',
@@ -28,7 +28,7 @@ export function FeatureCard({
         <div
           className={cn(
             numberBgClass,
-            'flex h-12 w-12 items-center justify-center rounded-full text-xl font-medium',
+            'flex aspect-square h-12 w-12 shrink-0 items-center justify-center rounded-full text-xl font-medium',
           )}
         >
           {number}

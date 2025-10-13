@@ -12,6 +12,7 @@ import editor from '@/access/editor'
 import { BentoCard } from '@/blocks/Bento/BentoCard'
 import { FeatureCards } from '@/blocks/FeatureCards/config'
 import { FeatureCollection } from '@/blocks/FeatureCollection/config'
+import { HistoryAbout } from '@/blocks/HistoryAbout'
 import { ContentSectionBlock } from '@/blocks/contentSection/config'
 import { map } from '@/blocks/map/config'
 import { slugField } from '@/fields/slug'
@@ -97,6 +98,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 BentoCard,
                 FeatureCollection,
                 FeatureCards,
+                HistoryAbout,
               ],
               required: true,
               admin: {

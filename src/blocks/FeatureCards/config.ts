@@ -7,6 +7,8 @@ export const FeatureCards: Block = {
     plural: 'Cartes de fonctionnalités',
   },
   interfaceName: 'FeatureCardsBlock',
+  imageURL: '/img/blocks/card-preview.jpeg',
+  imageAltText: 'Feature Cards',
   fields: [
     {
       name: 'title',
