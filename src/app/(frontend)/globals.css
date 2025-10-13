@@ -248,7 +248,7 @@
     font-family: var(--font-sans);
   }
   h2 {
-    @apply text-3xl font-bold text-balance md:text-4xl;
+    @apply text-3xl font-bold text-balance text-gray-700 md:text-4xl;
   }
 }
 

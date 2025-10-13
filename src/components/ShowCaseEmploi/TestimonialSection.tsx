@@ -24,33 +24,24 @@ const TESTIMONIALS: Testimonial[] = [
     quote:
       "Je souhaite apporter de la sérénité et du bien-être au quotidien. Venir chez eux c'est leur permettre le maintien à domicile et de les sortir de l'isolement, la solitude.",
     author: 'Espérance',
-    age: 24,
-    role: 'Aide à domicile',
-    avatar: 'E',
   },
   {
     id: 2,
     quote:
       "Je suis heureuse d'aider nos bénéficiaires pour les tâches qu'ils ne peuvent plus réaliser eux-mêmes. J'aime les accompagner et les voir sourire.",
     author: 'Véronique',
-    role: 'Aide à domicile',
-    avatar: 'V',
   },
   {
     id: 3,
     quote:
       "J'ai commencé à travailler en parallèle de mes études et j'ai trouvé du sens dans ce métier, j'ai donc continué à temps partiel même après avoir terminé mon parcours.",
     author: 'David',
-    role: 'Auxiliaire de vie',
-    avatar: 'D',
   },
   {
     id: 4,
     quote:
       "Je voulais m'orienter vers un secteur plus humain et plus gratifiant. Ce que j'aime dans mon travail avec les bénéficiaires c'est le sourire du matin, les anecdotes que l'on partage, la complicité, la confiance qui s'installe.",
     author: 'Christine',
-    role: 'Responsable de secteur',
-    avatar: 'C',
   },
 ]
 
@@ -76,20 +67,20 @@ export function TestimonialSection({ testimonials = TESTIMONIALS }: TestimonialS
         {/* MySlider intégré */}
         <MySlider
           data={testimonials}
-          itemPerRow={3}
+          itemPerRow={1}
           className="mx-auto max-w-7xl"
           arrowBtnClass="top-1/2 -translate-y-1/2"
           renderItem={(testimonial) => (
-            <Card className="border-0 bg-white/80 shadow-lg backdrop-blur-sm transition-shadow hover:shadow-xl">
+            <Card className="mx-auto max-w-3xl rounded-3xl border-0 bg-white/80 shadow-sm transition-shadow hover:shadow-xl">
               <CardContent className="p-8">
-                <Quote className="text-primary mb-4 h-8 w-8" />
-                <blockquote className="mb-6 text-lg leading-relaxed">
+                <Quote className="text-primary-dark mb-4 h-8 w-8" />
+                <blockquote className="mb-6 text-center text-lg leading-relaxed">
                   {testimonial.quote}
                 </blockquote>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-end gap-3">
                   {testimonial.avatar && (
                     <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
-                      <span className="text-primary font-semibold">{testimonial.avatar}</span>
+                      <span className="text-primary-dark font-semibold">{testimonial.avatar}</span>
                     </div>
                   )}
                   <div>

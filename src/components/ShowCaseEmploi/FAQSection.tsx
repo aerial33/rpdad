@@ -7,36 +7,93 @@ import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 
-const faqData = [
+type FAQAnswer = string | { text?: string; items: string[] }[]
+
+interface FAQItem {
+  question: string
+  answer: FAQAnswer
+}
+
+const faqData: FAQItem[] = [
   {
-    question: 'En quoi consiste le travail d’aide à domicile ?',
-    answer:
-      'Vous accompagnez des personnes âgées et/ou en situation de handicap afin qu’elles puissent continuer à vivre chez elles dans de bonnes conditions. Concrètement, vous pouvez :• les accompagner dans les gestes du quotidien (toilette, habillage, repas)  • réaliser des tâches ménagères (entretien du logement, linge, courses) • leur apporter un soutien social (discussions, écoute, présence bienveillante) Votre rôle est à la fois pratique, humain et rassurant pour les personnes que vous aidez.',
+    question: "En quoi consiste le travail d'aide à domicile ?",
+    answer: [
+      {
+        text: "Vous accompagnez des personnes âgées et/ou en situation de handicap afin qu'elles puissent continuer à vivre chez elles dans de bonnes conditions. Concrètement, vous pouvez :",
+        items: [
+          'les accompagner dans les gestes du quotidien (toilette, habillage, repas)',
+          'réaliser des tâches ménagères (entretien du logement, linge, courses)',
+          'leur apporter un soutien social (discussions, écoute, présence bienveillante)',
+        ],
+      },
+      {
+        text: 'Votre rôle est à la fois pratique, humain et rassurant pour les personnes que vous aidez.',
+        items: [],
+      },
+    ],
   },
   {
-    question: 'Quels types de contrats proposez-vous ?',
-    answer:
-      "Nous proposons différents types de contrats : CDI, CDD, temps partiel, temps complet, contrats d'apprentissage et stages. Nos offres s'adaptent aux besoins et disponibilités de chacun.",
+    question: 'Peut-on se former en travaillant  ?',
+    answer: [
+      {
+        text: 'Oui, tout à fait. Le RPDAD propose des formations professionnalisantes en cours d’emploi.',
+        items: [],
+      },
+      {
+        text: 'Certains CCAS et CIAS offrent également des formations en alternance ou via la VAE (Validation des Acquis de l’Expérience)',
+        items: [],
+      },
+    ],
   },
   {
-    question: "Quelles sont les possibilités d'évolution de carrière ?",
-    answer:
-      "Le RPDAD offre de nombreuses perspectives d'évolution : responsable de secteur, coordinateur, formateur, ou spécialisation dans l'accompagnement de publics spécifiques. Nous encourageons la formation continue et l'évolution professionnelle.",
+    question: 'Les horaires sont-ils fixes ?',
+    answer: [
+      {
+        text: 'Les horaires peuvent varier, car ce métier implique une continuité de service. Vous pouvez être amené(e) à travailler le matin, en fin d’après-midi, voire certains week-ends, en fonction des besoins des personnes accompagnées et en alternance avec les autres agents du service.',
+        items: [],
+      },
+    ],
   },
   {
-    question: "Quel est le secteur géographique d'intervention ?",
+    question: 'Est-ce un métier fatigant ?',
     answer:
-      "Nous intervenons sur l'ensemble du département de la Gironde, avec des secteurs urbains et ruraux. Chaque agent est affecté à un secteur géographique défini pour optimiser les déplacements.",
+      'Oui, il s’agit d’un métier physique et exigeant sur le plan relationnel. Mais il est également très humain, enrichissant et valorisant. Vous développez un lien fort avec les personnes que vous accompagnez.',
   },
   {
-    question: 'Quels sont les avantages du service public ?',
-    answer:
-      "En tant qu'agents de la fonction publique territoriale, nos employés bénéficient d'une sécurité de l'emploi, d'un régime de retraite avantageux, de congés spécifiques, et d'un accompagnement professionnel continu.",
+    question: 'En quoi consiste le travail de responsable de secteur?',
+    answer: [
+      {
+        text: 'Concrètement, il ou elle :',
+        items: [
+          'planifie les tournées et établit les plannings',
+          'assure la liaison entre les familles, les aides à domicile, la direction et les autres professionnels',
+          'évalue les besoins des personnes accompagnées et propose un accompagnement adapté',
+          'encadre et soutient l’équipe au quotidien',
+        ],
+      },
+      {
+        text: 'C’est un métier qui repose sur l’organisation, la coordination et le sens du contact humain. Il est essentiel au bon fonctionnement du service.',
+        items: [],
+      },
+    ],
   },
   {
-    question: 'Comment se déroule le processus de recrutement ?',
-    answer:
-      "Le processus comprend l'envoi de candidature, un entretien avec le responsable du secteur, une visite médicale et une période d'intégration avec accompagnement personnalisé.",
+    question: 'Travaille-t-on seul(e) ?',
+    answer: [
+      {
+        text: 'Vous intervenez seul(e) au domicile des personnes aidées, mais vous faites partie d’une équipe avec laquelle vous échangez régulièrement. Vous n’êtes donc jamais vraiment isolé(e).',
+        items: [],
+      },
+    ],
+  },
+  {
+    question: 'Se déplace-t-on beaucoup ?',
+    answer: [
+      {
+        text: 'Oui, vous devez vous rendre d’un domicile à l’autre. Un moyen de transport est donc souvent nécessaire (voiture, vélo, scooter, etc.).',
+        items: [],
+      },
+    ],
   },
 ]
 
@@ -51,12 +108,12 @@ export function FAQSection() {
 
   return (
     <section className="py-20 lg:py-32">
-      <div className="container mx-auto px-4">
-        <div className="mb-16 text-center">
-          <Badge className="mb-4" variant="outline">
+      <div className="container mx-auto px-4 xl:flex xl:justify-between xl:gap-8 xl:px-0">
+        <div className="mb-16 text-center xl:text-left">
+          <Badge className="mb-4 border-gray-600" variant="outline">
             F.A.Q
           </Badge>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-700 md:text-4xl lg:text-5xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-700 md:text-4xl">
             Questions Fréquentes
           </h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
@@ -72,14 +129,12 @@ export function FAQSection() {
               return (
                 <Card
                   key={index}
-                  className={`border-0 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 ${
-                    isOpen ? 'ring-primary/10 shadow-lg ring-2' : 'hover:shadow-md'
-                  }`}
+                  className="border-muted-foreground border-0 border-b bg-transparent shadow-sm transition-all duration-300"
                 >
                   <CardContent className="p-0">
                     <button
                       onClick={() => toggleItem(index)}
-                      className="hover:bg-muted/20 focus:ring-primary/20 group w-full rounded-lg p-6 text-left transition-all duration-200 focus:ring-2 focus:outline-none"
+                      className="hover:bg-muted/20 group w-full p-6 text-left transition-all duration-200"
                     >
                       <div className="flex items-center justify-between">
                         <h3
@@ -115,7 +170,24 @@ export function FAQSection() {
                             isOpen ? 'delay-150' : ''
                           }`}
                         >
-                          <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                          {typeof faq.answer === 'string' ? (
+                            <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                          ) : (
+                            <div className="text-muted-foreground space-y-3 leading-relaxed">
+                              {faq.answer.map((section, idx) => (
+                                <div key={idx}>
+                                  {section.text && <p className="mb-2">{section.text}</p>}
+                                  {section.items.length > 0 && (
+                                    <ul className="ml-6 list-disc space-y-1.5">
+                                      {section.items.map((item, itemIdx) => (
+                                        <li key={itemIdx}>{item}</li>
+                                      ))}
+                                    </ul>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>

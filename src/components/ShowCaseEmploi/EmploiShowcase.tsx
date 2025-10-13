@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { displayDate } from '@/utilities/formatDateTime'
 
+import { FAQSection } from './FAQSection'
 import { TestimonialSection } from './TestimonialSection'
 import type { EmploiShowcaseProps } from './types'
 
@@ -101,7 +102,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
             sizes="(max-width: 1280px) 100vw, 1536px"
           />
           <div className="bg-opacity-30 absolute inset-0 flex flex-col items-center justify-center text-white">
-            <Badge className="mb-4 text-white" variant="outline">
+            <Badge className="mb-4 border-white text-white" variant="outline">
               {totalDocs} offres disponibles
             </Badge>
             <h1 className="inline-block align-middle text-5xl font-semibold md:text-7xl">
@@ -121,12 +122,12 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
 
       {/* Section Offres d'emploi */}
       <section className="bg-muted/30 py-20">
-        <div className="container mx-auto px-4 text-left lg:text-center">
-          <div className="mb-16">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+        <div className="container mx-auto px-4 text-left">
+          <div className="mb-16 xl:mb-24">
+            <h2 className="mb-4 text-4xl font-bold tracking-tight text-balance lg:text-5xl">
               {"Le Réseau Public Départemental d'Aide à Domicile de la Gironde"}
             </h2>
-            <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
+            <p className="text-muted-foreground max-w-2xl text-xl">
               {
                 'C’est près de 1200 agents, les métiers sont variés : aide à domicile, auxiliaire de vie, responsable de SAD, responsable de secteur, agent administratif…, voici nos offres'
               }
@@ -275,7 +276,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
         </div>
       </section>
       <TestimonialSection />
-      {/* <FAQSection /> */}
+      <FAQSection />
 
       {/* Section Call to Action */}
       {/* <section className="from-primary to-secondary bg-gradient-to-r py-20 lg:py-32">

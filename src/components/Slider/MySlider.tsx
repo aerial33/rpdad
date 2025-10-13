@@ -1,6 +1,7 @@
 'use client'
 
-import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion'
+
 import { ReactNode, useEffect, useState } from 'react'
 import { useSwipeable } from 'react-swipeable'
 
@@ -25,10 +26,17 @@ export interface MySliderProps<T> {
  * Features:
  * - Responsive breakpoints (auto-adjusts items per view)
  * - Touch/swipe support for mobile
+ * - Keyboard navigation (Arrow keys, Home, End)
  * - Smooth animations via Framer Motion
  * - RTL support
  * - Dark mode support
  * - SSR-safe
+ * - WCAG 2.1 compliant (accessibility)
+ *
+ * Keyboard shortcuts:
+ * - Arrow Left/Right: Navigate between slides
+ * - Home: Jump to first slide
+ * - End: Jump to last slide
  *
  * @example
  * ```tsx
@@ -88,6 +96,42 @@ export default function MySlider<T>({
     trackMouse: true,
   })
 
+  // Keyboard navigation handler for accessibility
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Maximum index we can navigate to
+    const maxIndex = Math.max(0, data.length - numberOfItems)
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault() // Prevent page scroll
+        if (currentIndex > 0) {
+          changeItemId(currentIndex - 1)
+        }
+        break
+
+      case 'ArrowRight':
+        e.preventDefault() // Prevent page scroll
+        if (currentIndex < maxIndex) {
+          changeItemId(currentIndex + 1)
+        }
+        break
+
+      case 'Home':
+        e.preventDefault()
+        if (currentIndex !== 0) {
+          changeItemId(0)
+        }
+        break
+
+      case 'End':
+        e.preventDefault()
+        if (currentIndex !== maxIndex) {
+          changeItemId(maxIndex)
+        }
+        break
+    }
+  }
+
   // Don't render until we have calculated number of items
   if (!numberOfItems) {
     return <div></div>
@@ -101,18 +145,24 @@ export default function MySlider<T>({
           opacity: { duration: 0.2 },
         }}
       >
-        <div className={`relative flow-root`} {...handlers}>
+        <div
+          className={`relative flow-root rounded-xl focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 focus:outline-none`}
+          tabIndex={0}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label={`Carousel avec ${data.length} élément${data.length > 1 ? 's' : ''}`}
+          onKeyDown={handleKeyDown}
+          {...handlers}
+        >
           <div className={`flow-root overflow-hidden rounded-xl`}>
             <motion.ul initial={false} className="relative -mx-2 whitespace-nowrap xl:-mx-4">
               <AnimatePresence initial={false} custom={direction}>
                 {data.map((item, indx) => (
                   <motion.li
-                    className={`relative inline-block whitespace-normal px-2 xl:px-4`}
+                    className={`relative inline-block px-2 whitespace-normal xl:px-4`}
                     custom={direction}
                     initial={{
-                      x: !isRTL
-                        ? `${(currentIndex - 1) * -100}%`
-                        : `${(currentIndex - 1) * 100}%`,
+                      x: !isRTL ? `${(currentIndex - 1) * -100}%` : `${(currentIndex - 1) * 100}%`,
                     }}
                     animate={{
                       x: !isRTL ? `${currentIndex * -100}%` : `${currentIndex * 100}%`,
