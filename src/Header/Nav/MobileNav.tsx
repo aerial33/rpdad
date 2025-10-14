@@ -22,6 +22,7 @@ import { usePathname } from 'next/navigation'
 import { CMSLink } from '@/components/Link'
 import { RpdadLogo } from '@/graphics/LogoRpdad/logo'
 import type { HautDePage as HeaderType } from '@/payload-types'
+import { getLinkHref } from '@/utilities/getLinkHref'
 import { cn } from '@/utilities/ui'
 
 export function MobileMenu({ data }: { data: HeaderType }) {
@@ -50,7 +51,7 @@ export function MobileMenu({ data }: { data: HeaderType }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-flamingo-lighter fixed inset-0 z-50"
+            className="fixed inset-0 z-50 bg-white"
             onClick={closeMenu}
           >
             {/* Contenu du menu mobile */}
@@ -72,23 +73,27 @@ export function MobileMenu({ data }: { data: HeaderType }) {
                   <X width={32} height={32} />
                 </button>
               </div>
-              <div className="mt-10 flex h-screen flex-col space-y-6 overflow-y-scroll pt-10">
+              <div className="mt-2 flex h-screen flex-col items-center space-y-6 overflow-y-scroll pt-10">
                 {data.navItems?.map((item) => {
                   // Si c'est un lien simple sans sous-menu
                   if (item.link) {
-                    const isActive = pathname === item.link.url
+                    const linkHref = getLinkHref(item.link)
+                    const isActive = pathname === linkHref
                     return (
-                      <Link
+                      <CMSLink
                         key={item.id}
-                        href={item.link.url || ''}
+                        type={item.link.type}
+                        reference={item.link.reference}
+                        url={item.link.url}
+                        newTab={item.link.newTab}
                         className={cn(
-                          'border-primary-dark cursor-pointer border-b py-2 text-lg transition-colors',
+                          'cursor-pointer py-2 text-lg transition-colors',
                           isActive ? 'text-primary font-bold' : 'hover:text-primary text-gray-600',
                         )}
                         onClick={closeMenu}
                       >
                         {item.link.label}
-                      </Link>
+                      </CMSLink>
                     )
                   }
 

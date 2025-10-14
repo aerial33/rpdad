@@ -226,6 +226,7 @@ export interface Page {
     | FeatureCollectionBlock
     | FeatureCardsBlock
     | HistoryAboutBlock
+    | TeamBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1001,6 +1002,37 @@ export interface HistoryAboutBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  members?:
+    | {
+        name: string;
+        role: string;
+        photo?: (number | null) | Media;
+        bio?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  layout?: ('grid-2' | 'grid-3' | 'grid-4') | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'team';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emplois".
  */
 export interface Emplois {
@@ -1479,6 +1511,7 @@ export interface PagesSelect<T extends boolean = true> {
         featureCollection?: T | FeatureCollectionBlockSelect<T>;
         featureCards?: T | FeatureCardsBlockSelect<T>;
         historyAbout?: T | HistoryAboutBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
       };
   meta?:
     | T
@@ -1715,6 +1748,27 @@ export interface HistoryAboutBlockSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  bgColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  members?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        photo?: T;
+        bio?: T;
+        id?: T;
+      };
+  layout?: T;
   bgColor?: T;
   id?: T;
   blockName?: T;
