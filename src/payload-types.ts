@@ -1013,6 +1013,21 @@ export interface TeamBlock {
         role: string;
         photo?: (number | null) | Media;
         bio?: string | null;
+        cardAccentColor?:
+          | (
+              | 'bg-blue-100'
+              | 'bg-blue-200'
+              | 'bg-blue-300'
+              | 'bg-flamingo-lighter'
+              | 'bg-flamingo-light'
+              | 'bg-chateau-lighter'
+              | 'bg-chateau-light'
+              | 'bg-primary-lighter'
+              | 'bg-primary-light'
+              | 'bg-neutral-100'
+              | 'bg-neutral-200'
+            )
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1766,6 +1781,7 @@ export interface TeamBlockSelect<T extends boolean = true> {
         role?: T;
         photo?: T;
         bio?: T;
+        cardAccentColor?: T;
         id?: T;
       };
   layout?: T;

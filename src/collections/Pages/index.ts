@@ -13,6 +13,7 @@ import { BentoCard } from '@/blocks/Bento/BentoCard'
 import { FeatureCards } from '@/blocks/FeatureCards/config'
 import { FeatureCollection } from '@/blocks/FeatureCollection/config'
 import { HistoryAbout } from '@/blocks/HistoryAbout'
+import { Team } from '@/blocks/Team/config'
 import { ContentSectionBlock } from '@/blocks/contentSection/config'
 import { map } from '@/blocks/map/config'
 import { slugField } from '@/fields/slug'
@@ -99,6 +100,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FeatureCollection,
                 FeatureCards,
                 HistoryAbout,
+                Team,
               ],
               required: true,
               admin: {

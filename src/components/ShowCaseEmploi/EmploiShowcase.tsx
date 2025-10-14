@@ -279,34 +279,6 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
       </section>
       <TestimonialSection />
       <FAQSection />
-
-      {/* Section Call to Action */}
-      {/* <section className="from-primary to-secondary bg-gradient-to-r py-20 lg:py-32">
-        <div className="container mx-auto px-4 text-center">
-          <div className="mx-auto max-w-3xl text-white">
-            <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              Prêt à rejoindre votre équipe ?
-            </h2>
-            <p className="mb-8 text-xl opacity-90">
-              Découvrez nos offres d'emploi et donnez du sens à votre carrière dans l'aide à
-              domicile.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" variant="secondary" className="gap-2">
-                Voir toutes les offres
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="gap-2 border-white/20 bg-white/10 text-white hover:bg-white/20"
-              >
-                Nous contacter
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section> */}
     </div>
   )
 }

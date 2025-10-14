@@ -6,6 +6,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { HistoryAboutBlock } from '@/blocks/HistoryAbout'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { TeamBlock } from '@/blocks/Team/Component'
 import type { Page } from '@/payload-types'
 
 import { BentoGridBlock } from './Bento/Component'
@@ -25,6 +26,7 @@ const blockComponents = {
   featureCollection: FeatureCollectionBlockComponent,
   featureCards: FeatureCardsBlock,
   historyAbout: HistoryAboutBlock,
+  team: TeamBlock,
   map: MapBlock,
 }
 
