@@ -823,9 +823,9 @@ export interface ContentSectionBlock {
         id?: string | null;
       }[]
     | null;
-  button: {
-    text: string;
-    href: string;
+  button?: {
+    text?: string | null;
+    href?: string | null;
     icon?: ('arrow-right' | 'arrow-left' | 'external-link' | 'download' | 'none') | null;
   };
   imagePosition?: ('Droite' | 'Gauche') | null;
