@@ -31,10 +31,10 @@ export const SidebarWidgets: React.FC<SidebarWidgetsProps> = ({
       <SearchWidget />
 
       {/* À propos */}
-      <div className="widget mt-8 rounded-3xl bg-neutral-100 px-6 py-6 md:py-8">
+      {/* <div className="widget mt-8 rounded-3xl bg-neutral-100 px-6 py-6 md:py-8">
         <h4 className="!mb-3 text-2xl font-bold text-gray-700">{aboutTitle}</h4>
         <p className="lineheigth-tight text-sm">{aboutContent}</p>
-      </div>
+      </div> */}
 
       {/* Articles Populaires */}
       {popularPosts.length > 0 && (
