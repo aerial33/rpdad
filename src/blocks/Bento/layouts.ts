@@ -38,8 +38,9 @@ export const CARD_LAYOUTS: Record<number, CardLayout> = {
     titleClass: 'mb-2 text-2xl font-bold text-gray-700 lg:text-2xl',
     descriptionClass: 'text-balance text-gray-500',
     imagePosition: 'absolute-top-right',
-    imageWrapperClass: 'md:absolute md:-top-10 md:-right-10 max-w-[250px] z-10',
-    cardInnerClass: 'flex h-full flex-col justify-center  p-6',
+    imageWrapperClass: 'xl:absolute xl:-top-10 xl:-right-10 max-w-[250px] z-10',
+    cardInnerClass:
+      'flex h-full flex-col lg:flex-row justify-center items-center xl:justify-start p-6',
     linkClass: 'mt-4 font-medium hover:text-primary',
     badgeClass: 'mb-2 ml-auto block text-xs font-medium',
   },
@@ -48,10 +49,9 @@ export const CARD_LAYOUTS: Record<number, CardLayout> = {
   2: {
     contentWrapperClass: 'flex w-full max-w-md flex-col items-start justify-center',
     titleClass: 'mb-2 text-2xl font-bold text-gray-700 lg:text-2xl',
-    descriptionClass:
-      'text-balance text-sm text-gray-500 border border-flamingo bg-white rounded-xl p-2 max-w-md',
+    descriptionClass: 'text-balance text-sm text-gray-500 p-2 max-w-md',
     imagePosition: 'absolute-top-right',
-    imageWrapperClass: 'lg:absolute lg:-bottom-10 md:-right-10 max-w-[150px] z-10',
+    imageWrapperClass: 'xl:absolute xl:-bottom-10 xl:-right-10 max-w-[150px] z-10',
     cardInnerClass: 'flex h-full flex-col md:flex-row justify-center p-6 items-center',
     linkClass: 'mt-4 font-medium hover:text-primary',
     badgeClass: 'mb-2 ml-auto block text-xs font-medium',

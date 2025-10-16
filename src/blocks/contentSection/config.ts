@@ -234,7 +234,7 @@ export const ContentSectionBlock: Block = {
           name: 'text',
           label: 'Texte du bouton',
           type: 'text',
-          required: true,
+          required: false,
           admin: {
             placeholder: 'ex: Retrouvez notre réseau',
           },
@@ -243,7 +243,7 @@ export const ContentSectionBlock: Block = {
           name: 'href',
           label: 'Lien',
           type: 'text',
-          required: true,
+          required: false,
           admin: {
             placeholder: 'ex: /services-membres',
           },
