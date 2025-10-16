@@ -57,7 +57,8 @@ export const MembresContent = (membre: Membre) => {
             <div className="flex-grow pt-5 md:pt-1 lg:ml-6 xl:ml-12">
               <div className="w-full space-y-4">
                 <h2 className="mb-4 w-full items-center text-2xl font-medium text-gray-600 sm:text-4xl">
-                  {"Service d'Aide et d' Accompagnement à Domicile du CCAS: "} {membre.name}
+                  {"Service d'Aide et d' Accompagnement à Domicile: "}{' '}
+                  <span className="font-bold">{membre.name}</span>
                 </h2>
 
                 {membre.informations?.website && (

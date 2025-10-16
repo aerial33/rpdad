@@ -26,11 +26,11 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
   }
 
   return (
-    <section className="relative -z-10 mt-4 min-h-screen lg:min-h-0">
+    <section className="relative -z-10 mt-4 flex min-h-screen items-center lg:min-h-0">
       <div className="container mx-auto px-4 xl:px-0">
         <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-8">
-          <FadeUp delay={0.3} className="mt-8">
-            <div className="flex flex-col gap-6">
+          <FadeUp delay={0.3} className="lg:mt-8">
+            <div className="flex flex-col gap-10 lg:gap-6">
               {badge && (
                 <Badge variant="outline" className="text-muted-foreground border-muted-foreground">
                   {badge}
@@ -62,16 +62,18 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
                 </div>
               )}
               {actionType === 'search' && <HeroSearch />}
-              <LogoTicker className="lg:text-muted-foreground rounded-xl bg-white/20 p-3 text-white backdrop-blur-sm" />
+
+              {/* Desktop: LogoTicker intégré dans le hero */}
+              <LogoTicker className="lg:text-muted-foreground mt-12 rounded-xl bg-white/20 p-3 text-white backdrop-blur-sm lg:mt-0 xl:block" />
             </div>
           </FadeUp>
 
           {/* Mobile: afficher seulement la première image avec forme arrondie */}
-          <div className="absolute inset-0 -z-1 h-screen overflow-hidden shadow-2xl sm:rounded-bl-[300px] lg:hidden">
+          <div className="absolute inset-0 -z-1 min-h-screen overflow-hidden sm:rounded-bl-[300px] lg:hidden lg:shadow-2xl">
             {images?.[0]?.image && (
               <Media
                 resource={images[0].image}
-                imgClassName="h-full w-full object-cover brightness-60 object-left"
+                imgClassName="h-full min-h-screen w-full object-cover brightness-60 object-left"
                 priority={true}
                 quality={90}
                 size="100vw"
@@ -92,7 +94,7 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
                       duration={0.35}
                       key={index}
                       className={cn(
-                        'flex aspect-square items-center justify-center overflow-hidden rounded-full transition-transform',
+                        'flex aspect-square items-center justify-center overflow-hidden rounded-full shadow-lg transition-transform',
                         (index === 0 || index === images.length - 1) && 'scale-75',
                       )}
                     >
@@ -152,8 +154,13 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
             </div>
           </div>
         </div>
+
+        {/* Mobile/Tablet: Section séparée pour LogoTicker */}
+        {/* <div className="mt-16 lg:mt-24 xl:hidden">
+          <LogoTicker className="rounded-xl bg-white/10 p-4 text-white backdrop-blur-sm" />
+        </div> */}
       </div>
-      <div className="lg:from-primary lg:to-primary-dark absolute inset-0 top-[-188px] -bottom-4 -z-1 rounded-bl-[300px] shadow lg:visible lg:left-[60%] lg:bg-gradient-to-br"></div>
+      <div className="lg:from-primary lg:to-primary-dark absolute inset-0 top-[-188px] -bottom-4 -z-1 rounded-bl-[300px] lg:visible lg:left-[60%] lg:bg-gradient-to-br lg:shadow"></div>
     </section>
   )
 }
