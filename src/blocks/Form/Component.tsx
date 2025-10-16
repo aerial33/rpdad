@@ -1,8 +1,5 @@
 'use client'
 
-import type { FormFieldBlock, Form as FormType } from '@payloadcms/plugin-form-builder/types'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-
 import React, { useCallback, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -11,31 +8,29 @@ import { useRouter } from 'next/navigation'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
 import { getClientSideURL } from '@/utilities/getURL'
+import type { FormBlock as FormBlockType } from '@/payload-types'
 
 import { fields } from './fields'
-
-export type FormBlockType = {
-  blockName?: string
-  blockType?: 'formBlock'
-  enableIntro: boolean
-  form: FormType
-  introContent?: SerializedEditorState
-}
 
 export const FormBlock: React.FC<
   {
     id?: string
   } & FormBlockType
 > = (props) => {
-  const {
-    enableIntro,
-    form: formFromProps,
-    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
-    introContent,
-  } = props
+  const { enableIntro, form: formFromProps, introContent } = props
+
+  // Handle case where form might be just an ID - in practice it should always be populated
+  const formData = typeof formFromProps === 'object' ? formFromProps : null
+  if (!formData) {
+    console.error('Form data is not populated')
+    return null
+  }
+
+  const { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } =
+    formData
 
   const formMethods = useForm({
-    defaultValues: formFromProps.fields,
+    defaultValues: formData.fields || [],
   })
   const {
     control,
@@ -50,7 +45,8 @@ export const FormBlock: React.FC<
   const router = useRouter()
 
   const onSubmit = useCallback(
-    (data: FormFieldBlock[]) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (data: any) => {
       let loadingTimerID: ReturnType<typeof setTimeout>
       const submitForm = async () => {
         setError(undefined)
@@ -129,24 +125,24 @@ export const FormBlock: React.FC<
       )}
       <div className="border-border rounded-[0.8rem] border p-4 lg:p-6">
         <FormProvider {...formMethods}>
-          {!isLoading && hasSubmitted && confirmationType === 'message' && (
+          {!isLoading && hasSubmitted && confirmationType === 'message' && confirmationMessage && (
             <RichText data={confirmationMessage} />
           )}
           {isLoading && !hasSubmitted && <p>Chargement, veuillez patienter...</p>}
           {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
           {!hasSubmitted && (
-            <form id={formID} onSubmit={handleSubmit(onSubmit)}>
+            <form id={String(formID)} onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-4 last:mb-0">
-                {formFromProps &&
-                  formFromProps.fields &&
-                  formFromProps.fields?.map((field, index) => {
+                {formData &&
+                  formData.fields &&
+                  formData.fields?.map((field, index) => {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const Field: React.FC<any> = fields?.[field.blockType as keyof typeof fields]
                     if (Field) {
                       return (
                         <div className="mb-6 last:mb-0" key={index}>
                           <Field
-                            form={formFromProps}
+                            form={formData}
                             {...field}
                             {...formMethods}
                             control={control}
@@ -160,7 +156,7 @@ export const FormBlock: React.FC<
                   })}
               </div>
 
-              <Button form={formID} type="submit" variant="default">
+              <Button form={String(formID)} type="submit" variant="default">
                 {submitButtonLabel}
               </Button>
             </form>
