@@ -18,7 +18,7 @@ export default async function Page() {
   const membres = await payload.find({
     collection: 'membres',
     depth: 1,
-    limit: 12,
+    limit: 50,
     overrideAccess: false,
     select: {
       name: true,
@@ -52,7 +52,7 @@ export default async function Page() {
             <PageRange
               collection="membres"
               currentPage={membres.page}
-              limit={12}
+              limit={50}
               totalDocs={membres.totalDocs}
             />
             <Pagination page={membres.page} totalPages={membres.totalPages} collection="membres" />
