@@ -7,6 +7,23 @@ export const FeatureCollection: Block = {
   imageAltText: 'Feature Collection',
   fields: [
     {
+      name: 'variant',
+      type: 'select',
+      defaultValue: 'grid',
+      label: 'Variante d\'affichage',
+      options: [
+        {
+          label: 'Grille (affichage par défaut)',
+          value: 'grid',
+        },
+        {
+          label: 'Mise en avant (1 article principal + 5 articles compacts)',
+          value: 'featured',
+        },
+      ],
+      required: true,
+    },
+    {
       name: 'title',
       type: 'text',
       label: 'Titre',
@@ -98,6 +115,20 @@ export const FeatureCollection: Block = {
       hasMany: true,
       label: 'Selection',
       relationTo: ['posts'],
+    },
+    {
+      name: 'bgColor',
+      type: 'radio',
+      label: 'Couleur de fond de section',
+      defaultValue: 'bg-white',
+      options: [
+        { label: '⚪ Blanc', value: 'bg-white' },
+        { label: '⚫ Gris', value: 'bg-neutral-100' },
+        { label: '🟠 Orange', value: 'bg-flamingo-lightest' },
+        { label: '🔵 Bleu', value: 'bg-blue-lightest' },
+        { label: '🟢 Vert', value: 'bg-chateau-lightest' },
+        { label: '🟣 Violet', value: 'bg-primary-lightest' },
+      ],
     },
   ],
   labels: {

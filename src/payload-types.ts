@@ -904,6 +904,7 @@ export interface BentoCardBlock {
  * via the `definition` "FeatureCollectionBlock".
  */
 export interface FeatureCollectionBlock {
+  variant: 'grid' | 'featured';
   title: string;
   subtitle?: string | null;
   badgeText?: string | null;
@@ -918,6 +919,16 @@ export interface FeatureCollectionBlock {
         relationTo: 'posts';
         value: number | Post;
       }[]
+    | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
     | null;
   id?: string | null;
   blockName?: string | null;
@@ -1721,6 +1732,7 @@ export interface BentoCardBlockSelect<T extends boolean = true> {
  * via the `definition` "FeatureCollectionBlock_select".
  */
 export interface FeatureCollectionBlockSelect<T extends boolean = true> {
+  variant?: T;
   title?: T;
   subtitle?: T;
   badgeText?: T;
@@ -1731,6 +1743,7 @@ export interface FeatureCollectionBlockSelect<T extends boolean = true> {
   categories?: T;
   limit?: T;
   selectedDocs?: T;
+  bgColor?: T;
   id?: T;
   blockName?: T;
 }

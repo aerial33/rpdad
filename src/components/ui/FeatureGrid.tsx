@@ -61,7 +61,7 @@ function FeatureGrid({
         <div className="flex flex-col gap-10">
           <div className="flex flex-col items-start gap-4">
             <div>
-              <Badge variant={'outline'} className="border-flamingo text-md mb-4">
+              <Badge variant={'outline'} className="text-md mb-4 border-gray-700">
                 {badgeText}
               </Badge>
             </div>
