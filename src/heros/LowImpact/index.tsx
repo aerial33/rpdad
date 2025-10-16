@@ -8,8 +8,8 @@ import type { Page } from '@/payload-types'
 export const LowImpactHero: React.FC<Page['hero']> = ({ badge, media, richText }) => {
   return (
     <section className="">
-      <div className="mx-auto w-full px-2 pt-12 xl:max-w-screen-2xl">
-        <div className="relative h-120 w-full overflow-hidden rounded-3xl md:rounded-[40px]">
+      <div className="mx-auto h-120 w-full px-2 pt-12 xl:max-w-screen-2xl">
+        <div className="aspect-w-16 aspect-h-13 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-5 relative z-0 h-full overflow-hidden rounded-3xl md:rounded-[40px]">
           {/* Image avec Media component ou dégradé par défaut */}
           {media && typeof media === 'object' ? (
             <Media

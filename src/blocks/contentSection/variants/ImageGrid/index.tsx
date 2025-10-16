@@ -72,7 +72,7 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
     }
 
     return (
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {multipleImages.map((imageItem, index) => {
           const imageData = getPopulatedImageData(imageItem.image)
 
@@ -93,10 +93,15 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
             <div
               key={index}
               className={`relative overflow-hidden rounded-xl ${
-                index === 0 ? 'aspect-video md:col-span-2 md:mx-5' : 'w-full'
+                index === 0 ? 'aspect-video md:mx-5 lg:col-span-2' : 'w-full'
               }`}
             >
-              <MediaComponent className="h-auto w-full rounded-xl" resource={imageData} />
+              <MediaComponent
+                className="aspect-video h-auto w-full rounded-xl border lg:aspect-square"
+                imgClassName="object-cover"
+                fill
+                resource={imageData}
+              />
             </div>
           )
         })}
@@ -107,7 +112,7 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
   // Composant pour le contenu texte
   const ContentComponent = () => (
     <div className="richtext-content flex min-w-[250px] flex-col gap-4">
-      {content && <RichText className="m-0" data={content} />}
+      {content && <RichText className="m-0 [&_h2]:mb-4" data={content} />}
 
       {/* Fonctionnalités avec icônes */}
       {features && features.length > 0 && (

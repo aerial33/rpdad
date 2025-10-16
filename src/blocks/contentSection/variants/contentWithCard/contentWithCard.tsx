@@ -14,7 +14,7 @@ import { getIconComponent } from '../../utils'
 const ImageDisplay: React.FC<{ image?: { src: string; alt: string } }> = ({ image }) => {
   if (!image) return null
 
-  return <img className="rounded-xl" src={image.src} srcSet={image.src} alt={image.alt} />
+  return <img className="rounded-xl" src={image?.src} srcSet={image?.src} alt={image?.alt} />
 }
 
 const InfoCard: React.FC<{ cardInfo: any }> = ({ cardInfo }) => (
@@ -38,7 +38,7 @@ export function ContentSection({ images, cardInfo, badge, content, button }: Con
   const getImageUrl = (imageItem: any): { src: string; alt: string } | undefined => {
     if (!imageItem) return undefined
     return {
-      src: typeof imageItem.image === 'object' ? (imageItem.image as Media).url || '' : '',
+      src: typeof imageItem.image === 'object' ? (imageItem.image as Media)?.url || '' : '',
       alt: imageItem.alt || '',
     }
   }
