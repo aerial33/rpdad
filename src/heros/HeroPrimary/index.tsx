@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { HeroSearch } from '@/components/HeroSearch'
+import { HeroSearchMembers } from '@/components/HeroSearchMembers'
 import { CMSLink } from '@/components/Link'
 import { LogoTicker } from '@/components/LogoTicker'
 import { Media } from '@/components/Media'
@@ -61,7 +61,7 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
                   )}
                 </div>
               )}
-              {actionType === 'search' && <HeroSearch />}
+              {actionType === 'search' && <HeroSearchMembers />}
 
               {/* Desktop: LogoTicker intégré dans le hero */}
               <LogoTicker className="lg:text-muted-foreground mt-12 rounded-xl bg-white/20 p-3 text-white backdrop-blur-sm lg:mt-0 xl:block" />
