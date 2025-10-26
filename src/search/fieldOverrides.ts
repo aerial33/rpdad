@@ -10,6 +10,14 @@ export const searchFields: Field[] = [
     },
   },
   {
+    name: 'publishedAt',
+    type: 'date',
+    admin: {
+      readOnly: true,
+      position: 'sidebar',
+    },
+  },
+  {
     name: 'meta',
     label: 'Meta',
     type: 'group',

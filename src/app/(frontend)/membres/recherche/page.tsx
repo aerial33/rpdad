@@ -3,7 +3,8 @@ import { getPayload } from 'payload'
 
 import type { Metadata } from 'next/types'
 
-import { Search } from '@/search/Component'
+import { HeroSearchMembers } from '@/components/HeroSearchMembers'
+import CardMembers from '@/components/ShowCaseMembers/CardMembers'
 
 import MembresSearchPageClient from './page.client'
 
@@ -28,66 +29,75 @@ export default async function MembresSearchPage({ searchParams: searchParamsProm
       coordinates: true,
       meta: true,
       logo: true,
+      informations: true,
     },
-    where: {
-      and: [
-        {
-          _status: {
-            equals: 'published',
-          },
-        },
-        ...(query
-          ? [
+    // pagination: false reduces overhead if you don't need totalDocs
+    pagination: false,
+    ...(query
+      ? {
+          where: {
+            and: [
+              {
+                _status: {
+                  equals: 'published',
+                },
+              },
               {
                 or: [
                   {
                     name: {
-                      contains: query,
+                      like: query,
                     },
                   },
                   {
                     adresse: {
-                      contains: query,
+                      like: query,
                     },
                   },
                   {
                     'coordinates.zone': {
-                      contains: query,
+                      like: query,
                     },
                   },
                   {
                     'meta.description': {
-                      contains: query,
+                      like: query,
                     },
                   },
                   {
                     'meta.title': {
-                      contains: query,
+                      like: query,
                     },
                   },
                   {
                     slug: {
-                      contains: query,
+                      like: query,
                     },
                   },
                 ],
               },
-            ]
-          : []),
-      ],
-    },
+            ],
+          },
+        }
+      : {
+          where: {
+            _status: {
+              equals: 'published',
+            },
+          },
+        }),
     sort: 'name',
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="animation-appear pt-24 pb-24">
       <MembresSearchPageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none text-center">
           <h1 className="mb-8 lg:mb-16">Rechercher un membre</h1>
 
-          <div className="mx-auto max-w-[50rem]">
-            <Search />
+          <div className="mx-auto max-w-[40rem] text-center">
+            <HeroSearchMembers />
           </div>
         </div>
       </div>
@@ -95,37 +105,9 @@ export default async function MembresSearchPage({ searchParams: searchParamsProm
       {membres.totalDocs > 0 ? (
         <div className="container">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {membres.docs.map((membre) => {
-              const metaDescription = membre.meta?.description
-              const displayDescription = metaDescription || membre.adresse
-
-              return (
-                <a
-                  key={membre.id}
-                  href={`/membres/${membre.slug}`}
-                  className="bg-card hover:border-primary group rounded-lg border p-6 shadow-sm transition-all hover:shadow-md"
-                >
-                  <h3 className="group-hover:text-primary mb-2 text-xl font-semibold transition-colors">
-                    {membre.name}
-                  </h3>
-                  {displayDescription && (
-                    <p className="text-muted-foreground line-clamp-3 text-sm">
-                      {displayDescription}
-                    </p>
-                  )}
-                  {membre.adresse && (
-                    <p className="text-muted-foreground mt-4 text-xs">
-                      <span className="font-medium">Adresse :</span> {membre.adresse}
-                    </p>
-                  )}
-                  {membre.coordinates?.zone && (
-                    <p className="text-muted-foreground text-xs">
-                      <span className="font-medium">Zone :</span> {membre.coordinates.zone}
-                    </p>
-                  )}
-                </a>
-              )
-            })}
+            {membres.docs.map((membre) => (
+              <CardMembers key={membre.id} membre={membre} />
+            ))}
           </div>
         </div>
       ) : (
@@ -141,6 +123,6 @@ export function generateMetadata(): Metadata {
   return {
     title: `Rechercher un membre du RPDAD`,
     description:
-      'Trouvez un membre du Réseau Public Départemental d\'Aide à Domicile proche de chez vous',
+      "Trouvez un membre du Réseau Public Départemental d'Aide à Domicile proche de chez vous",
   }
 }
