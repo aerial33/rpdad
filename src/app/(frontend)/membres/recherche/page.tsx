@@ -18,76 +18,100 @@ export default async function MembresSearchPage({ searchParams: searchParamsProm
   const { q: query } = await searchParamsPromise
   const payload = await getPayload({ config: configPromise })
 
-  const membres = await payload.find({
-    collection: 'membres',
-    depth: 1,
-    limit: 50,
-    select: {
-      name: true,
-      slug: true,
-      adresse: true,
-      coordinates: true,
-      meta: true,
-      logo: true,
-      informations: true,
-    },
-    // pagination: false reduces overhead if you don't need totalDocs
-    pagination: false,
-    ...(query
-      ? {
-          where: {
-            and: [
-              {
-                _status: {
-                  equals: 'published',
+  // Récupérer les résultats de recherche si une query existe
+  const searchResults = query
+    ? await payload.find({
+        collection: 'membres',
+        depth: 1,
+        limit: 50,
+        select: {
+          name: true,
+          slug: true,
+          adresse: true,
+          coordinates: true,
+          meta: true,
+          logo: true,
+          informations: true,
+        },
+        pagination: false,
+        where: {
+          and: [
+            {
+              _status: {
+                equals: 'published',
+              },
+            },
+            {
+              or: [
+                {
+                  name: {
+                    like: query,
+                  },
                 },
-              },
-              {
-                or: [
-                  {
-                    name: {
-                      like: query,
-                    },
+                {
+                  adresse: {
+                    like: query,
                   },
-                  {
-                    adresse: {
-                      like: query,
-                    },
+                },
+                {
+                  'coordinates.zone': {
+                    like: query,
                   },
-                  {
-                    'coordinates.zone': {
-                      like: query,
-                    },
+                },
+                {
+                  'meta.description': {
+                    like: query,
                   },
-                  {
-                    'meta.description': {
-                      like: query,
-                    },
+                },
+                {
+                  'meta.title': {
+                    like: query,
                   },
-                  {
-                    'meta.title': {
-                      like: query,
-                    },
+                },
+                {
+                  slug: {
+                    like: query,
                   },
-                  {
-                    slug: {
-                      like: query,
-                    },
-                  },
-                ],
-              },
-            ],
+                },
+              ],
+            },
+          ],
+        },
+        sort: 'name',
+      })
+    : null
+
+  // Si la recherche ne donne aucun résultat, récupérer tous les membres
+  const allMembers =
+    query && searchResults && searchResults.docs.length === 0
+      ? await payload.find({
+          collection: 'membres',
+          depth: 1,
+          limit: 50,
+          select: {
+            name: true,
+            slug: true,
+            adresse: true,
+            coordinates: true,
+            meta: true,
+            logo: true,
+            informations: true,
           },
-        }
-      : {
+          pagination: false,
           where: {
             _status: {
               equals: 'published',
             },
           },
-        }),
-    sort: 'name',
-  })
+          sort: 'name',
+        })
+      : null
+
+  // Déterminer quels membres afficher
+  const membres = searchResults || allMembers || {
+    docs: [],
+    totalDocs: 0,
+  }
 
   return (
     <div className="animation-appear pt-24 pb-24">
@@ -102,7 +126,23 @@ export default async function MembresSearchPage({ searchParams: searchParamsProm
         </div>
       </div>
 
-      {membres.totalDocs > 0 ? (
+      {query && searchResults && searchResults.docs.length === 0 ? (
+        <div className="container">
+          <div className="text-center mb-8">
+            <p className="text-lg">Aucun membre trouvé pour cette recherche.</p>
+          </div>
+
+          <div className="prose dark:prose-invert max-w-none text-center mb-8">
+            <h2>Tous nos membres</h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {allMembers?.docs.map((membre) => (
+              <CardMembers key={membre.id} membre={membre} />
+            ))}
+          </div>
+        </div>
+      ) : membres.docs.length > 0 ? (
         <div className="container">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {membres.docs.map((membre) => (
@@ -112,7 +152,7 @@ export default async function MembresSearchPage({ searchParams: searchParamsProm
         </div>
       ) : (
         <div className="container text-center">
-          {query ? 'Aucun membre trouvé pour cette recherche.' : 'Aucun membre disponible.'}
+          <p className="text-lg">Aucun membre disponible.</p>
         </div>
       )}
     </div>
