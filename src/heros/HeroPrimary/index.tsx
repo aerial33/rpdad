@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { HeroSearchMembers } from '@/components/HeroSearchMembers'
 import { CMSLink } from '@/components/Link'
@@ -61,7 +61,17 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
                   )}
                 </div>
               )}
-              {actionType === 'search' && <HeroSearchMembers />}
+              {actionType === 'search' && (
+                <Suspense
+                  fallback={
+                    <div className="relative w-full max-w-2xl">
+                      <div className="animate-pulse rounded-2xl border-2 border-gray-300 bg-gray-100 p-8" />
+                    </div>
+                  }
+                >
+                  <HeroSearchMembers />
+                </Suspense>
+              )}
 
               {/* Desktop: LogoTicker intégré dans le hero */}
               <LogoTicker className="lg:text-muted-foreground mt-12 rounded-xl bg-white/20 p-3 text-white backdrop-blur-sm lg:mt-0 xl:block" />

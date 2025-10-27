@@ -1287,6 +1287,7 @@ export interface Search {
     value: number | Post;
   };
   slug?: string | null;
+  publishedAt?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -2216,6 +2217,7 @@ export interface SearchSelect<T extends boolean = true> {
   priority?: T;
   doc?: T;
   slug?: T;
+  publishedAt?: T;
   meta?:
     | T
     | {
