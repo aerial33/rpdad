@@ -3,8 +3,9 @@ import { getPayload } from 'payload'
 
 import type { Metadata } from 'next/types'
 
-import { FeatureGrid } from '@/components/ui/FeatureGrid'
-import { Search } from '@/search/Component'
+import { FeatureGrid, type FeatureGridItem } from '@/components/ui/FeatureGrid'
+import type { Search } from '@/payload-types'
+import { Search as SearchComponent } from '@/search/Component'
 
 import PageClient from './page.client'
 
@@ -12,6 +13,12 @@ type Args = {
   searchParams: Promise<{
     q: string
   }>
+}
+
+// Type helper pour les documents de recherche valides
+type ValidSearchResult = Search & {
+  doc: NonNullable<Search['doc']>
+  slug: string
 }
 export default async function Page({ searchParams: searchParamsPromise }: Args) {
   const { q: query } = await searchParamsPromise
@@ -69,28 +76,38 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
           <h1 className="mb-8 lg:mb-16">Rechercher sur le site</h1>
 
           <div className="mx-auto max-w-[50rem]">
-            <Search />
+            <SearchComponent />
           </div>
         </div>
       </div>
 
       {posts.totalDocs > 0 ? (
+        // todo : Rafactoriser FeatureGrid as soons as possible
         <FeatureGrid
           title={`${posts.totalDocs} résultat${posts.totalDocs > 1 ? 's' : ''}${query ? ` pour "${query}"` : ''}`}
           subtitle="Découvrez les contenus correspondant à votre recherche"
           badgeText="Résultats de recherche"
           buttonText=""
           buttonLink=""
-          items={posts.docs.map((doc: any) => ({
-            id: doc.id,
-            image: doc.meta?.image?.url,
-            titre: doc.title || '',
-            date: doc.publishedAt
-              ? new Date(doc.publishedAt).toLocaleDateString('fr-FR')
-              : undefined,
-            description: doc.meta?.description || '',
-            link: `/${doc.doc.relationTo}/${doc.slug}`,
-          }))}
+          items={posts.docs
+            .filter((doc): doc is ValidSearchResult => doc.doc != null && doc.slug != null)
+            .map((searchDoc): FeatureGridItem => {
+              const metaImage = searchDoc.meta?.image
+
+              return {
+                id: searchDoc.id,
+                image:
+                  metaImage && typeof metaImage !== 'number'
+                    ? (metaImage.url ?? undefined)
+                    : undefined,
+                titre: searchDoc.title || '',
+                date: searchDoc.publishedAt
+                  ? new Date(searchDoc.publishedAt).toLocaleDateString('fr-FR')
+                  : undefined,
+                description: searchDoc.meta?.description || '',
+                link: `/${searchDoc.doc.relationTo}/${searchDoc.slug}`,
+              }
+            })}
           maxItems={12}
           columns={3}
         />
