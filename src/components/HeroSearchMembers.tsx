@@ -4,7 +4,7 @@ import { ArrowRight, Building2, Loader2, MapPin } from 'lucide-react'
 
 import React, { useCallback, useEffect, useState } from 'react'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import {
   Command,
@@ -28,7 +28,8 @@ type SuggestionsResponse = {
 }
 
 export const HeroSearchMembers: React.FC = () => {
-  const [value, setValue] = useState('')
+  const searchParams = useSearchParams()
+  const [value, setValue] = useState(searchParams?.get('q') || '')
   const [suggestions, setSuggestions] = useState<SuggestionsResponse>({ membres: [], lieux: [] })
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
@@ -65,9 +66,26 @@ export const HeroSearchMembers: React.FC = () => {
     return () => clearTimeout(timer)
   }, [value, fetchSuggestions])
 
+  // Réinitialiser la page quand le champ est vidé
+  useEffect(() => {
+    const currentQuery = searchParams?.get('q')
+    // Si on est sur une page avec recherche mais que le champ est vide
+    if (currentQuery && !value.trim()) {
+      const timer = setTimeout(() => {
+        router.push('/membres/recherche')
+      }, 500) // Petit délai pour éviter de naviguer pendant la frappe
+
+      return () => clearTimeout(timer)
+    }
+  }, [value, searchParams, router])
+
   const handleSearch = (searchValue: string) => {
     if (searchValue.trim()) {
       router.push(`/membres/recherche?q=${encodeURIComponent(searchValue)}`)
+      setOpen(false)
+    } else {
+      // Si le champ est vide, réinitialiser la page
+      router.push('/membres/recherche')
       setOpen(false)
     }
   }

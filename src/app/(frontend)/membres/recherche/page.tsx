@@ -81,9 +81,9 @@ export default async function MembresSearchPage({ searchParams: searchParamsProm
       })
     : null
 
-  // Si la recherche ne donne aucun résultat, récupérer tous les membres
+  // Si pas de recherche ou si la recherche ne donne aucun résultat, récupérer tous les membres
   const allMembers =
-    query && searchResults && searchResults.docs.length === 0
+    !query || (searchResults && searchResults.docs.length === 0)
       ? await payload.find({
           collection: 'membres',
           depth: 1,
@@ -126,24 +126,20 @@ export default async function MembresSearchPage({ searchParams: searchParamsProm
         </div>
       </div>
 
-      {query && searchResults && searchResults.docs.length === 0 ? (
+      {membres.docs.length > 0 ? (
         <div className="container">
-          <div className="text-center mb-8">
-            <p className="text-lg">Aucun membre trouvé pour cette recherche.</p>
-          </div>
+          {query && searchResults && searchResults.docs.length === 0 && (
+            <>
+              <div className="text-center mb-8">
+                <p className="text-lg">Aucun membre trouvé pour cette recherche.</p>
+              </div>
 
-          <div className="prose dark:prose-invert max-w-none text-center mb-8">
-            <h2>Tous nos membres</h2>
-          </div>
+              <div className="prose dark:prose-invert max-w-none text-center mb-8">
+                <h2>Tous nos membres</h2>
+              </div>
+            </>
+          )}
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {allMembers?.docs.map((membre) => (
-              <CardMembers key={membre.id} membre={membre} />
-            ))}
-          </div>
-        </div>
-      ) : membres.docs.length > 0 ? (
-        <div className="container">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {membres.docs.map((membre) => (
               <CardMembers key={membre.id} membre={membre} />
