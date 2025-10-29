@@ -72,6 +72,7 @@ export interface Config {
     emplois: Emplois;
     membres: Membre;
     media: Media;
+    'video-embeds': VideoEmbed;
     categories: Category;
     users: User;
     forms: Form;
@@ -90,6 +91,7 @@ export interface Config {
     emplois: EmploisSelect<false> | EmploisSelect<true>;
     membres: MembresSelect<false> | MembresSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'video-embeds': VideoEmbedsSelect<false> | VideoEmbedsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -316,6 +318,10 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Thumbnail affiché avant la lecture (pour vidéos uploadées)
+   */
+  videoPoster?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1231,6 +1237,50 @@ export interface Membre {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video-embeds".
+ */
+export interface VideoEmbed {
+  id: number;
+  /**
+   * Titre descriptif pour identifier la vidéo
+   */
+  title: string;
+  /**
+   * Plateforme de la vidéo
+   */
+  source: 'youtube' | 'vimeo';
+  /**
+   * URL complète ou ID de la vidéo
+   */
+  videoId?: string | null;
+  /**
+   * Description pour accessibilité
+   */
+  alt?: string | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Optionnel : remplace thumbnail auto de la plateforme
+   */
+  thumbnail?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1422,6 +1472,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'video-embeds';
+        value: number | VideoEmbed;
       } | null)
     | ({
         relationTo: 'categories';
@@ -1933,6 +1987,7 @@ export interface MembresSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  videoPoster?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2018,6 +2073,20 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video-embeds_select".
+ */
+export interface VideoEmbedsSelect<T extends boolean = true> {
+  title?: T;
+  source?: T;
+  videoId?: T;
+  alt?: T;
+  caption?: T;
+  thumbnail?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

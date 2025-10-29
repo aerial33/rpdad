@@ -40,6 +40,21 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'videoPoster',
+      label: 'Image de couverture (Poster)',
+      type: 'upload',
+      relationTo: 'media',
+      filterOptions: {
+        mimeType: { contains: 'image' },
+      },
+      admin: {
+        description: 'Thumbnail affiché avant la lecture (pour vidéos uploadées)',
+        condition: (data) => {
+          return data?.mimeType?.startsWith('video/')
+        },
+      },
+    },
   ],
   upload: {
     // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload

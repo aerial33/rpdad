@@ -1,46 +1,61 @@
 'use client'
 
-import { cn } from '@/utilities/ui'
-import React, { useEffect, useRef } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 
-import type { Props as MediaProps } from '../types'
+import Image from 'next/image'
 
 import { getMediaUrl } from '@/utilities/getMediaUrl'
+import { cn } from '@/utilities/ui'
+
+import type { Props as MediaProps } from '../types'
+import { PlayButton } from './PlayButton'
 
 export const VideoMedia: React.FC<MediaProps> = (props) => {
   const { onClick, resource, videoClassName } = props
-
   const videoRef = useRef<HTMLVideoElement>(null)
-  // const [showFallback] = useState<boolean>()
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  useEffect(() => {
-    const { current: video } = videoRef
-    if (video) {
-      video.addEventListener('suspend', () => {
-        // setShowFallback(true);
-        // console.warn('Video was suspended, rendering fallback image.')
-      })
-    }
-  }, [])
+  if (!resource || typeof resource !== 'object') return null
 
-  if (resource && typeof resource === 'object') {
-    const { filename } = resource
+  const { filename, mimeType, videoPoster } = resource
 
+  // CAS 1: UPLOADED VIDEO WITH POSTER
+  if (videoPoster && typeof videoPoster === 'object') {
     return (
-      <video
-        autoPlay
-        className={cn(videoClassName)}
-        controls={false}
-        loop
-        muted
-        onClick={onClick}
-        playsInline
-        ref={videoRef}
-      >
-        <source src={getMediaUrl(`/media/${filename}`)} />
-      </video>
+      <div className={cn('group relative aspect-video', videoClassName)}>
+        {!isPlaying ? (
+          <Fragment>
+            <div className="absolute inset-0 z-20" onClick={() => setIsPlaying(true)}>
+              <PlayButton />
+            </div>
+            <Image
+              src={getMediaUrl(`/api/media/file/${videoPoster.filename}`)}
+              alt="Thumbnail vidéo"
+              fill
+              className="m-0 object-cover"
+            />
+          </Fragment>
+        ) : (
+          <video ref={videoRef} controls autoPlay className="w-full">
+            <source src={getMediaUrl(`/api/media/file/${filename}`)} type={mimeType || undefined} />
+          </video>
+        )}
+      </div>
     )
   }
 
-  return null
+  // CAS 2: UPLOADED VIDEO WITHOUT POSTER (fallback actuel préservé)
+  return (
+    <video
+      ref={videoRef}
+      autoPlay={false}
+      controls={true}
+      muted={false}
+      onClick={onClick}
+      playsInline
+      className={cn(videoClassName)}
+    >
+      <source src={getMediaUrl(`/api/media/file/${filename}`)} />
+    </video>
+  )
 }

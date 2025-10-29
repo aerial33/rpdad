@@ -20,6 +20,7 @@ import { Membres } from './collections/Membres'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Users } from './collections/Users'
+import { VideoEmbeds } from './collections/VideoEmbeds'
 import { plugins } from './plugins'
 import { getServerSideURL } from './utilities/getURL'
 
@@ -96,7 +97,7 @@ export default buildConfig({
     },
     push: process.env.NODE_ENV === 'development',
   }),
-  collections: [Pages, Posts, Emplois, Membres, Media, Categories, Users],
+  collections: [Pages, Posts, Emplois, Membres, Media, VideoEmbeds, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
