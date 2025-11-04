@@ -1,15 +1,16 @@
 'use client'
 
-import type { StaticImageData } from 'next/image'
-
-import { cn } from '@/utilities/ui'
-import NextImage from 'next/image'
 import React from 'react'
 
-import type { Props as MediaProps } from '../types'
+import type { StaticImageData } from 'next/image'
+import NextImage from 'next/image'
 
 import { cssVariables } from '@/cssVariables'
+import type { Media } from '@/payload-types'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
+import { cn } from '@/utilities/ui'
+
+import type { Props as MediaProps } from '../types'
 
 const { breakpoints } = cssVariables
 
@@ -40,7 +41,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
+    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource as Media
 
     width = fullWidth!
     height = fullHeight!
@@ -63,10 +64,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   if (imageError) {
     return (
       <div
-        className={cn('bg-gray-200 flex items-center justify-center', imgClassName)}
+        className={cn('flex items-center justify-center bg-gray-200', imgClassName)}
         style={{ width: !fill ? width : undefined, height: !fill ? height : undefined }}
       >
-        <span className="text-gray-400 text-sm">Image non disponible</span>
+        <span className="text-sm text-gray-400">Image non disponible</span>
       </div>
     )
   }

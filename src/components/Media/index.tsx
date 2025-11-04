@@ -7,7 +7,12 @@ import type { Props } from './types'
 export const Media: React.FC<Props> = (props) => {
   const { className, htmlElement = 'div', resource } = props
 
-  const isVideo = typeof resource === 'object' && resource?.mimeType?.includes('video')
+  // Détecter vidéo uploadée (mimeType) ou embed (source + videoId)
+  const isVideo =
+    typeof resource === 'object' &&
+    resource !== null &&
+    (('mimeType' in resource && resource.mimeType?.includes('video')) ||
+      ('source' in resource && 'videoId' in resource))
   const Tag = htmlElement || Fragment
 
   return (

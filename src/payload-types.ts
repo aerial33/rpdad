@@ -529,10 +529,59 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: number | Media;
+  /**
+   * Choisir entre un média uploadé ou une vidéo embed
+   */
+  mediaType?: ('media' | 'video-embed') | null;
+  media?: (number | null) | Media;
+  videoEmbed?: (number | null) | VideoEmbed;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video-embeds".
+ */
+export interface VideoEmbed {
+  id: number;
+  /**
+   * Titre descriptif pour identifier la vidéo
+   */
+  title: string;
+  /**
+   * Plateforme de la vidéo
+   */
+  source: 'youtube' | 'vimeo';
+  /**
+   * URL complète ou ID de la vidéo
+   */
+  videoId?: string | null;
+  /**
+   * Description pour accessibilité
+   */
+  alt?: string | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Optionnel : remplace thumbnail auto de la plateforme
+   */
+  thumbnail?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1237,50 +1286,6 @@ export interface Membre {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "video-embeds".
- */
-export interface VideoEmbed {
-  id: number;
-  /**
-   * Titre descriptif pour identifier la vidéo
-   */
-  title: string;
-  /**
-   * Plateforme de la vidéo
-   */
-  source: 'youtube' | 'vimeo';
-  /**
-   * URL complète ou ID de la vidéo
-   */
-  videoId?: string | null;
-  /**
-   * Description pour accessibilité
-   */
-  alt?: string | null;
-  caption?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Optionnel : remplace thumbnail auto de la plateforme
-   */
-  thumbnail?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1666,7 +1671,9 @@ export interface ContentBlockSelect<T extends boolean = true> {
  * via the `definition` "MediaBlock_select".
  */
 export interface MediaBlockSelect<T extends boolean = true> {
+  mediaType?: T;
   media?: T;
+  videoEmbed?: T;
   id?: T;
   blockName?: T;
 }

@@ -1,10 +1,10 @@
+import React from 'react'
+
 import type { StaticImageData } from 'next/image'
 
-import { cn } from '@/utilities/ui'
-import React from 'react'
 import RichText from '@/components/RichText'
-
-import type { MediaBlock as MediaBlockProps } from '@/payload-types'
+import type { MediaBlock as MediaBlockProps, Media as MediaType, VideoEmbed } from '@/payload-types'
+import { cn } from '@/utilities/ui'
 
 import { Media } from '../../components/Media'
 
@@ -25,12 +25,24 @@ export const MediaBlock: React.FC<Props> = (props) => {
     enableGutter = true,
     imgClassName,
     media,
+    videoEmbed,
     staticImage,
     disableInnerContainer,
   } = props
 
+  // Utiliser media OU videoEmbed selon ce qui est défini
+  const selectedMedia = media || videoEmbed
+
+  // Extraire resource depuis structure polymorphe
+  const resource =
+    selectedMedia && typeof selectedMedia === 'object' && 'value' in selectedMedia
+      ? selectedMedia.value
+      : selectedMedia
+
   let caption
-  if (media && typeof media === 'object') caption = media.caption
+  // Fonctionne pour Media et VideoEmbed (les deux ont un champ caption)
+  if (resource && typeof resource === 'object')
+    caption = (resource as MediaType | VideoEmbed).caption
 
   return (
     <div
@@ -42,10 +54,10 @@ export const MediaBlock: React.FC<Props> = (props) => {
         className,
       )}
     >
-      {(media || staticImage) && (
+      {(resource || staticImage) && (
         <Media
           imgClassName={cn('border border-border rounded-[0.8rem]', imgClassName)}
-          resource={media}
+          resource={resource as MediaType | VideoEmbed}
           src={staticImage}
         />
       )}
