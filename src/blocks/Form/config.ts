@@ -9,6 +9,8 @@ import type { Block } from 'payload'
 export const FormBlock: Block = {
   slug: 'formBlock',
   interfaceName: 'FormBlock',
+  imageURL: '/img/blocks/contact-form.png',
+
   fields: [
     {
       name: 'form',
@@ -45,7 +47,7 @@ export const FormBlock: Block = {
     singularName: 'FormBlock',
   },
   labels: {
-    plural: 'Form Blocks',
-    singular: 'Form Block',
+    singular: 'Formulaire contact',
+    plural: 'Formulaires',
   },
 }

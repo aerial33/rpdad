@@ -7,7 +7,7 @@ export const Team: Block = {
     plural: 'Équipes',
   },
   interfaceName: 'TeamBlock',
-  imageURL: '/img/blocks/team-preview.jpeg',
+  imageURL: '/img/blocks/team-preview.png',
   imageAltText: 'Team Block',
   fields: [
     {

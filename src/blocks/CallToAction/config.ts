@@ -13,9 +13,13 @@ import { MediaBlock } from '../MediaBlock/config'
 
 export const CallToAction: Block = {
   slug: 'cta',
-  imageURL: 'https://via.placeholder.com/300x200?text=CTA+Block',
+  imageURL: '/img/blocks/call-to-action.png',
   imageAltText: "Block d'appel à l'action",
   interfaceName: 'CallToActionBlock',
+  labels: {
+    singular: "Appel à l'action",
+    plural: "Appels à l'action",
+  },
   fields: [
     {
       name: 'title',

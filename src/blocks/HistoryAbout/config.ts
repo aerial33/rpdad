@@ -15,7 +15,7 @@ export const HistoryAbout: Block = {
     plural: 'Sections Historiques',
   },
   interfaceName: 'HistoryAboutBlock',
-  imageURL: '/img/blocks/history-about.jpeg',
+  imageURL: '/img/blocks/history-about.png',
   imageAltText: 'History About Section',
   fields: [
     {
