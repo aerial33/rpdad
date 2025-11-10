@@ -24,6 +24,7 @@ export const BentoGridBlock: React.FC<BentoCardBlock> = (props) => {
         title: card.title || '',
         description: card.description || '',
         link: card.link, // Passer la structure link directe
+        enableLink: card.enableLink ?? undefined, // Active/désactive l'affichage du lien
         ...(card.tag ? { tag: card.tag } : {}),
         image: imageResource,
         // Design fixe selon la position (index)

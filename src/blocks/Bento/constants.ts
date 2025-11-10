@@ -7,6 +7,7 @@ export const DEFAULT_BENTO_CARDS = [
     description:
       '1200 agents en Gironde dont 900 aides à domiciles, mais aussi des responsable de secteurs, agents administratifs et personnel de directrion',
     tag: 'Le réseau en Gironde',
+    enableLink: true,
     link: {
       type: 'custom' as const,
       url: '/',
@@ -17,6 +18,7 @@ export const DEFAULT_BENTO_CARDS = [
     title: 'Aide à domicile',
     description:
       'Un service de qualité auprès de nos 5200 bénéficiaires agées et/ou en situation de handicap',
+    enableLink: true,
     link: {
       type: 'custom' as const,
       url: '/le-rpdad',
@@ -27,6 +29,7 @@ export const DEFAULT_BENTO_CARDS = [
     title: 'Accompagnement adapté à vos besoins',
     description:
       '1200 agents en Gironde dont 900 aides à domiciles, mais aussi des responsable de secteurs, agents administratifs et personnel de directrion',
+    enableLink: true,
     link: {
       type: 'custom' as const,
       url: '/',
@@ -37,6 +40,7 @@ export const DEFAULT_BENTO_CARDS = [
     title: 'Service de qualité',
     description:
       'Un accompagnement adapté à vos besoins : 671 700 heures réalisées en 2024 (AMPA, AMPH)',
+    enableLink: true,
     link: {
       type: 'custom' as const,
       url: '/',

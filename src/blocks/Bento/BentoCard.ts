@@ -62,7 +62,7 @@ export const BentoCard: Block = {
           name: 'enableLink',
           type: 'checkbox',
           label: 'Activer un lien',
-          defaultValue: true,
+          defaultValue: false,
         },
         link({
           appearances: ['default', 'outline'],

@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 
+import Link from 'next/link'
+
 import { CARD_LAYOUTS } from '@/blocks/Bento/layouts'
 import type { BentoCardBlock, Media as MediaType } from '@/payload-types'
 import { cn } from '@/utilities/ui'
@@ -19,6 +21,7 @@ interface BentoCardProps extends Omit<SingleCard, 'id' | 'image'> {
   image?: string | number | MediaType | null // Media object, string ou number ID depuis PayloadCMS
   className?: string // Classes CSS Tailwind pour le design
   cardIndex?: number // Index de la card pour appliquer le layout correspondant
+  enableLink?: boolean // Active/désactive l'affichage du lien
 }
 
 const BentoCard = ({
@@ -28,12 +31,9 @@ const BentoCard = ({
   description,
   link,
   tag,
+  enableLink,
   cardIndex = 0,
 }: BentoCardProps) => {
-  // Extraire href et label depuis la structure link PayloadCMS
-  const href = link?.url
-  const label = link?.label
-
   // Récupérer la configuration de layout pour cette card
   const layout = CARD_LAYOUTS[cardIndex] || CARD_LAYOUTS[0]
 
@@ -57,11 +57,11 @@ const BentoCard = ({
       )}
       <h3 className={layout?.titleClass}>{title}</h3>
       <p className={layout?.descriptionClass}>{description}</p>
-      {/* {href && label && (
-        <Link href={href} className={layout?.linkClass}>
-          {`${label} →`}
+      {enableLink && link?.url && link?.label && (
+        <Link href={link.url} className={layout?.linkClass}>
+          {`${link.label} →`}
         </Link>
-      )} */}
+      )}
     </div>
   )
 
