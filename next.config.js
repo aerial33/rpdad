@@ -46,6 +46,10 @@ const nextConfig = {
         hostname: '*.youtube.com',
         protocol: 'https',
       },
+      {
+        hostname: '*.r2.cloudflarestorage.com',
+        protocol: 'https',
+      },
     ],
   },
   eslint: {

@@ -86,6 +86,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         loading={loading}
         sizes={sizes}
         src={src}
+        unoptimized={true}
         width={!fill ? width : undefined}
         onLoad={onLoad}
         onError={() => setImageError(true)}
