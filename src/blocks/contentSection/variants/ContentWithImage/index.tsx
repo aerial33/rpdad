@@ -6,37 +6,30 @@ import { Media as MediaComponent } from '@/components/Media'
 import { FadeUp } from '@/components/motion/animations'
 import { ContentSectionBlock } from '@/payload-types'
 import { getPopulatedImageData } from '@/utilities/isImagePopulated'
+import { getSelectedMedia } from '@/utilities/getSelectedMedia'
 
 export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
   const { content, singleImage, imagePosition } = props
 
-  // Récupérer l'image unique
-  const firstImage = singleImage?.image
+  // Récupérer le média sélectionné (image ou vidéo embed)
+  const selectedMedia = getSelectedMedia(singleImage || {})
 
-  // Vérifier si l'image est un objet Media complet ou juste un ID
-  const imageData = getPopulatedImageData(firstImage)
+  // Vérifier si le média est un objet complet ou juste un ID
+  const mediaData = getPopulatedImageData(selectedMedia)
 
-  // Composant pour afficher l'image
-  const ImageComponent = () => {
-    if (!imageData?.url) {
+  // Composant pour afficher le média (image ou vidéo)
+  const MediaDisplayComponent = () => {
+    if (!mediaData?.url && !('source' in (mediaData || {}))) {
       return (
         <div className="flex h-64 w-full items-center justify-center bg-gray-200">
-          <span className="text-gray-500">Image non disponible</span>
+          <span className="text-gray-500">Média non disponible</span>
         </div>
       )
     }
 
     return (
       <div className="relative overflow-visible rounded-3xl shadow-lg">
-        {/* <Image
-          src={imageData.url}
-          alt={imageData.alt || 'Image'}
-          width={imageData.width || 800}
-          height={imageData.height || 600}
-          className="h-auto w-full object-cover"
-          priority // Si c'est une image importante
-        /> */}
-        <MediaComponent resource={imageData} imgClassName="rounded-3xl" />
+        <MediaComponent resource={mediaData} imgClassName="rounded-3xl" />
         <DotPattern dotColor="bg-blue-base" className="-right-5 -bottom-20 -z-10 hidden md:flex" />
       </div>
     )
@@ -58,7 +51,7 @@ export const ContentWithImage: React.FC<ContentSectionBlock> = (props) => {
         <ContentComponent />
       </div>
       <div className="lg:w-1/2">
-        <ImageComponent />
+        <MediaDisplayComponent />
       </div>
     </FadeUp>
   )

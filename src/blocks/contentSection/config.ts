@@ -46,35 +46,64 @@ export const ContentSectionBlock: Block = {
       },
     },
 
-    // Image unique pour contentWithImage
+    // Image/Vidéo unique pour contentWithImage
     {
       name: 'singleImage',
-      label: 'Image',
+      label: 'Média',
       type: 'group',
       admin: {
         condition: (_, { variant } = {}) => variant === 'contentWithImage',
       },
       fields: [
         {
+          name: 'mediaType',
+          type: 'radio',
+          admin: {
+            layout: 'horizontal',
+            description: 'Choisir entre un média uploadé ou une vidéo embed',
+          },
+          defaultValue: 'media',
+          options: [
+            { label: 'Media (Upload)', value: 'media' },
+            { label: 'Video Embed (YouTube/Vimeo)', value: 'video-embed' },
+          ],
+        },
+        {
           name: 'image',
-          label: 'Image',
+          label: 'Média à afficher',
           type: 'upload',
           relationTo: 'media',
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.mediaType === 'media',
+          },
+        },
+        {
+          name: 'videoEmbed',
+          type: 'upload',
+          relationTo: 'video-embeds',
+          required: true,
+          label: 'Vidéo embed à afficher',
+          admin: {
+            condition: (_, siblingData) => siblingData?.mediaType === 'video-embed',
+          },
         },
         {
           name: 'alt',
           label: 'Texte alternatif',
           type: 'text',
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.mediaType === 'media',
+          },
         },
       ],
     },
 
-    // Images multiples pour contentWithGallery et contentWithCard
+    // Médias multiples pour contentWithGallery et contentWithCard
     {
       name: 'multipleImages',
-      label: 'Images',
+      label: 'Médias',
       type: 'array',
       admin: {
         condition: (_, { variant } = {}) =>
@@ -83,22 +112,51 @@ export const ContentSectionBlock: Block = {
       minRows: 2,
       maxRows: 3,
       labels: {
-        singular: 'Image',
-        plural: 'Images',
+        singular: 'Média',
+        plural: 'Médias',
       },
       fields: [
         {
+          name: 'mediaType',
+          type: 'radio',
+          admin: {
+            layout: 'horizontal',
+            description: 'Choisir entre un média uploadé ou une vidéo embed',
+          },
+          defaultValue: 'media',
+          options: [
+            { label: 'Media (Upload)', value: 'media' },
+            { label: 'Video Embed (YouTube/Vimeo)', value: 'video-embed' },
+          ],
+        },
+        {
           name: 'image',
-          label: 'Image',
+          label: 'Média à afficher',
           type: 'upload',
           relationTo: 'media',
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.mediaType === 'media',
+          },
+        },
+        {
+          name: 'videoEmbed',
+          type: 'upload',
+          relationTo: 'video-embeds',
+          required: true,
+          label: 'Vidéo embed à afficher',
+          admin: {
+            condition: (_, siblingData) => siblingData?.mediaType === 'video-embed',
+          },
         },
         {
           name: 'alt',
           label: 'Texte alternatif',
           type: 'text',
           required: true,
+          admin: {
+            condition: (_, siblingData) => siblingData?.mediaType === 'media',
+          },
         },
       ],
     },

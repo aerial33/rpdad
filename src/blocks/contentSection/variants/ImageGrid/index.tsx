@@ -4,6 +4,7 @@ import { Media as MediaComponent } from '@/components/Media'
 // import type { ContentWithImage as ContentWithImageProps } from '@/payload-types'
 import { ContentSectionBlock } from '@/payload-types'
 import { getPopulatedImageData } from '@/utilities/isImagePopulated'
+import { getSelectedMedia } from '@/utilities/getSelectedMedia'
 
 export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
   const { content, multipleImages, imagePosition, features } = props
@@ -61,22 +62,24 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
     )
   }
 
-  // Composant pour afficher la grille d'images
-  const ImageGridComponent = () => {
+  // Composant pour afficher la grille de médias (images et vidéos)
+  const MediaGridComponent = () => {
     if (!multipleImages || multipleImages.length === 0) {
       return (
         <div className="flex h-64 w-full items-center justify-center rounded-xl bg-gray-200">
-          <span className="text-gray-500">Aucune image disponible</span>
+          <span className="text-gray-500">Aucun média disponible</span>
         </div>
       )
     }
 
     return (
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {multipleImages.map((imageItem, index) => {
-          const imageData = getPopulatedImageData(imageItem.image)
+        {multipleImages.map((mediaItem, index) => {
+          // Récupérer le média sélectionné (image ou vidéo embed)
+          const selectedMedia = getSelectedMedia(mediaItem)
+          const mediaData = getPopulatedImageData(selectedMedia)
 
-          if (!imageData?.url) {
+          if (!mediaData?.url && !('source' in (mediaData || {}))) {
             return (
               <div
                 key={index}
@@ -84,7 +87,7 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
                   index === 0 ? 'h-64 md:col-span-2' : 'h-48'
                 }`}
               >
-                <span className="text-gray-500">Image non disponible</span>
+                <span className="text-gray-500">Média non disponible</span>
               </div>
             )
           }
@@ -100,7 +103,7 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
                 className="aspect-video h-auto w-full rounded-xl border lg:aspect-square"
                 imgClassName="object-cover"
                 fill
-                resource={imageData}
+                resource={mediaData}
               />
             </div>
           )
@@ -140,9 +143,9 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
         <ContentComponent />
       </div>
 
-      {/* Grille d'images en dessous */}
+      {/* Grille de médias en dessous */}
       <div className="w-full">
-        <ImageGridComponent />
+        <MediaGridComponent />
       </div>
     </div>
   )

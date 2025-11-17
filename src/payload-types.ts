@@ -811,13 +811,23 @@ export interface ContentSectionBlock {
    */
   variant: 'basicContent' | 'contentWithImage' | 'contentWithGallery' | 'contentWithCard';
   singleImage?: {
-    image: number | Media;
-    alt: string;
+    /**
+     * Choisir entre un média uploadé ou une vidéo embed
+     */
+    mediaType?: ('media' | 'video-embed') | null;
+    image?: (number | null) | Media;
+    videoEmbed?: (number | null) | VideoEmbed;
+    alt?: string | null;
   };
   multipleImages?:
     | {
-        image: number | Media;
-        alt: string;
+        /**
+         * Choisir entre un média uploadé ou une vidéo embed
+         */
+        mediaType?: ('media' | 'video-embed') | null;
+        image?: (number | null) | Media;
+        videoEmbed?: (number | null) | VideoEmbed;
+        alt?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1711,13 +1721,17 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
   singleImage?:
     | T
     | {
+        mediaType?: T;
         image?: T;
+        videoEmbed?: T;
         alt?: T;
       };
   multipleImages?:
     | T
     | {
+        mediaType?: T;
         image?: T;
+        videoEmbed?: T;
         alt?: T;
         id?: T;
       };

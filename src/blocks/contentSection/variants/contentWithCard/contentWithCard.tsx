@@ -7,14 +7,23 @@ import { DotPattern } from '@/components/DotPattern'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import type { ContentSectionBlock as ContentSectionBlockType, Media } from '@/payload-types'
+import type { ContentSectionBlock as ContentSectionBlockType, Media, VideoEmbed } from '@/payload-types'
+import { Media as MediaComponent } from '@/components/Media'
+import { getSelectedMedia } from '@/utilities/getSelectedMedia'
+import { getPopulatedImageData } from '@/utilities/isImagePopulated'
 
 import { getIconComponent } from '../../utils'
 
-const ImageDisplay: React.FC<{ image?: { src: string; alt: string } }> = ({ image }) => {
-  if (!image) return null
+const MediaDisplay: React.FC<{ mediaItem?: any }> = ({ mediaItem }) => {
+  if (!mediaItem) return null
 
-  return <img className="rounded-xl" src={image?.src} srcSet={image?.src} alt={image?.alt} />
+  // Récupérer le média sélectionné (image ou vidéo embed)
+  const selectedMedia = getSelectedMedia(mediaItem)
+  const mediaData = getPopulatedImageData(selectedMedia)
+
+  if (!mediaData && !selectedMedia) return null
+
+  return <MediaComponent resource={mediaData || selectedMedia} imgClassName="rounded-xl" />
 }
 
 const InfoCard: React.FC<{ cardInfo: any }> = ({ cardInfo }) => (
@@ -34,17 +43,8 @@ interface ContentSectionProps {
 }
 
 export function ContentSection({ images, cardInfo, badge, content, button }: ContentSectionProps) {
-  // Transformer les images du type généré vers un format utilisable
-  const getImageUrl = (imageItem: any): { src: string; alt: string } | undefined => {
-    if (!imageItem) return undefined
-    return {
-      src: typeof imageItem.image === 'object' ? (imageItem.image as Media)?.url || '' : '',
-      alt: imageItem.alt || '',
-    }
-  }
-
-  const firstImage = images?.[0] ? getImageUrl(images[0]) : undefined
-  const secondImage = images?.[1] ? getImageUrl(images[1]) : undefined
+  const firstMediaItem = images?.[0]
+  const secondMediaItem = images?.[1]
 
   return (
     <section className="py-10">
@@ -57,14 +57,14 @@ export function ContentSection({ images, cardInfo, badge, content, button }: Con
             <div className="mx-[-15px] !mt-[-25px] flex flex-wrap md:mx-[-12.5px] lg:mx-[-12.5px] xl:mx-[-12.5px]">
               <div className="!mt-[25px] w-full max-w-full flex-[0_0_auto] px-[12.5px] md:w-6/12 lg:w-6/12 xl:w-6/12">
                 <figure className="!relative rounded-xl md:!mt-10 lg:!mt-10 xl:!mt-10">
-                  <ImageDisplay image={firstImage} />
+                  <MediaDisplay mediaItem={firstMediaItem} />
                 </figure>
               </div>
               <div className="!mt-[25px] w-full max-w-full flex-[0_0_auto] px-[12.5px] md:w-6/12 lg:w-6/12 xl:w-6/12">
                 <div className="mx-[-15px] !mt-[-25px] flex flex-wrap md:mx-[-12.5px] lg:mx-[-12.5px] xl:mx-[-12.5px]">
                   <div className="!mt-[25px] w-full max-w-full flex-[0_0_auto] px-[12.5px] md:!order-2 lg:!order-2 xl:!order-2">
                     <figure className="rounded-xl">
-                      <ImageDisplay image={secondImage} />
+                      <MediaDisplay mediaItem={secondMediaItem} />
                     </figure>
                   </div>
                   <div className="!mt-[25px] w-full max-w-full flex-[0_0_auto] px-[12.5px] md:w-10/12 lg:w-10/12 xl:w-10/12">
