@@ -12,9 +12,21 @@ interface ArticleMetaProps {
   readTime?: string
   likes?: number
   comments?: number
+  url: string
+  title: string
+  description?: string
 }
 
-const ArticleMeta: React.FC<ArticleMetaProps> = ({ author, date, readTime, likes, comments }) => {
+const ArticleMeta: React.FC<ArticleMetaProps> = ({
+  author,
+  date,
+  readTime,
+  likes,
+  comments,
+  url,
+  title,
+  description,
+}) => {
   return (
     <div className="flex w-full flex-col justify-between space-y-5 sm:flex-row sm:items-end sm:space-y-0 sm:space-x-5 rtl:space-x-reverse">
       {/* Auteur et infos */}
@@ -26,7 +38,8 @@ const ArticleMeta: React.FC<ArticleMetaProps> = ({ author, date, readTime, likes
         <div>
           <div className="font-semibold">{author.name}</div>
           <div className="text-muted-foreground text-sm">
-            {date}{readTime && ` · ${readTime}`}
+            {date}
+            {readTime && ` · ${readTime}`}
           </div>
         </div>
       </div>
@@ -37,6 +50,9 @@ const ArticleMeta: React.FC<ArticleMetaProps> = ({ author, date, readTime, likes
           <SocialsShare
             className="flex space-x-1"
             itemClass="w-8 h-8 text-base hover:bg-neutral-100"
+            url={url}
+            title={title}
+            description={description}
           />
         </div>
       </div>

@@ -25,7 +25,7 @@ export interface SingleTitleProps {
 }
 
 const SingleTitle: FC<SingleTitleProps> = ({
-  mainClass = 'text-neutral-900 font-bold text-3xl md:text-5xl md:!leading-[120%] lg:text-5xl ',
+  mainClass = 'text-neutral-900 font-bold text-3xl md:text-5xl md:!leading-[120%] lg:text-5xl',
   className = '',
   title,
 }) => {
@@ -39,7 +39,7 @@ const SingleTitle: FC<SingleTitleProps> = ({
 const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleContentProps) => {
   // Extract author data
   const firstAuthor = post.populatedAuthors?.[0] || null
-  const authorName = firstAuthor?.name || 'Auteur inconnu'
+  const authorName = firstAuthor?.name || 'RPDAD'
 
   // Format date
   const postDate = post.publishedAt || post.createdAt
@@ -48,6 +48,12 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
     month: 'long',
     day: 'numeric',
   })
+
+  // Construct post URL for sharing
+  const postUrl =
+    typeof window !== 'undefined'
+      ? window.location.href
+      : `${process.env.NEXT_PUBLIC_SERVER_URL}/posts/${post.slug}`
 
   return (
     <div className="relative">
@@ -77,6 +83,9 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
                 <ArticleMeta
                   author={{ name: authorName }}
                   date={formattedDate}
+                  url={postUrl}
+                  title={post.title}
+                  description={post.meta?.description || undefined}
                 />
               </div>
             </div>
@@ -88,7 +97,8 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
           <div className="container my-10 sm:my-12">
             <Media
               resource={post.heroImage}
-              imgClassName="w-full rounded-xl object-cover object-top aspect-video"
+              imgClassName="w-full rounded-xl aspect-video"
+              size="(max-width: 1024px) 100vw, 1280px"
             />
           </div>
         )}
@@ -97,7 +107,7 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
         {/* ENTRY CONTENT */}
         <div
           id="single-entry-content"
-          className="prose lg:prose-lg dark:prose-invert mx-auto !max-w-screen-md"
+          className="prose lg:prose-lg richtext-content mx-auto !max-w-screen-md"
         >
           <RichText data={post.content} enableGutter={false} />
         </div>

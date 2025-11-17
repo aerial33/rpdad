@@ -1,5 +1,4 @@
-import { Analytics } from '@vercel/analytics/next'
-
+// import { Analytics } from '@vercel/analytics/next'
 import React from 'react'
 
 import type { Metadata } from 'next'
@@ -9,6 +8,7 @@ import { draftMode } from 'next/headers'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { AdminBar } from '@/components/Admin/AdminBar'
+import { Toaster } from '@/components/ui/sonner'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -47,8 +47,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Header />
           {children}
           <Footer />
+          <Toaster />
         </Providers>
-        <Analytics />
+        {/* <Analytics /> */}
       </body>
     </html>
   )
