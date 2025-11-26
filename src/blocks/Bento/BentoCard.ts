@@ -29,8 +29,10 @@ export const BentoCard: Block = {
       options: [
         { label: '⚪ Blanc', value: 'bg-white' },
         { label: '⚫ Gris', value: 'bg-neutral-100' },
-        { label: '🍑 Peche', value: 'bg-flamingo-lightest' },
+        { label: '🟠 Orange', value: 'bg-flamingo-lightest' },
+        { label: '🔵 Bleu', value: 'bg-blue-lightest' },
         { label: '🟢 Vert', value: 'bg-chateau-lightest' },
+        { label: '🟣 Violet', value: 'bg-primary-lightest' },
       ],
     },
     {

@@ -33,5 +33,19 @@ export const map: Block = {
         },
       }),
     },
+    {
+      name: 'bgColor',
+      type: 'radio',
+      label: 'Couleur de fond de section',
+      defaultValue: 'bg-white',
+      options: [
+        { label: '⚪ Blanc', value: 'bg-white' },
+        { label: '⚫ Gris', value: 'bg-neutral-100' },
+        { label: '🟠 Orange', value: 'bg-flamingo-lightest' },
+        { label: '🔵 Bleu', value: 'bg-blue-lightest' },
+        { label: '🟢 Vert', value: 'bg-chateau-lightest' },
+        { label: '🟣 Violet', value: 'bg-primary-lightest' },
+      ],
+    },
   ],
 }

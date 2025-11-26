@@ -47,10 +47,10 @@ export const EmbeddedVideo: React.FC<EmbeddedVideoProps> = ({ embed, className }
   // Cas Vimeo sans thumbnail: iframe direct
   if (!thumbnailSrc) {
     return (
-      <div className={cn('group relative my-4 aspect-video rounded-xl border-2', className)}>
+      <div className={cn('group relative aspect-video rounded-xl border-2', className)}>
         <iframe
           src={embedUrl.replace('autoplay=1', 'autoplay=0')}
-          className="mt-4 h-full w-full rounded-xl shadow-lg"
+          className="h-full w-full rounded-xl shadow-lg"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title={alt || `Vidéo ${source}`}
@@ -61,7 +61,7 @@ export const EmbeddedVideo: React.FC<EmbeddedVideoProps> = ({ embed, className }
 
   // Cas avec thumbnail (YouTube auto ou custom)
   return (
-    <div className={cn('group relative my-8 aspect-video rounded-xl', className)}>
+    <div className={cn('group relative aspect-video rounded-xl', className)}>
       {!isPlaying ? (
         <Fragment>
           <div className="absolute inset-0 z-20 rounded-xl" onClick={() => setIsPlaying(true)}>

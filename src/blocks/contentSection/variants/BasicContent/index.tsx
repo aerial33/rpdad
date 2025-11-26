@@ -2,6 +2,7 @@ import React from 'react'
 
 import Link from 'next/link'
 
+import BackgroundSection from '@/components/BackgroundSection/BackgroundSection'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,9 +10,10 @@ import type { ContentSectionBlock as ContentSectionBlockType } from '@/payload-t
 
 import { DEFAULT_BG_CLASSES, DEFAULT_CONTAINER_CLASSES, getIconComponent } from '../../utils'
 
-export const BasicContent: React.FC<ContentSectionBlockType> = ({ badge, content, button }) => {
+export const BasicContent: React.FC<ContentSectionBlockType> = ({ badge, content, button, bgColor }) => {
   return (
-    <section className={DEFAULT_BG_CLASSES}>
+    <section className="relative">
+      <BackgroundSection className={bgColor || 'bg-white'} />
       <div className={DEFAULT_CONTAINER_CLASSES}>
         <div className="mx-[-15px] flex flex-wrap items-start lg:mx-[-20px] xl:mx-[-35px]">
           <div className="w-full max-w-full flex-[0_0_auto] px-[15px] lg:!px-[20px] xl:!px-[35px]">

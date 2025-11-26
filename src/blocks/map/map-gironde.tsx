@@ -23,7 +23,7 @@ export interface CantonProperties {
 }
 
 export function MapBlock(props: MapBlockType) {
-  const { MapInfo } = props
+  const { MapInfo, bgColor } = props
   const router = useRouter()
 
   const [membres, setMembres] = useState<MembreShowcase[]>([])
@@ -48,7 +48,7 @@ export function MapBlock(props: MapBlockType) {
 
   return (
     <section className="relative py-8">
-      <BackgroundSection />
+      <BackgroundSection className={bgColor || 'bg-white'} />
       <div className="relative z-10 container mb-8 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <FadeUp className="p-2 md:p-4">
           {MapInfo && (

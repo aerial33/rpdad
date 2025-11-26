@@ -3,6 +3,7 @@ import React from 'react'
 
 import Link from 'next/link'
 
+import BackgroundSection from '@/components/BackgroundSection/BackgroundSection'
 import { DotPattern } from '@/components/DotPattern'
 import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
@@ -10,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import type { ContentSectionBlock as ContentSectionBlockType, Media, VideoEmbed } from '@/payload-types'
 import { Media as MediaComponent } from '@/components/Media'
 import { getSelectedMedia } from '@/utilities/getSelectedMedia'
-import { getPopulatedImageData } from '@/utilities/isImagePopulated'
+import { getPopulatedMediaData } from '@/utilities/isImagePopulated'
 
 import { getIconComponent } from '../../utils'
 
@@ -19,7 +20,7 @@ const MediaDisplay: React.FC<{ mediaItem?: any }> = ({ mediaItem }) => {
 
   // Récupérer le média sélectionné (image ou vidéo embed)
   const selectedMedia = getSelectedMedia(mediaItem)
-  const mediaData = getPopulatedImageData(selectedMedia)
+  const mediaData = getPopulatedMediaData(selectedMedia)
 
   if (!mediaData && !selectedMedia) return null
 
@@ -40,14 +41,16 @@ interface ContentSectionProps {
   badge?: ContentSectionBlockType['badge']
   content: ContentSectionBlockType['content']
   button: ContentSectionBlockType['button']
+  bgColor?: ContentSectionBlockType['bgColor']
 }
 
-export function ContentSection({ images, cardInfo, badge, content, button }: ContentSectionProps) {
+export function ContentSection({ images, cardInfo, badge, content, button, bgColor }: ContentSectionProps) {
   const firstMediaItem = images?.[0]
   const secondMediaItem = images?.[1]
 
   return (
-    <section className="py-10">
+    <section className="relative py-10">
+      <BackgroundSection className={bgColor || 'bg-white'} />
       <div className="container mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-20 lg:pt-28 lg:pb-20 xl:pt-28 xl:pb-20 2xl:px-0">
         <div className="mx-[-15px] !mt-[-50px] flex flex-wrap items-center lg:mx-[-20px] xl:mx-[-35px]">
           {/* Colonne images + card */}

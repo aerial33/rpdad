@@ -9,6 +9,7 @@ export const ContentSectionBlock: React.FC<ContentSectionBlockType> = ({
   badge,
   content,
   button,
+  bgColor,
 }) => {
   return (
     <ContentSection
@@ -17,6 +18,7 @@ export const ContentSectionBlock: React.FC<ContentSectionBlockType> = ({
       badge={badge}
       content={content}
       button={button}
+      bgColor={bgColor}
     />
   )
 }

@@ -1,13 +1,14 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
+import BackgroundSection from '@/components/BackgroundSection/BackgroundSection'
 import { Media as MediaComponent } from '@/components/Media'
-// import type { ContentWithImage as ContentWithImageProps } from '@/payload-types'
+// import type { ContentWithImage as ContentWithImageProps} from '@/payload-types'
 import { ContentSectionBlock } from '@/payload-types'
-import { getPopulatedImageData } from '@/utilities/isImagePopulated'
 import { getSelectedMedia } from '@/utilities/getSelectedMedia'
+import { getPopulatedMediaData } from '@/utilities/isImagePopulated'
 
 export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
-  const { content, multipleImages, imagePosition, features } = props
+  const { content, multipleImages, imagePosition, features, bgColor } = props
 
   // Composant pour afficher une icône
   const IconComponent = ({ icon }: { icon: any }) => {
@@ -19,8 +20,8 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
       )
     }
 
-    const iconData = getPopulatedImageData(icon.image)
-    if (!iconData?.url) {
+    const iconData = getPopulatedMediaData(icon.image)
+    if (!iconData || !('url' in iconData)) {
       return (
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-200">
           <span className="text-gray-400">?</span>
@@ -77,9 +78,14 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
         {multipleImages.map((mediaItem, index) => {
           // Récupérer le média sélectionné (image ou vidéo embed)
           const selectedMedia = getSelectedMedia(mediaItem)
-          const mediaData = getPopulatedImageData(selectedMedia)
+          const mediaData = getPopulatedMediaData(selectedMedia)
 
-          if (!mediaData?.url && !('source' in (mediaData || {}))) {
+          // Vérifier si le média est valide (Media avec url OU VideoEmbed avec source)
+          const isValidMedia =
+            mediaData &&
+            (('url' in mediaData && mediaData.url) || ('source' in mediaData && mediaData.source))
+
+          if (!isValidMedia) {
             return (
               <div
                 key={index}
@@ -100,7 +106,7 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
               }`}
             >
               <MediaComponent
-                className="aspect-video h-auto w-full rounded-xl border lg:aspect-square"
+                className="aspect-video h-auto w-full rounded-xl lg:aspect-square"
                 imgClassName="object-cover"
                 fill
                 resource={mediaData}
@@ -135,18 +141,21 @@ export const ImageGrid: React.FC<ContentSectionBlock> = (props) => {
   )
 
   return (
-    <div
-      className={`container flex flex-col gap-8 py-20 md:justify-center ${imagePosition === 'Gauche' ? 'md:flex-row-reverse' : 'md:flex-row'}`}
-    >
-      {/* Contenu texte en premier */}
-      <div className="w-full">
-        <ContentComponent />
-      </div>
+    <section className="relative">
+      <BackgroundSection className={bgColor || 'bg-white'} />
+      <div
+        className={`container flex flex-col gap-8 py-20 md:justify-center ${imagePosition === 'Gauche' ? 'md:flex-row-reverse' : 'md:flex-row'}`}
+      >
+        {/* Contenu texte en premier */}
+        <div className="w-full">
+          <ContentComponent />
+        </div>
 
-      {/* Grille de médias en dessous */}
-      <div className="w-full">
-        <MediaGridComponent />
+        {/* Grille de médias en dessous */}
+        <div className="w-full">
+          <MediaGridComponent />
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

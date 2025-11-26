@@ -894,6 +894,16 @@ export interface ContentSectionBlock {
     icon?: ('arrow-right' | 'arrow-left' | 'external-link' | 'download' | 'none') | null;
   };
   imagePosition?: ('Droite' | 'Gauche') | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contentSection';
@@ -919,6 +929,16 @@ export interface MapBlock {
     };
     [k: string]: unknown;
   };
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'map';
@@ -930,7 +950,16 @@ export interface MapBlock {
 export interface BentoCardBlock {
   title?: string | null;
   sousTitre?: string | null;
-  bgColor?: ('bg-white' | 'bg-neutral-100' | 'bg-flamingo-lightest' | 'bg-chateau-lightest') | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
   cards?:
     | {
         title: string;
@@ -1759,6 +1788,7 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
         icon?: T;
       };
   imagePosition?: T;
+  bgColor?: T;
   id?: T;
   blockName?: T;
 }
@@ -1769,6 +1799,7 @@ export interface ContentSectionBlockSelect<T extends boolean = true> {
 export interface MapBlockSelect<T extends boolean = true> {
   title?: T;
   MapInfo?: T;
+  bgColor?: T;
   id?: T;
   blockName?: T;
 }

@@ -34,4 +34,4 @@ export const getImageByIndex = (images: ImageInfo[], index: number): ImageInfo |
 
 export const DEFAULT_CONTAINER_CLASSES =
   'container mx-auto px-6 pt-20 pb-16 md:pt-28 md:pb-20 lg:pt-28 lg:pb-20 xl:pt-28 xl:pb-20 2xl:px-0'
-export const DEFAULT_BG_CLASSES = 'bg-white py-10'
+export const DEFAULT_BG_CLASSES = 'relative py-4 pt-8'
