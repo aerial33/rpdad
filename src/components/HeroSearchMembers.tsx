@@ -91,8 +91,15 @@ export const HeroSearchMembers: React.FC = () => {
   }
 
   const handleSelect = (suggestion: Suggestion) => {
-    setValue(suggestion.value)
-    handleSearch(suggestion.value)
+    if (suggestion.type === 'membre' && suggestion.slug) {
+      // Redirection directe vers la page du membre
+      router.push(`/membres/${suggestion.slug}`)
+      setOpen(false)
+    } else {
+      // Pour les lieux, comportement actuel (recherche)
+      setValue(suggestion.value)
+      handleSearch(suggestion.value)
+    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {

@@ -7,7 +7,7 @@ import { CMSLink } from '@/components/Link'
 import { LogoTicker } from '@/components/LogoTicker'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
-import { ExpandFromCenter, FadeUp } from '@/components/motion/animations'
+import { FadeLeft, FadeRight } from '@/components/motion/animations'
 import { Badge } from '@/components/ui/badge'
 import { Page } from '@/payload-types'
 import { cn } from '@/utilities/ui'
@@ -29,7 +29,7 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
     <section className="relative -z-10 mt-4 flex min-h-screen items-center lg:min-h-0">
       <div className="container mx-auto px-4 xl:px-0">
         <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-8">
-          <FadeUp delay={0.3} className="lg:mt-8">
+          <FadeLeft delay={0.3} className="lg:mt-8">
             <div className="flex flex-col gap-10 lg:gap-6">
               {badge && (
                 <Badge variant="outline" className="text-muted-foreground border-muted-foreground">
@@ -76,7 +76,7 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
               {/* Desktop: LogoTicker intégré dans le hero */}
               <LogoTicker className="lg:text-muted-foreground mt-12 rounded-xl bg-white/20 p-3 text-white backdrop-blur-sm lg:mt-0 xl:block" />
             </div>
-          </FadeUp>
+          </FadeLeft>
 
           {/* Mobile: afficher seulement la première image avec forme arrondie */}
           <div className="absolute inset-0 -z-1 min-h-screen overflow-hidden sm:rounded-bl-[300px] lg:hidden lg:shadow-2xl">
@@ -93,15 +93,13 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
 
           {/* Desktop: grille complète */}
           <div className="hidden self-start lg:block">
-            <div className="relative grid grid-cols-2 gap-6">
+            <FadeRight delay={0.15} duration={0.35} className="relative grid grid-cols-2 gap-6">
               {images && images.length > 0 ? (
                 images.map((item, index) => {
                   const isPriority = index < 2 // Les 2 premières images en priorité
 
                   return (
-                    <ExpandFromCenter
-                      delay={0.15 + index * 0.06}
-                      duration={0.35}
+                    <div
                       key={index}
                       className={cn(
                         'flex aspect-square items-center justify-center overflow-hidden rounded-full shadow-lg transition-transform',
@@ -142,7 +140,7 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
                           <div className="h-full w-full bg-gray-200" />
                         )}
                       </div>
-                    </ExpandFromCenter>
+                    </div>
                   )
                 })
               ) : (
@@ -161,7 +159,7 @@ export const HeroPrimary: React.FC<Page['hero']> = ({
                   ))}
                 </>
               )}
-            </div>
+            </FadeRight>
           </div>
         </div>
 
