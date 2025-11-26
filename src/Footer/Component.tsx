@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
 
+import { CMSLink } from '@/components/Link'
 import { RpdadLogo } from '@/graphics/LogoRpdad/logo'
 import type { Footer } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
@@ -8,6 +9,7 @@ export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
 
   const navItems = footerData?.navItems || []
+  const legalLinks = footerData?.legalLinks || []
 
   return (
     <footer className="bg-flamingo-white rounded-t-4xl py-4">
@@ -75,15 +77,11 @@ export async function Footer() {
       <div className="text-muted-foreground border-flamingo container mt-20 flex flex-col justify-between gap-4 border-t px-4 pt-8 text-center text-sm font-medium lg:flex-row lg:items-center lg:text-left">
         <p>© 2025 RPDAD. Tous droits réservés.</p>
         <ul className="flex justify-center gap-4 lg:justify-start">
-          <li className="hover:text-primary">
-            <a href="#"> Mentions légales</a>
-          </li>
-          <li className="hover:text-primary">
-            <a href="#"> Politique de confidentialité</a>
-          </li>
-          <li className="hover:text-primary">
-            <a href="#"> Cookies</a>
-          </li>
+          {legalLinks.map((item, idx) => (
+            <li key={idx} className="hover:text-primary">
+              <CMSLink {...item.link} />
+            </li>
+          ))}
         </ul>
       </div>
 

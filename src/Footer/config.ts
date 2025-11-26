@@ -25,6 +25,23 @@ export const Footer: GlobalConfig = {
         },
       },
     },
+    {
+      name: 'legalLinks',
+      type: 'array',
+      label: 'Liens légaux',
+      fields: [
+        link({
+          appearances: false,
+        }),
+      ],
+      maxRows: 3,
+      admin: {
+        initCollapsed: true,
+        components: {
+          RowLabel: '@/Footer/RowLabel#RowLabel',
+        },
+      },
+    },
   ],
   hooks: {
     afterChange: [revalidateFooter],

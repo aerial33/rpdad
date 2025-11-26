@@ -35,7 +35,7 @@ export default async function Page() {
         equals: 'published',
       },
     },
-    sort: '-publishedAt',
+    sort: 'name',
   })
 
   return (
