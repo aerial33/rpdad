@@ -122,12 +122,12 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
 
       {/* Section Offres d'emploi */}
       <section className="bg-muted/30 py-20">
-        <div className="container mx-auto px-4 text-left">
-          <div className="mb-16 xl:mb-24">
+        <div className="container mx-auto px-4 text-center">
+          <div className="mx-auto mb-16 xl:mb-24">
             <h2 className="mb-4 text-4xl font-bold tracking-tight text-balance lg:text-5xl">
               {"Le Réseau Public Départemental d'Aide à Domicile de la Gironde"}
             </h2>
-            <p className="text-muted-foreground max-w-2xl text-xl">
+            <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
               {
                 'C’est près de 1200 agents, les métiers sont variés : aide à domicile, auxiliaire de vie, responsable de SAD, responsable de secteur, agent administratif…, voici nos offres'
               }
