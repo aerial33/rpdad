@@ -1,6 +1,6 @@
-import React from 'react'
+import { Calendar } from 'lucide-react'
 
-import { SearchWidget } from './SearchWidget'
+import React from 'react'
 
 export type SidebarWidgetsProps = {
   aboutTitle?: string
@@ -28,7 +28,7 @@ export const SidebarWidgets: React.FC<SidebarWidgetsProps> = ({
 }) => {
   return (
     <aside className="sidebar !mt-8 w-full max-w-full flex-[0_0_auto] self-start !px-[15px] lg:sticky lg:top-7 lg:!mt-6 lg:w-4/12 lg:!px-[20px] xl:!mt-6 xl:w-4/12 xl:!px-[35px]">
-      <SearchWidget />
+      {/* <SearchWidget /> */}
 
       {/* À propos */}
       {/* <div className="widget mt-8 rounded-3xl bg-neutral-100 px-6 py-6 md:py-8">
@@ -55,26 +55,14 @@ export const SidebarWidgets: React.FC<SidebarWidgetsProps> = ({
                 )}
                 <div className="!relative !mb-0 !ml-[4.25rem]">
                   <h6 className="!mb-2">
-                    <a
-                      className="!text-[#343f52] hover:!text-[#3f78e0]"
-                      href={`/posts/${post.slug}`}
-                    >
+                    <a className="hover:text-primary !text-[#343f52]" href={`/posts/${post.slug}`}>
                       {post.title}
                     </a>
                   </h6>
                   <ul className="m-0 list-none p-0 !text-[0.7rem] !text-[#aab0bc]">
                     <li className="post-date inline-block">
-                      <i className="uil uil-calendar-alt pr-[0.2rem] align-[-.05rem] before:content-['\e9ba']"></i>
+                      <Calendar className="mr-1 inline h-3 w-3" />
                       <span>{post.date}</span>
-                    </li>
-                    <li className="post-comments inline-block before:m-[0_.6rem_0] before:inline-block before:h-[0.2rem] before:w-[0.2rem] before:rounded-[100%] before:bg-[#aab0bc] before:align-[.15rem] before:opacity-50 before:content-['']">
-                      <a
-                        className="!text-[#aab0bc] hover:!border-[#3f78e0] hover:!text-[#3f78e0]"
-                        href="#"
-                      >
-                        <i className="uil uil-comment pr-[0.2rem] align-[-.05rem] before:content-['\ea54']"></i>
-                        {post.commentsCount}
-                      </a>
                     </li>
                   </ul>
                 </div>
