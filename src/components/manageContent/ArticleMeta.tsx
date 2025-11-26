@@ -4,8 +4,6 @@ import React from 'react'
 
 import SocialsShare from '@/graphics/SocialsShare/SocialsShare'
 
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-
 interface ArticleMetaProps {
   author: { name: string; avatar?: string }
   date: string
@@ -31,14 +29,14 @@ const ArticleMeta: React.FC<ArticleMetaProps> = ({
     <div className="flex w-full flex-col justify-between space-y-5 sm:flex-row sm:items-end sm:space-y-0 sm:space-x-5 rtl:space-x-reverse">
       {/* Auteur et infos */}
       <div className="flex items-center space-x-4">
-        <Avatar>
+        {/* <Avatar>
           <AvatarImage src={author.avatar} alt={author.name} />
           <AvatarFallback>{author.name[0]}</AvatarFallback>
-        </Avatar>
+        </Avatar> */}
+        <div className="font-semibold">{author.name}</div>
         <div>
-          <div className="font-semibold">{author.name}</div>
           <div className="text-muted-foreground text-sm">
-            {date}
+            Le {date}
             {readTime && ` · ${readTime}`}
           </div>
         </div>

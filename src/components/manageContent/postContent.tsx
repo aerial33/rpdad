@@ -30,7 +30,7 @@ const SingleTitle: FC<SingleTitleProps> = ({
   title,
 }) => {
   return (
-    <h1 className={className + ' ' + mainClass + ' max-w-4xl'} title={title}>
+    <h1 className={className + ' ' + mainClass + ' mx-auto max-w-4xl'} title={title}>
       {title}
     </h1>
   )
@@ -59,20 +59,20 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
     <div className="relative">
       <div className={`nc-PageSingle py-4 pt-8`}>
         <header className="container rounded-xl">
-          <div className="mx-auto max-w-screen-md">
-            <div className="space-y-2">
+          <div className="mx-auto max-w-screen-lg">
+            <div className="space-y-2 text-center">
               {/* <CategoryBadgeList
                 itemClass="!px-3"
                 categories={[DEMO_CATEGORIES[1]]}
               /> */}
               <SingleTitle title={post.title} />
               {!hiddenDesc && post.meta?.description && (
-                <span className="block pb-1 text-base text-neutral-500 md:text-lg dark:text-neutral-400">
+                <span className="mt-4 block pb-1 text-base text-balance text-neutral-500 md:text-lg dark:text-neutral-400">
                   {post.meta.description}
                 </span>
               )}
-              <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-              <div className="mb-4 flex flex-col justify-between space-y-5 sm:flex-row sm:items-end sm:space-y-0 sm:space-x-5 rtl:space-x-reverse">
+              <div className="mx-auto mt-4 max-w-screen-md border-b border-neutral-200 dark:border-neutral-700"></div>
+              <div className="mx-auto mb-4 flex max-w-screen-md flex-col justify-between space-y-5 sm:flex-row sm:items-end sm:space-y-0 sm:space-x-5 rtl:space-x-reverse">
                 {/* <PostMeta2
                   size="large"
                   className="leading-none flex-shrink-0"

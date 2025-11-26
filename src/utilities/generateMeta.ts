@@ -29,6 +29,16 @@ export const generateMeta = async (args: {
     ? doc?.meta?.title + ' | Rpdad Réseau départemental de la gironde'
     : 'Rpdad Réseau départemental de la gironde'
 
+  // Construct full URL for OpenGraph
+  const serverUrl = getServerSideURL()
+  let fullUrl = serverUrl
+  if (doc?.slug) {
+    const slugPath = Array.isArray(doc.slug) ? doc.slug.join('/') : doc.slug
+    // Check if it's a Post (has publishedAt or content) or a Page
+    const isPost = 'publishedAt' in (doc as Post) || 'content' in (doc as Post)
+    fullUrl = `${serverUrl}/${isPost ? 'posts/' : ''}${slugPath}`
+  }
+
   return {
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
@@ -41,7 +51,7 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: fullUrl,
     }),
     title,
   }
