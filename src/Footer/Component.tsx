@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
 
 import { CMSLink } from '@/components/Link'
+import { CookieSettingsButton } from '@/components/consent/cookie-settings-button'
 import { RpdadLogo } from '@/graphics/LogoRpdad/logo'
 import type { Footer } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
@@ -82,6 +83,9 @@ export async function Footer() {
               <CMSLink {...item.link} />
             </li>
           ))}
+          <li className="hover:text-primary">
+            <CookieSettingsButton className="cursor-pointer" />
+          </li>
         </ul>
       </div>
 

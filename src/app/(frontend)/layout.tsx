@@ -8,6 +8,7 @@ import { draftMode } from 'next/headers'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { AdminBar } from '@/components/Admin/AdminBar'
+import ConsentManager from '@/components/consent/consent-manager'
 import { Toaster } from '@/components/ui/sonner'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
@@ -44,9 +45,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }}
           />
 
-          <Header />
-          {children}
-          <Footer />
+          <ConsentManager>
+            <Header />
+            {children}
+            <Footer />
+          </ConsentManager>
           <Toaster />
         </Providers>
         {/* <Analytics /> */}
