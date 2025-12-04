@@ -27,7 +27,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   }
 
   return (
-    <div className="container mx-auto my-16 border">
+    <div className="container mx-auto my-16 rounded-[40px] shadow-lg">
       <div className="grid grid-cols-4 gap-x-16 gap-y-8 lg:grid-cols-12">
         {columns &&
           columns.length > 0 &&
@@ -35,10 +35,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
             const { enableLink, link, richText, size } = col
 
             return (
-              <div
-                className={`${getResponsiveClasses(size!)} richtext-content border-flamingo border`}
-                key={index}
-              >
+              <div className={`${getResponsiveClasses(size!)} richtext-content`} key={index}>
                 {richText && (
                   <RichText
                     data={richText}

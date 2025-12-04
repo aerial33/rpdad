@@ -19,6 +19,7 @@ import SocialsList from '../SocialsList/SocialsList'
 import { Badge } from '../ui/badge'
 
 export const MembresContent = (membre: Membre) => {
+  // console.log(membre.informations.website)
   return (
     <>
       <div className="w-full">
