@@ -47,7 +47,7 @@ export const SidebarWidgets: React.FC<SidebarWidgetsProps> = ({
                 className={`clear-both block overflow-hidden ${index > 0 ? '!mt-4' : ''}`}
               >
                 {post.image && (
-                  <figure className="float-left !h-[4.5rem] w-14 !rounded-[.4rem]">
+                  <figure className="float-left mr-2 w-24 !rounded-[.4rem]">
                     <a href={`/posts/${post.slug}`}>
                       <img className="!rounded-[.4rem]" src={post.image} alt={post.title} />
                     </a>
@@ -59,7 +59,7 @@ export const SidebarWidgets: React.FC<SidebarWidgetsProps> = ({
                       {post.title}
                     </a>
                   </h6>
-                  <ul className="m-0 list-none p-0 !text-[0.7rem] !text-[#aab0bc]">
+                  <ul className="list-none pl-8 !text-[0.7rem] !text-[#aab0bc]">
                     <li className="post-date inline-block">
                       <Calendar className="mr-1 inline h-3 w-3" />
                       <span>{post.date}</span>

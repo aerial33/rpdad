@@ -1,9 +1,10 @@
-import type { Post } from '@/payload-types'
-import type { SidebarWidgetsProps } from '@/components/CollectionArchive/SidebarWidgets'
-
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+
 import { unstable_cache } from 'next/cache'
+
+import type { SidebarWidgetsProps } from '@/components/CollectionArchive/SidebarWidgets'
+import type { Post } from '@/payload-types'
 
 type CollectionSlug = 'posts' | 'emplois'
 
@@ -18,6 +19,9 @@ async function getFeaturedPosts(): Promise<SidebarWidgetsProps['popularPosts']> 
     where: {
       isFeatured: {
         equals: true,
+      },
+      _status: {
+        equals: 'published',
       },
     },
     limit: 5,

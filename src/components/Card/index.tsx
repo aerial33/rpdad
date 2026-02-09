@@ -13,7 +13,7 @@ import useClickableCard from '@/utilities/useClickableCard'
 
 export type CardPostData = Pick<
   Post,
-  'slug' | 'categories' | 'meta' | 'title' | 'publishedAt' | 'populatedAuthors'
+  'slug' | 'categories' | 'meta' | 'title' | 'heroImage' | 'publishedAt' | 'populatedAuthors'
 >
 
 export const Card: React.FC<{
@@ -34,9 +34,10 @@ export const Card: React.FC<{
     title: titleFromProps,
     variant = 'default',
   } = props
-
-  const { slug, meta, title } = doc || {}
+  const { slug, meta, title, heroImage } = doc || {}
   const { description, image: metaImage } = meta || {}
+  // @ts-ignore
+  const displayImage = heroImage?.sizes?.medium || metaImage
 
   // Handle categories for posts and category for emplois
   const categories = doc && 'categories' in doc ? doc.categories : undefined
@@ -92,15 +93,15 @@ export const Card: React.FC<{
     >
       <figure className="overlay overlay-1 hover-scale group rounded-t-xl">
         <Link href={href} className="hover:text-primary">
-          {!metaImage && (
+          {!displayImage && (
             <div
               className={`flex items-center justify-center bg-gray-200 ${variant === 'featured' ? 'h-64' : 'h-48'}`}
             >
               {" Pas d'image 📷"}
             </div>
           )}
-          {metaImage && typeof metaImage !== 'string' && (
-            <Media resource={metaImage} className={getImageClasses()} />
+          {displayImage && typeof displayImage !== 'string' && (
+            <Media resource={displayImage} className={getImageClasses()} />
           )}
         </Link>
         <figcaption className="pointer-events-none absolute inset-0 z-[5] h-full w-full p-2 px-4 py-3 text-center opacity-0 group-hover:opacity-100">
