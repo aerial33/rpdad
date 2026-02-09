@@ -175,6 +175,37 @@ export const Membres: CollectionConfig = {
                 },
               ],
             },
+            {
+              name: 'socials',
+              type: 'group',
+              label: 'Réseaux sociaux',
+              fields: [
+                {
+                  name: 'facebook',
+                  type: 'text',
+                  label: 'Facebook',
+                  admin: { placeholder: 'https://facebook.com/votre-page' },
+                },
+                {
+                  name: 'twitter',
+                  type: 'text',
+                  label: 'Twitter / X',
+                  admin: { placeholder: 'https://x.com/votre-compte' },
+                },
+                {
+                  name: 'linkedin',
+                  type: 'text',
+                  label: 'LinkedIn',
+                  admin: { placeholder: 'https://linkedin.com/in/votre-profil' },
+                },
+                {
+                  name: 'instagram',
+                  type: 'text',
+                  label: 'Instagram',
+                  admin: { placeholder: 'https://instagram.com/votre-compte' },
+                },
+              ],
+            },
           ],
         },
         {

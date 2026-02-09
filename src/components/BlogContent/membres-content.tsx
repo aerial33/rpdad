@@ -15,11 +15,23 @@ import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs'
 import { CMSLink } from '../Link'
 import { Media } from '../Media'
 import RichText from '../RichText'
-import SocialsList from '../SocialsList/SocialsList'
+import SocialsList, { SOCIAL_PROFILES_DATA } from '../SocialsList/SocialsList'
+import type { SocialProfileType } from '../SocialsList/SocialsList'
 import { Badge } from '../ui/badge'
 
 export const MembresContent = (membre: Membre) => {
-  // console.log(membre.informations.website)
+  const socials = SOCIAL_PROFILES_DATA.filter((social) => {
+    const key = social.id.toLowerCase() as 'facebook' | 'twitter' | 'linkedin' | 'instagram'
+    return membre.socials?.[key]
+  }).map((social) => {
+    const key = social.id.toLowerCase() as 'facebook' | 'twitter' | 'linkedin' | 'instagram'
+    const href = membre.socials![key]!
+    return {
+      ...social,
+      href: href.startsWith('http') ? href : `https://${href}`,
+    } satisfies SocialProfileType
+  })
+
   return (
     <>
       <div className="w-full">
@@ -65,7 +77,7 @@ export const MembresContent = (membre: Membre) => {
                 {membre.informations?.website && (
                   <CMSLink
                     type="custom"
-                    url={membre.informations.website}
+                    url={membre.informations.website.startsWith('http') ? membre.informations.website : `https://${membre.informations.website}`}
                     newTab
                     className="flex cursor-pointer items-center space-x-2.5 truncate text-xs font-medium text-neutral-500 rtl:space-x-reverse"
                   >
@@ -73,7 +85,7 @@ export const MembresContent = (membre: Membre) => {
                     <span className="truncate text-neutral-700">{membre.informations.website}</span>
                   </CMSLink>
                 )}
-                <SocialsList itemClass="block w-7 h-7" />
+                {socials.length > 0 && <SocialsList itemClass="block w-7 h-7" socials={socials} />}
               </div>
             </div>
 
@@ -240,7 +252,7 @@ export const MembresContent = (membre: Membre) => {
                   <div className="theme-dark:text-zinc-400 ml-7 text-sm text-zinc-600">
                     <CMSLink
                       type="custom"
-                      url={membre.informations.website}
+                      url={membre.informations.website.startsWith('http') ? membre.informations.website : `https://${membre.informations.website}`}
                       newTab
                       className="theme-dark:hover:text-zinc-200 break-all underline hover:text-zinc-900"
                     >

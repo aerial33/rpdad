@@ -1298,6 +1298,12 @@ export interface Membre {
     astreinte?: string | null;
     website?: string | null;
   };
+  socials?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    linkedin?: string | null;
+    instagram?: string | null;
+  };
   /**
    * Contenu principal qui sera affich� dans le body de la page
    */
@@ -2032,6 +2038,14 @@ export interface MembresSelect<T extends boolean = true> {
         horaires?: T;
         astreinte?: T;
         website?: T;
+      };
+  socials?:
+    | T
+    | {
+        facebook?: T;
+        twitter?: T;
+        linkedin?: T;
+        instagram?: T;
       };
   content?: T;
   meta?:
