@@ -1045,6 +1045,14 @@ export interface FeatureCardsBlock {
         | 'bg-primary-lightest'
       )
     | null;
+  cards?:
+    | {
+        title: string;
+        description: string;
+        color: 'chateau' | 'primary' | 'yellow' | 'blue' | 'flamingo';
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'featureCards';
@@ -1862,6 +1870,14 @@ export interface FeatureCardsBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   bgColor?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        color?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
