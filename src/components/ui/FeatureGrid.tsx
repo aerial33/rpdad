@@ -85,7 +85,7 @@ function FeatureGrid({
           <div className={`grid grid-cols-1 gap-8 ${getGridCols()}`}>
             {displayedItems.map((item) => (
               <Link href={item.link || '#'} key={item.id}>
-                <div className="shadow-card mb-4 flex flex-col gap-2 rounded-3xl transition-all hover:scale-[1.02]">
+                <div className="shadow-card mb-4 flex flex-col gap-2 rounded-3xl bg-white transition-all hover:scale-[1.02]">
                   <div className="bg-primary-lightest relative mb-2 aspect-video overflow-hidden rounded-t-3xl shadow">
                     {item.image && (
                       <Image
