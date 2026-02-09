@@ -76,7 +76,7 @@ export async function Footer() {
         </div>
       </div>
       <div className="text-muted-foreground border-flamingo container mt-20 flex flex-col justify-between gap-4 border-t px-4 pt-8 text-center text-sm font-medium lg:flex-row lg:items-center lg:text-left">
-        <p>© 2025 RPDAD. Tous droits réservés.</p>
+        <p>© {new Date().getFullYear()} RPDAD. Tous droits réservés.</p>
         <ul className="flex justify-center gap-4 lg:justify-start">
           {legalLinks.map((item, idx) => (
             <li key={idx} className="hover:text-primary">
