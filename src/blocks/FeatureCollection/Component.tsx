@@ -45,23 +45,28 @@ export const FeatureCollectionBlockComponent: React.FC<
       collection: 'posts',
       depth: 1,
       limit,
-      ...(flattenedCategories && flattenedCategories.length > 0
-        ? {
-            where: {
+      where: {
+        _status: {
+          equals: 'published',
+        },
+        ...(flattenedCategories && flattenedCategories.length > 0
+          ? {
               categories: {
                 in: flattenedCategories,
               },
-            },
-          }
-        : {}),
+            }
+          : {}),
+      },
     })
 
     posts = fetchedPosts.docs
   } else {
     if (selectedDocs?.length) {
-      const filteredSelectedPosts = selectedDocs.map((post) => {
-        if (typeof post.value === 'object') return post.value
-      }) as Post[]
+      const filteredSelectedPosts = selectedDocs
+        .map((post) => {
+          if (typeof post.value === 'object') return post.value
+        })
+        .filter((post): post is Post => !!post && post._status === 'published')
 
       posts = filteredSelectedPosts
     }
