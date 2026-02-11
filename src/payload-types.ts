@@ -229,6 +229,7 @@ export interface Page {
     | FeatureCardsBlock
     | HistoryAboutBlock
     | TeamBlock
+    | MembresMapBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1168,6 +1169,31 @@ export interface TeamBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MembresMapBlock".
+ */
+export interface MembresMapBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  bgColor?: ('bg-white' | 'bg-neutral-100' | 'bg-flamingo-lightest' | 'bg-primary-lightest') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'membresMap';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emplois".
  */
 export interface Emplois {
@@ -1658,6 +1684,7 @@ export interface PagesSelect<T extends boolean = true> {
         featureCards?: T | FeatureCardsBlockSelect<T>;
         historyAbout?: T | HistoryAboutBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
+        membresMap?: T | MembresMapBlockSelect<T>;
       };
   meta?:
     | T
@@ -1934,6 +1961,16 @@ export interface TeamBlockSelect<T extends boolean = true> {
         id?: T;
       };
   layout?: T;
+  bgColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MembresMapBlock_select".
+ */
+export interface MembresMapBlockSelect<T extends boolean = true> {
+  introContent?: T;
   bgColor?: T;
   id?: T;
   blockName?: T;

@@ -47,7 +47,7 @@ export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) 
       {/* ====================== END HEADER ====================== */}
 
       {/* Section Présentation */}
-      <section className="bg-muted/30 relative py-8">
+      <section className="relative py-8">
         <BackgroundSection />
         {/* LOOP CARDS */}
         {/* <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

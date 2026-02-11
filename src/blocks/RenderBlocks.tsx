@@ -14,6 +14,7 @@ import { FeatureCardsBlock } from './FeatureCards/component'
 import { FeatureCollectionBlockComponent } from './FeatureCollection/Component'
 import ContentSectionBlock from './contentSection/RenderContentSection'
 import { MapBlock } from './map/map-gironde'
+import { MembresMapBlock } from './MembresMap/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -28,6 +29,7 @@ const blockComponents = {
   historyAbout: HistoryAboutBlock,
   team: TeamBlock,
   map: MapBlock,
+  membresMap: MembresMapBlock,
 }
 
 export const RenderBlocks: React.FC<{

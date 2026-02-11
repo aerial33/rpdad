@@ -16,6 +16,7 @@ import { HistoryAbout } from '@/blocks/HistoryAbout'
 import { Team } from '@/blocks/Team/config'
 import { ContentSectionBlock } from '@/blocks/contentSection/config'
 import { map } from '@/blocks/map/config'
+import { MembresMap } from '@/blocks/MembresMap/config'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 
@@ -101,6 +102,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FeatureCards,
                 HistoryAbout,
                 Team,
+                MembresMap,
               ],
               required: true,
               admin: {

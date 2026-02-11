@@ -1,5 +1,8 @@
 'use client'
 
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+
 import { useRef, useState } from 'react'
 
 import CardMembers from './CardMembers'
@@ -8,10 +11,11 @@ import type { MembreShowcase } from './types'
 
 export interface MembreMapLayoutProps {
   membres: MembreShowcase[]
-  totalDocs: number
+  totalDocs?: number
+  introContent?: SerializedEditorState
 }
 
-export function MembreMapLayout({ membres, totalDocs }: MembreMapLayoutProps) {
+export function MembreMapLayout({ membres, introContent }: MembreMapLayoutProps) {
   const [selectedMarkerId, setSelectedMarkerId] = useState<string | number | null>(null)
   const [hoveredMarkerId, setHoveredMarkerId] = useState<string | number | null>(null)
   const cardRefs = useRef<Map<string | number, HTMLDivElement>>(new Map())
@@ -47,15 +51,11 @@ export function MembreMapLayout({ membres, totalDocs }: MembreMapLayoutProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-16">
-        <h2 className="mb-2 text-3xl font-bold tracking-tight text-gray-700 md:text-4xl lg:text-5xl">
-          Le Réseau Public Départemental d'Aide à Domicile de la Gironde
-        </h2>
-        <p className="text-muted-foreground max-w-2xl text-xl">
-          Un réseau de {totalDocs} structures associatives engagées dans l'accompagnement et le
-          soutien des personnes à domicile partout en Gironde.
-        </p>
-      </div>
+      {introContent && (
+        <div className="mb-16 max-w-2xl">
+          <RichText data={introContent} className="richtext-content" />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 gap-6 py-8 pt-8 md:gap-8 lg:grid-cols-2">
         {/* Carte interactive de la Gironde */}
