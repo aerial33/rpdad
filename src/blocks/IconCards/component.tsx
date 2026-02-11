@@ -41,6 +41,8 @@ const iconMap: Record<string, LucideIcon> = {
   TrendingUp,
 }
 
+const defaultColor = { bg: 'bg-primary/10', text: 'text-primary' }
+
 const colorMap: Record<string, { bg: string; text: string }> = {
   primary: { bg: 'bg-primary/10', text: 'text-primary' },
   flamingo: { bg: 'bg-flamingo/10', text: 'text-flamingo' },
@@ -64,8 +66,8 @@ export const IconCardsBlock = ({ title, subtitle, bgColor, items }: IconCardsBlo
         )}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => {
-            const Icon = iconMap[item.icon] || UsersRound
-            const colors = colorMap[item.iconColor] || colorMap.primary
+            const Icon = iconMap[item.icon] ?? UsersRound
+            const colors = colorMap[item.iconColor ?? 'primary'] ?? defaultColor
 
             return (
               <FadeUp key={item.id ?? index} delay={0.2 + index * 0.1}>
