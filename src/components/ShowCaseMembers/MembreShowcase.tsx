@@ -1,9 +1,3 @@
-'use client'
-
-import { Building2, Handshake, MapPin, UsersRound } from 'lucide-react'
-
-import { useState } from 'react'
-
 import Image from 'next/image'
 
 import { Badge } from '@/components/ui/badge'
@@ -13,8 +7,6 @@ import { MembreMapLayout } from './MembreMapLayout'
 import type { MembreShowcaseProps } from './types'
 
 export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) {
-  const [hoveredMembre, setHoveredMembre] = useState<number | string | null>(null)
-
   return (
     <div className="">
       {/* HEADER */}
@@ -69,49 +61,6 @@ export function MembreShowcase({ membres, totalDocs = 0 }: MembreShowcaseProps) 
         )}
       </section>
 
-      {/* Section Valeurs */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <UsersRound className="text-primary h-8 w-8" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Solidarité</h3>
-              <p className="text-muted-foreground text-sm">
-                Des structures unies pour offrir un service de qualité sur tout le département.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-flamingo/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <Building2 className="text-flamingo h-8 w-8" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Proximité</h3>
-              <p className="text-muted-foreground text-sm">
-                Un maillage territorial dense pour être au plus près des bénéficiaires.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-chateau/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <MapPin className="text-chateau h-8 w-8" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Couverture territoriale</h3>
-              <p className="text-muted-foreground text-sm">
-                Une présence sur l'ensemble de la Gironde pour garantir l'accès aux services.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-300/10">
-                <Handshake className="h-8 w-8 text-yellow-300" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Engagement</h3>
-              <p className="text-muted-foreground text-sm">
-                Des valeurs communes au service du bien-être et de l'autonomie des personnes.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }

@@ -1,0 +1,106 @@
+import type { Block } from 'payload'
+
+export const IconCards: Block = {
+  slug: 'iconCards',
+  labels: {
+    singular: 'Carte Icône',
+    plural: 'Cartes Icônes',
+  },
+  interfaceName: 'IconCardsBlock',
+  imageAltText: 'Icon Cards',
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Titre de section',
+      required: false,
+    },
+    {
+      name: 'subtitle',
+      type: 'text',
+      label: 'Sous-titre',
+      required: false,
+    },
+    {
+      name: 'bgColor',
+      type: 'select',
+      label: '🎨 Couleur de fond',
+      defaultValue: 'bg-white',
+      options: [
+        { label: '⚪ Blanc', value: 'bg-white' },
+        { label: '⚫ Gris', value: 'bg-neutral-100' },
+        { label: '🟠 Orange', value: 'bg-flamingo-lightest' },
+        { label: '🔵 Bleu', value: 'bg-blue-lightest' },
+        { label: '🟢 Vert', value: 'bg-chateau-lightest' },
+        { label: '🟣 Violet', value: 'bg-primary-lightest' },
+      ],
+    },
+    {
+      name: 'items',
+      type: 'array',
+      label: 'Cartes',
+      labels: {
+        singular: 'Carte',
+        plural: 'Cartes',
+      },
+      minRows: 1,
+      maxRows: 4,
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'icon',
+          type: 'select',
+          label: '🎯 Icône',
+          required: true,
+          defaultValue: 'UsersRound',
+          options: [
+            { label: '👥 Utilisateurs', value: 'UsersRound' },
+            { label: '🏢 Bâtiment', value: 'Building2' },
+            { label: '📍 Localisation', value: 'MapPin' },
+            { label: '🤝 Poignée de main', value: 'Handshake' },
+            { label: '❤️ Coeur', value: 'Heart' },
+            { label: '🛡️ Bouclier', value: 'Shield' },
+            { label: '⭐ Étoile', value: 'Star' },
+            { label: '🎯 Cible', value: 'Target' },
+            { label: '🏆 Récompense', value: 'Award' },
+            { label: '📖 Livre', value: 'BookOpen' },
+            { label: '🌍 Globe', value: 'Globe' },
+            { label: '💡 Ampoule', value: 'Lightbulb' },
+            { label: '💬 Message', value: 'MessageCircle' },
+            { label: '📞 Téléphone', value: 'Phone' },
+            { label: '✨ Étincelles', value: 'Sparkles' },
+            { label: '📈 Tendance', value: 'TrendingUp' },
+          ],
+        },
+        {
+          name: 'iconColor',
+          type: 'select',
+          label: '🎨 Couleur de l\'icône',
+          required: true,
+          defaultValue: 'primary',
+          options: [
+            { label: '🟣 Violet', value: 'primary' },
+            { label: '🟠 Orange', value: 'flamingo' },
+            { label: '🟢 Vert', value: 'chateau' },
+            { label: '🟡 Jaune', value: 'yellow' },
+            { label: '🔵 Bleu', value: 'blue' },
+          ],
+        },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Titre',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Description',
+          required: true,
+        },
+      ],
+    },
+  ],
+}

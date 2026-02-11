@@ -227,6 +227,7 @@ export interface Page {
     | BentoCardBlock
     | FeatureCollectionBlock
     | FeatureCardsBlock
+    | IconCardsBlock
     | HistoryAboutBlock
     | TeamBlock
     | MembresMapBlock
@@ -1060,6 +1061,52 @@ export interface FeatureCardsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconCardsBlock".
+ */
+export interface IconCardsBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
+  items?:
+    | {
+        icon:
+          | 'UsersRound'
+          | 'Building2'
+          | 'MapPin'
+          | 'Handshake'
+          | 'Heart'
+          | 'Shield'
+          | 'Star'
+          | 'Target'
+          | 'Award'
+          | 'BookOpen'
+          | 'Globe'
+          | 'Lightbulb'
+          | 'MessageCircle'
+          | 'Phone'
+          | 'Sparkles'
+          | 'TrendingUp';
+        iconColor: 'primary' | 'flamingo' | 'chateau' | 'yellow' | 'blue';
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'iconCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HistoryAboutBlock".
  */
 export interface HistoryAboutBlock {
@@ -1682,6 +1729,7 @@ export interface PagesSelect<T extends boolean = true> {
         bentoCard?: T | BentoCardBlockSelect<T>;
         featureCollection?: T | FeatureCollectionBlockSelect<T>;
         featureCards?: T | FeatureCardsBlockSelect<T>;
+        iconCards?: T | IconCardsBlockSelect<T>;
         historyAbout?: T | HistoryAboutBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
         membresMap?: T | MembresMapBlockSelect<T>;
@@ -1909,6 +1957,26 @@ export interface FeatureCardsBlockSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         color?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconCardsBlock_select".
+ */
+export interface IconCardsBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  bgColor?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        iconColor?: T;
+        title?: T;
+        description?: T;
         id?: T;
       };
   id?: T;

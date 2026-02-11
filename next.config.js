@@ -24,6 +24,10 @@ const nextConfig = {
         protocol: 'https',
       },
       {
+        hostname: 'rpdad.vercel.app',
+        protocol: 'https',
+      },
+      {
         hostname: 'sandbox-tailwind-template.netlify.app',
         protocol: 'https',
       },

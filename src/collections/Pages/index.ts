@@ -11,6 +11,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import editor from '@/access/editor'
 import { BentoCard } from '@/blocks/Bento/BentoCard'
 import { FeatureCards } from '@/blocks/FeatureCards/config'
+import { IconCards } from '@/blocks/IconCards/config'
 import { FeatureCollection } from '@/blocks/FeatureCollection/config'
 import { HistoryAbout } from '@/blocks/HistoryAbout'
 import { Team } from '@/blocks/Team/config'
@@ -100,6 +101,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 BentoCard,
                 FeatureCollection,
                 FeatureCards,
+                IconCards,
                 HistoryAbout,
                 Team,
                 MembresMap,

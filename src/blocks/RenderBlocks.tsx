@@ -11,6 +11,7 @@ import type { Page } from '@/payload-types'
 
 import { BentoGridBlock } from './Bento/Component'
 import { FeatureCardsBlock } from './FeatureCards/component'
+import { IconCardsBlock } from './IconCards/component'
 import { FeatureCollectionBlockComponent } from './FeatureCollection/Component'
 import ContentSectionBlock from './contentSection/RenderContentSection'
 import { MapBlock } from './map/map-gironde'
@@ -26,6 +27,7 @@ const blockComponents = {
   bentoCard: BentoGridBlock,
   featureCollection: FeatureCollectionBlockComponent,
   featureCards: FeatureCardsBlock,
+  iconCards: IconCardsBlock,
   historyAbout: HistoryAboutBlock,
   team: TeamBlock,
   map: MapBlock,
