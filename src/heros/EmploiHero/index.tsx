@@ -7,11 +7,22 @@ import { FadeLeft, FadeRight } from '@/components/motion/animations'
 import { Badge } from '@/components/ui/badge'
 import type { Emplois } from '@/payload-types'
 
+const heroColorMap: Record<string, string> = {
+  primary: 'from-primary via-[#cc35a1] to-primary-darkest',
+  flamingo: 'from-flamingo to-flamingo-dark',
+  blue: 'from-[#21839c] via-[#21839c] to-blue-darkest',
+  chateau: 'from-chateau-light via-chateau to-chateau-dark',
+  yellow: 'from-yellow-light via-yellow-base to-yellow-dark',
+}
+
 export const EmploiHero: React.FC<{
   emploi: Emplois
-}> = ({ emploi }) => {
+  heroColor?: string
+}> = ({ emploi, heroColor = 'primary' }) => {
   const { image, organisme, publishedAt, title, workTime, statusOffre, datePourvoir, typeContrat } =
     emploi
+
+  const gradientClasses = heroColorMap[heroColor] || heroColorMap.primary
 
   const getWorkTimeLabel = (workTime: string) => {
     const workTimeMap = {
@@ -29,19 +40,27 @@ export const EmploiHero: React.FC<{
 
   return (
     <>
-      <section className="from-primary to-primary-dark relative z-10 bg-gradient-to-l pt-16 md:py-20 lg:py-28">
+      <section
+        className={`${gradientClasses} relative z-10 bg-gradient-to-l pt-16 md:py-20 lg:py-28`}
+      >
         <div className="relative z-10 container mx-auto">
           <div className="max-w-screen-md">
             {/* Badges de statut */}
             <FadeLeft delay={0.3} duration={0.6}>
               <div className="mb-8 flex flex-wrap items-center gap-3">
                 {typeContrat && (
-                  <Badge variant="outline" className="font-medium text-white backdrop-blur-sm">
+                  <Badge
+                    variant="outline"
+                    className="border-white font-medium text-white backdrop-blur-sm"
+                  >
                     {getTypeContratLabel(typeContrat)}
                   </Badge>
                 )}
                 {workTime && (
-                  <Badge variant="outline" className="font-medium text-white backdrop-blur-sm">
+                  <Badge
+                    variant="outline"
+                    className="border-white font-medium text-white backdrop-blur-sm"
+                  >
                     {getWorkTimeLabel(workTime)}
                   </Badge>
                 )}

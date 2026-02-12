@@ -13,6 +13,7 @@ import { defaultLexical } from '@/fields/defaultLexical'
 
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { Settings } from './Settings/config'
 import { Categories } from './collections/Categories'
 import Emplois from './collections/Emplois'
 import { Media } from './collections/Media'
@@ -99,7 +100,7 @@ export default buildConfig({
   }),
   collections: [Pages, Posts, Emplois, Membres, Media, VideoEmbeds, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, Settings],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder

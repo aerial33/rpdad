@@ -50,6 +50,10 @@ export default async function Emploi({ params: paramsPromise }: Args) {
 
   if (!emploi) return <PayloadRedirects url={url} />
 
+  const payload = await getPayload({ config: configPromise })
+  const settings = await payload.findGlobal({ slug: 'settings' })
+  const heroColor = emploi.heroColor || settings.emploiHeroColor || 'primary'
+
   return (
     <>
       <PageClient />
@@ -59,7 +63,7 @@ export default async function Emploi({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <EmploiHero emploi={emploi} />
+      <EmploiHero emploi={emploi} heroColor={heroColor} />
 
       <BlogSection emploi={emploi} />
     </>

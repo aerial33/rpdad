@@ -309,6 +309,22 @@ export const Emplois: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    {
+      name: 'heroColor',
+      type: 'select',
+      label: '🎨 Couleur du hero',
+      admin: {
+        position: 'sidebar',
+        description: 'Laisser vide pour utiliser la couleur par défaut (Réglages)',
+      },
+      options: [
+        { label: '🟣 Violet', value: 'primary' },
+        { label: '🔵 Bleu', value: 'blue' },
+        { label: '🟠 Orange', value: 'flamingo' },
+        { label: '🟢 Vert', value: 'chateau' },
+        { label: '🟡 Jaune', value: 'yellow' },
+      ],
+    },
     ...slugField(),
   ],
   hooks: {

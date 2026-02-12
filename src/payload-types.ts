@@ -109,10 +109,12 @@ export interface Config {
   globals: {
     hautDePage: HautDePage;
     footer: Footer;
+    settings: Setting;
   };
   globalsSelect: {
     hautDePage: HautDePageSelect<false> | HautDePageSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1330,6 +1332,10 @@ export interface Emplois {
    */
   workTime?: ('full-time' | 'part-time' | 'flexible') | null;
   statusOffre?: ('active' | 'filled' | 'expired') | null;
+  /**
+   * Laisser vide pour utiliser la couleur par défaut (Réglages)
+   */
+  heroColor?: ('primary' | 'flamingo' | 'chateau' | 'yellow' | 'blue') | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -2110,6 +2116,7 @@ export interface EmploisSelect<T extends boolean = true> {
   typeContrat?: T;
   workTime?: T;
   statusOffre?: T;
+  heroColor?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2655,6 +2662,19 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: number;
+  /**
+   * Couleur de fond par défaut pour le hero des offres d'emploi
+   */
+  emploiHeroColor?: ('primary' | 'flamingo' | 'chateau' | 'yellow' | 'blue') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "hautDePage_select".
  */
 export interface HautDePageSelect<T extends boolean = true> {
@@ -2723,6 +2743,16 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  emploiHeroColor?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
