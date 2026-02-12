@@ -233,6 +233,7 @@ export interface Page {
     | HistoryAboutBlock
     | TeamBlock
     | MembresMapBlock
+    | TestimonialsBlock
   )[];
   meta?: {
     title?: string | null;
@@ -1243,6 +1244,37 @@ export interface MembresMapBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock".
+ */
+export interface TestimonialsBlock {
+  title?: string | null;
+  subtitle?: string | null;
+  testimonials?:
+    | {
+        quote: string;
+        author: string;
+        role?: string | null;
+        age?: number | null;
+        avatar?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonials';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emplois".
  */
 export interface Emplois {
@@ -1335,7 +1367,7 @@ export interface Emplois {
   /**
    * Laisser vide pour utiliser la couleur par défaut (Réglages)
    */
-  heroColor?: ('primary' | 'flamingo' | 'chateau' | 'yellow' | 'blue') | null;
+  heroColor?: ('primary' | 'blue' | 'flamingo' | 'chateau' | 'yellow') | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1739,6 +1771,7 @@ export interface PagesSelect<T extends boolean = true> {
         historyAbout?: T | HistoryAboutBlockSelect<T>;
         team?: T | TeamBlockSelect<T>;
         membresMap?: T | MembresMapBlockSelect<T>;
+        testimonials?: T | TestimonialsBlockSelect<T>;
       };
   meta?:
     | T
@@ -2045,6 +2078,27 @@ export interface TeamBlockSelect<T extends boolean = true> {
  */
 export interface MembresMapBlockSelect<T extends boolean = true> {
   introContent?: T;
+  bgColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialsBlock_select".
+ */
+export interface TestimonialsBlockSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        author?: T;
+        role?: T;
+        age?: T;
+        avatar?: T;
+        id?: T;
+      };
   bgColor?: T;
   id?: T;
   blockName?: T;
