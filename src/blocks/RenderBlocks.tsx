@@ -17,6 +17,7 @@ import ContentSectionBlock from './contentSection/RenderContentSection'
 import { MapBlock } from './map/map-gironde'
 import { MembresMapBlock } from './MembresMap/Component'
 import { TestimonialsBlock } from './Testimonials/Component'
+import { FAQBlock } from './FAQ/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -34,6 +35,7 @@ const blockComponents = {
   map: MapBlock,
   membresMap: MembresMapBlock,
   testimonials: TestimonialsBlock,
+  faq: FAQBlock,
 }
 
 export const RenderBlocks: React.FC<{

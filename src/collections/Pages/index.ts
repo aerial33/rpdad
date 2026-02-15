@@ -19,6 +19,7 @@ import { ContentSectionBlock } from '@/blocks/contentSection/config'
 import { map } from '@/blocks/map/config'
 import { MembresMap } from '@/blocks/MembresMap/config'
 import { Testimonials } from '@/blocks/Testimonials/config'
+import { FAQ } from '@/blocks/FAQ/config'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 
@@ -107,6 +108,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 Team,
                 MembresMap,
                 Testimonials,
+                FAQ,
               ],
               required: true,
               admin: {

@@ -149,9 +149,9 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                 onMouseEnter={() => setHoveredEmploi(emploi.id)}
                 onMouseLeave={() => setHoveredEmploi(null)}
               >
-                <CardHeader className="flex-shrink-0 p-0 pb-4">
+                <CardHeader className="shrink-0 p-0 pb-4">
                   <div
-                    className={`relative z-10 block aspect-video w-full flex-shrink-0 overflow-hidden rounded-t-3xl`}
+                    className={`relative z-10 block aspect-video w-full shrink-0 overflow-hidden rounded-t-3xl`}
                   >
                     {emploi.image && typeof emploi.image === 'object' && (
                       <Media
@@ -178,7 +178,7 @@ export function EmploiShowcase({ emplois, totalDocs = 0 }: EmploiShowcaseProps) 
                     {getDescription(emploi)}
                   </CardDescription>
 
-                  <div className="my-6 flex-shrink-0 space-y-2">
+                  <div className="my-6 shrink-0 space-y-2">
                     {emploi.organisme?.nom && (
                       <div className="text-muted-foreground flex items-center gap-4 text-sm">
                         <div className="flex items-center gap-2">

@@ -40,6 +40,7 @@ import { Logo as Logo_f009030f22af14c21626edd52c238de4 } from '../../../graphics
 import { Welcome as Welcome_eb20c25977e07aef8ed2a6a5f926672b } from '@/components/Admin/ui/beforeDashboad.tsx'
 import { default as default_c952b30f87c526e75f64597baba73c3e } from '@/components/Admin/BeforeLogin'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
+import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
   "@/components/Admin/Fields/Cell.tsx#TitleCell": TitleCell_8cbcc1995fb73d9b6638ab2fdaede290,
@@ -83,5 +84,6 @@ export const importMap = {
   "/graphics/LogoRpdad/logo#Logo": Logo_f009030f22af14c21626edd52c238de4,
   "@/components/Admin/ui/beforeDashboad.tsx#Welcome": Welcome_eb20c25977e07aef8ed2a6a5f926672b,
   "@/components/Admin/BeforeLogin#default": default_c952b30f87c526e75f64597baba73c3e,
-  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

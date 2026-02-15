@@ -151,7 +151,7 @@ export function FAQSection() {
                           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                         >
                           <ChevronDown
-                            className={`h-5 w-5 flex-shrink-0 transition-colors duration-200 ${
+                            className={`h-5 w-5 shrink-0 transition-colors duration-200 ${
                               isOpen
                                 ? 'text-primary'
                                 : 'text-muted-foreground group-hover:text-primary'
