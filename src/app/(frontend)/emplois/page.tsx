@@ -35,7 +35,7 @@ export default async function Page() {
       <EmploiShowcase
         totalDocs={emplois.totalDocs}
         items={emplois.docs}
-        emploiTitle="Le Réseau Public Départemental d'Aide à Domicile de la Gironde"
+        emploiTitle="Recherchez un emploi d'Aide à Domicile en Gironde"
         emploiSubtitle="C'est près de 1200 agents, les métiers sont variés : aide à domicile, auxiliaire de vie, responsable de SAD, responsable de secteur, agent administratif…, voici nos offres"
       />
 

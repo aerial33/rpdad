@@ -18,6 +18,7 @@ export interface MySliderProps<T> {
   data: T[]
   renderItem?: (item: T, indx: number) => ReactNode
   arrowBtnClass?: string
+  showDots?: boolean
 }
 
 /**
@@ -53,6 +54,7 @@ export default function MySlider<T>({
   data,
   renderItem = () => <div></div>,
   arrowBtnClass = 'top-1/2 -translate-y-1/2',
+  showDots = false,
 }: MySliderProps<T>) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
@@ -199,6 +201,28 @@ export default function MySlider<T>({
             />
           ) : null}
         </div>
+
+        {showDots && numberOfItems > 0 && data.length > numberOfItems && (
+          <div className="mt-6 flex items-center justify-center gap-2" role="tablist">
+            {Array.from({ length: Math.ceil(data.length / numberOfItems) }).map((_, i) => {
+              const isActive = Math.floor(currentIndex / numberOfItems) === i
+              return (
+                <button
+                  key={i}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-label={`Page ${i + 1}`}
+                  onClick={() => changeItemId(i * numberOfItems)}
+                  className={`rounded-full transition-all duration-300 ${
+                    isActive
+                      ? 'bg-primary h-2.5 w-2.5'
+                      : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 h-2 w-2'
+                  }`}
+                />
+              )
+            })}
+          </div>
+        )}
       </MotionConfig>
     </div>
   )

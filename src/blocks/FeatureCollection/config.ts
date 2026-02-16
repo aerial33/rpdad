@@ -10,7 +10,7 @@ export const FeatureCollection: Block = {
       name: 'variant',
       type: 'select',
       defaultValue: 'grid',
-      label: 'Variante d\'affichage',
+      label: "Variante d'affichage",
       options: [
         {
           label: 'Grille (affichage par défaut)',
@@ -21,7 +21,7 @@ export const FeatureCollection: Block = {
           value: 'featured',
         },
         {
-          label: 'Grille Emplois (offres d\'emploi)',
+          label: "Grille Emplois (offres d'emploi)",
           value: 'emploi-grid',
         },
       ],
@@ -32,7 +32,6 @@ export const FeatureCollection: Block = {
       type: 'text',
       label: 'Titre',
       defaultValue: 'Nos dernières actualités',
-      required: true,
     },
     {
       name: 'subtitle',

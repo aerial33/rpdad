@@ -1,14 +1,10 @@
 'use client'
 
-import { Building2, Handshake, Sparkles, UsersRound } from 'lucide-react'
-
 import Image from 'next/image'
 
 import { EmploiRenderer } from '@/blocks/FeatureCollection/EmploiRenderer'
 import { Badge } from '@/components/ui/badge'
 
-import { FAQSection } from './FAQSection'
-import { TestimonialSection } from './TestimonialSection'
 import type { EmploiShowcaseProps } from './types'
 
 export function EmploiShowcase({
@@ -49,58 +45,13 @@ export function EmploiShowcase({
       {/* ====================== END HEADER ====================== */}
 
       {items.length > 0 && (
-        <EmploiRenderer items={items} title={emploiTitle} subtitle={emploiSubtitle} />
+        <EmploiRenderer
+          items={items}
+          title={emploiTitle}
+          subtitle={emploiSubtitle}
+          itemsPerPage={12}
+        />
       )}
-
-      {/* Section Mission */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <div className="text-center">
-              <div className="bg-flamingo/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <Building2 className="text-flamingo h-8 w-8" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Notre mission</h3>
-              <p className="text-muted-foreground text-sm">
-                Nous soutenons nos bénéficiaires au quotidien grâce à nos agents de la fonction
-                publique.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-chateau/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <UsersRound className="text-chateau h-8 w-8" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Service centré sur vous</h3>
-              <p className="text-muted-foreground text-sm">
-                Nous simplifions le parcours de soins en élaborant des solutions individuelles.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
-                <Sparkles className="text-primary h-8 w-8" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Innovation et qualité</h3>
-              <p className="text-muted-foreground text-sm">
-                Nos projets innovants modernisent l'organisation et rehaussent la qualité de vie au
-                travail.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-300/10">
-                <Handshake className="h-8 w-8 text-yellow-300" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Partenariats locaux</h3>
-              <p className="text-muted-foreground text-sm">
-                En collaboration avec le CD33 et divers organismes pour un accompagnement de
-                proximité.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <TestimonialSection />
-      <FAQSection />
     </div>
   )
 }
