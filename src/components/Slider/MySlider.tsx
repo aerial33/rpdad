@@ -187,7 +187,7 @@ export default function MySlider<T>({
           {currentIndex ? (
             <PrevBtn
               onClick={() => changeItemId(currentIndex - 1)}
-              className={`absolute -start-3 z-[1] h-9 w-9 text-lg xl:-start-6 xl:h-12 xl:w-12 ${arrowBtnClass}`}
+              className={`absolute -start-3 z-1 h-9 w-9 text-lg xl:-start-6 xl:h-12 xl:w-12 ${arrowBtnClass}`}
             />
           ) : null}
 
@@ -195,7 +195,7 @@ export default function MySlider<T>({
           {data.length > currentIndex + numberOfItems ? (
             <NextBtn
               onClick={() => changeItemId(currentIndex + 1)}
-              className={`absolute -end-3 z-[1] h-9 w-9 text-lg xl:-end-6 xl:h-12 xl:w-12 ${arrowBtnClass}`}
+              className={`absolute -end-3 z-1 h-9 w-9 text-lg xl:-end-6 xl:h-12 xl:w-12 ${arrowBtnClass}`}
             />
           ) : null}
         </div>

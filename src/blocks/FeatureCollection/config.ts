@@ -20,6 +20,10 @@ export const FeatureCollection: Block = {
           label: 'Mise en avant (1 article principal + 5 articles compacts)',
           value: 'featured',
         },
+        {
+          label: 'Grille Emplois (offres d\'emploi)',
+          value: 'emploi-grid',
+        },
       ],
       required: true,
     },
@@ -84,6 +88,10 @@ export const FeatureCollection: Block = {
           label: 'Posts',
           value: 'posts',
         },
+        {
+          label: 'Emplois',
+          value: 'emplois',
+        },
       ],
     },
     {
@@ -114,7 +122,7 @@ export const FeatureCollection: Block = {
       },
       hasMany: true,
       label: 'Selection',
-      relationTo: ['posts'],
+      relationTo: ['posts', 'emplois'],
     },
     {
       name: 'bgColor',

@@ -1,4 +1,3 @@
-// import { EmploiShowcase } from '@/components/emploi/EmploiShowcase'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
@@ -21,16 +20,6 @@ export default async function Page() {
     depth: 1,
     limit: 12,
     overrideAccess: false,
-    select: {
-      title: true,
-      slug: true,
-      image: true,
-      typeContrat: true,
-      publishedAt: true,
-      organisme: true,
-      meta: true,
-      content: true,
-    },
     where: {
       _status: {
         equals: 'published',
@@ -43,7 +32,12 @@ export default async function Page() {
     <div className="animation-appear">
       <PageClient />
 
-      <EmploiShowcase emplois={emplois.docs} totalDocs={emplois.totalDocs} />
+      <EmploiShowcase
+        totalDocs={emplois.totalDocs}
+        items={emplois.docs}
+        emploiTitle="Le Réseau Public Départemental d'Aide à Domicile de la Gironde"
+        emploiSubtitle="C'est près de 1200 agents, les métiers sont variés : aide à domicile, auxiliaire de vie, responsable de SAD, responsable de secteur, agent administratif…, voici nos offres"
+      />
 
       {/* Pagination Section */}
       {emplois.totalPages && emplois.totalPages > 1 && emplois.page && (

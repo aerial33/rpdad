@@ -1,4 +1,4 @@
-import type { Media } from '@/payload-types'
+import type { Emplois, Media } from '@/payload-types'
 
 // Type simplifié unique pour tous les emplois
 export interface EmploiItem {
@@ -36,8 +36,10 @@ export type EmploiListProps = {
 }
 
 export type EmploiShowcaseProps = {
-  emplois: EmploiItem[]
   totalDocs?: number
+  items?: Emplois[]
+  emploiTitle?: string | null
+  emploiSubtitle?: string | null
 }
 
 // Types from FAQSection.tsx

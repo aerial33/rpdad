@@ -1006,21 +1006,27 @@ export interface BentoCardBlock {
  * via the `definition` "FeatureCollectionBlock".
  */
 export interface FeatureCollectionBlock {
-  variant: 'grid' | 'featured';
+  variant: 'grid' | 'featured' | 'emploi-grid';
   title: string;
   subtitle?: string | null;
   badgeText?: string | null;
   buttonText?: string | null;
   buttonLink?: string | null;
   populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
+  relationTo?: ('posts' | 'emplois') | null;
   categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
-    | {
-        relationTo: 'posts';
-        value: number | Post;
-      }[]
+    | (
+        | {
+            relationTo: 'posts';
+            value: number | Post;
+          }
+        | {
+            relationTo: 'emplois';
+            value: number | Emplois;
+          }
+      )[]
     | null;
   bgColor?:
     | (
@@ -1035,6 +1041,107 @@ export interface FeatureCollectionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'featureCollection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emplois".
+ */
+export interface Emplois {
+  id: number;
+  title: string;
+  /**
+   * Image principale associée à l'offre d'emploi
+   */
+  image?: (number | null) | Media;
+  organisme?: {
+    /**
+     * Nom de l’organisme qui gère cet emploi
+     */
+    nom?: string | null;
+    /**
+     * Adresse de l’organisme
+     */
+    lieu?: string | null;
+    contact?: {
+      /**
+       * Nom du contact de l’organisme
+       */
+      nom?: string | null;
+      telephone?: string | null;
+      email?: string | null;
+    };
+    /**
+     * Information indicatif de l'organisme pour l'offre d'emploi
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Lien vers l'offre d'emploi
+     */
+    lien?: string | null;
+  };
+  /**
+   * Contenu de l'offre à pourvoir
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  publishedAt?: string | null;
+  /**
+   * Date souhaitée pour le début du poste
+   */
+  datePourvoir?: string | null;
+  /**
+   * Type de contrat proposé pour l'offre d'emploi
+   */
+  typeContrat?: ('cdi' | 'cdd') | null;
+  /**
+   * Durée de travail pour le poste
+   */
+  workTime?: ('full-time' | 'part-time' | 'flexible') | null;
+  statusOffre?: ('active' | 'filled' | 'expired') | null;
+  /**
+   * Laisser vide pour utiliser la couleur par défaut (Réglages)
+   */
+  heroColor?: ('primary' | 'blue' | 'flamingo' | 'chateau' | 'yellow') | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1318,107 +1425,6 @@ export interface FAQBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'faq';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "emplois".
- */
-export interface Emplois {
-  id: number;
-  title: string;
-  /**
-   * Image principale associée à l'offre d'emploi
-   */
-  image?: (number | null) | Media;
-  organisme?: {
-    /**
-     * Nom de l’organisme qui gère cet emploi
-     */
-    nom?: string | null;
-    /**
-     * Adresse de l’organisme
-     */
-    lieu?: string | null;
-    contact?: {
-      /**
-       * Nom du contact de l’organisme
-       */
-      nom?: string | null;
-      telephone?: string | null;
-      email?: string | null;
-    };
-    /**
-     * Information indicatif de l'organisme pour l'offre d'emploi
-     */
-    description?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    /**
-     * Lien vers l'offre d'emploi
-     */
-    lien?: string | null;
-  };
-  /**
-   * Contenu de l'offre à pourvoir
-   */
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
-  publishedAt?: string | null;
-  /**
-   * Date souhaitée pour le début du poste
-   */
-  datePourvoir?: string | null;
-  /**
-   * Type de contrat proposé pour l'offre d'emploi
-   */
-  typeContrat?: ('cdi' | 'cdd') | null;
-  /**
-   * Durée de travail pour le poste
-   */
-  workTime?: ('full-time' | 'part-time' | 'flexible') | null;
-  statusOffre?: ('active' | 'filled' | 'expired') | null;
-  /**
-   * Laisser vide pour utiliser la couleur par défaut (Réglages)
-   */
-  heroColor?: ('primary' | 'blue' | 'flamingo' | 'chateau' | 'yellow') | null;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

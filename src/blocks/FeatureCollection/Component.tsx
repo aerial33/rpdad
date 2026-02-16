@@ -5,8 +5,9 @@ import BackgroundSection from '@/components/BackgroundSection/BackgroundSection'
 import { FadeUp } from '@/components/motion/animations'
 import { FeatureGrid, FeatureGridItem } from '@/components/ui/FeatureGrid'
 import { Badge } from '@/components/ui/badge'
-import { FeatureCollectionBlock, Post } from '@/payload-types'
+import { Emplois, FeatureCollectionBlock, Post } from '@/payload-types'
 
+import { EmploiRenderer } from './EmploiRenderer'
 import { FeaturedPost } from './FeaturedPost'
 import { PostCardCompact } from './PostCardCompact'
 
@@ -25,6 +26,7 @@ export const FeatureCollectionBlockComponent: React.FC<
     badgeText,
     buttonText,
     buttonLink,
+    relationTo,
     variant = 'grid',
     bgColor = 'bg-white',
     id,
@@ -32,6 +34,47 @@ export const FeatureCollectionBlockComponent: React.FC<
 
   const limit = variant === 'featured' ? 6 : limitFromProps || 3
 
+  // --- Fetch emplois ---
+  if (relationTo === 'emplois' || variant === 'emploi-grid') {
+    let emplois: Emplois[] = []
+    const payload = await getPayload({ config: configPromise })
+
+    if (populateBy === 'collection') {
+      const fetched = await payload.find({
+        collection: 'emplois',
+        depth: 1,
+        limit: 0,
+        where: {
+          _status: { equals: 'published' },
+        },
+        sort: '-publishedAt',
+      })
+      emplois = fetched.docs
+    } else if (selectedDocs?.length) {
+      emplois = selectedDocs
+        .map((doc) => (typeof doc.value === 'object' ? doc.value : undefined))
+        .filter((doc): doc is Emplois => !!doc && doc._status === 'published')
+    }
+
+    return (
+      <FadeUp delay={0.5} className="relative">
+        <BackgroundSection className={bgColor || 'bg-primary-lightest'} />
+        <div className="my-custom-container mx-auto lg:max-w-7xl" id={`block-${id}`}>
+          <EmploiRenderer
+            items={emplois}
+            itemsPerPage={limit}
+            title={title}
+            subtitle={subtitle}
+            badgeText={badgeText}
+            buttonText={buttonText}
+            buttonLink={buttonLink}
+          />
+        </div>
+      </FadeUp>
+    )
+  }
+
+  // --- Fetch posts ---
   let posts: Post[] = []
   if (populateBy === 'collection') {
     const payload = await getPayload({ config: configPromise })

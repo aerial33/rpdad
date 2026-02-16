@@ -36,7 +36,7 @@ export const PostCardCompact: React.FC<PostCardCompactProps> = ({ post }) => {
       </div>
       {/* Image à droite */}
       {imageUrl && (
-        <div className="relative aspect-video h-full w-32 flex-shrink-0 overflow-hidden rounded-lg">
+        <div className="relative aspect-video h-full w-32 shrink-0 overflow-hidden rounded-lg">
           <Image
             src={imageUrl}
             alt={post.title}
