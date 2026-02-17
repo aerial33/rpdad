@@ -49,6 +49,57 @@ const columnFields: Field[] = [
     label: false,
   },
   {
+    name: 'enableMedia',
+    type: 'checkbox',
+    label: 'Média',
+  },
+  {
+    name: 'mediaPosition',
+    type: 'select',
+    label: 'Position du média',
+    defaultValue: 'above',
+    options: [
+      { label: 'Au-dessus du texte', value: 'above' },
+      { label: 'En-dessous du texte', value: 'below' },
+    ],
+    admin: {
+      condition: (_data, siblingData) => Boolean(siblingData?.enableMedia),
+    },
+  },
+  {
+    name: 'mediaType',
+    type: 'radio',
+    defaultValue: 'media',
+    options: [
+      { label: 'Media (Upload)', value: 'media' },
+      { label: 'Video Embed (YouTube/Vimeo)', value: 'video-embed' },
+    ],
+    admin: {
+      layout: 'horizontal',
+      condition: (_data, siblingData) => Boolean(siblingData?.enableMedia),
+    },
+  },
+  {
+    name: 'image',
+    type: 'upload',
+    relationTo: 'media',
+    label: 'Média à afficher',
+    admin: {
+      condition: (_data, siblingData) =>
+        Boolean(siblingData?.enableMedia) && siblingData?.mediaType === 'media',
+    },
+  },
+  {
+    name: 'videoEmbed',
+    type: 'upload',
+    relationTo: 'video-embeds',
+    label: 'Vidéo embed à afficher',
+    admin: {
+      condition: (_data, siblingData) =>
+        Boolean(siblingData?.enableMedia) && siblingData?.mediaType === 'video-embed',
+    },
+  },
+  {
     name: 'enableLink',
     type: 'checkbox',
     label: 'Lien',

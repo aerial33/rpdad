@@ -201,7 +201,7 @@ export interface Page {
             /**
              * Choisir comment le lien doit être rendu.
              */
-            appearance?: ('default' | 'outline') | null;
+            appearance?: ('default' | 'outline' | 'secondary' | 'link') | null;
           };
           id?: string | null;
         }[]
@@ -505,6 +505,11 @@ export interface ContentBlock {
           };
           [k: string]: unknown;
         } | null;
+        enableMedia?: boolean | null;
+        mediaPosition?: ('above' | 'below') | null;
+        mediaType?: ('media' | 'video-embed') | null;
+        image?: (number | null) | Media;
+        videoEmbed?: (number | null) | VideoEmbed;
         enableLink?: boolean | null;
         link?: {
           type?: ('reference' | 'custom') | null;
@@ -523,7 +528,7 @@ export interface ContentBlock {
           /**
            * Choisir comment le lien doit être rendu.
            */
-          appearance?: ('default' | 'outline') | null;
+          appearance?: ('default' | 'outline' | 'secondary' | 'link') | null;
         };
         id?: string | null;
       }[]
@@ -531,21 +536,6 @@ export interface ContentBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'content';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlock".
- */
-export interface MediaBlock {
-  /**
-   * Choisir entre un média uploadé ou une vidéo embed
-   */
-  mediaType?: ('media' | 'video-embed') | null;
-  media?: (number | null) | Media;
-  videoEmbed?: (number | null) | VideoEmbed;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -590,6 +580,21 @@ export interface VideoEmbed {
   thumbnail?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  /**
+   * Choisir entre un média uploadé ou une vidéo embed
+   */
+  mediaType?: ('media' | 'video-embed') | null;
+  media?: (number | null) | Media;
+  videoEmbed?: (number | null) | VideoEmbed;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1007,7 +1012,7 @@ export interface BentoCardBlock {
  */
 export interface FeatureCollectionBlock {
   variant: 'grid' | 'featured' | 'emploi-grid';
-  title: string;
+  title?: string | null;
   subtitle?: string | null;
   badgeText?: string | null;
   buttonText?: string | null;
@@ -1259,7 +1264,7 @@ export interface HistoryAboutBlock {
     /**
      * Choisir comment le lien doit être rendu.
      */
-    appearance?: ('default' | 'outline') | null;
+    appearance?: ('default' | 'outline' | 'secondary' | 'link') | null;
   };
   timelineItems: {
     date: string;
@@ -1883,6 +1888,11 @@ export interface ContentBlockSelect<T extends boolean = true> {
     | {
         size?: T;
         richText?: T;
+        enableMedia?: T;
+        mediaPosition?: T;
+        mediaType?: T;
+        image?: T;
+        videoEmbed?: T;
         enableLink?: T;
         link?:
           | T

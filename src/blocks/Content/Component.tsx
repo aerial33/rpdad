@@ -1,7 +1,14 @@
 import React from 'react'
 
+import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
-import type { ContentBlock as ContentBlockProps } from '@/payload-types'
+import type {
+  ContentBlock as ContentBlockProps,
+  Media as MediaType,
+  VideoEmbed,
+} from '@/payload-types'
+import { getSelectedMedia } from '@/utilities/getSelectedMedia'
+import { getPopulatedMediaData } from '@/utilities/isImagePopulated'
 
 import { CMSLink } from '../../components/Link'
 
@@ -27,15 +34,31 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   }
 
   return (
-    <div className="container mx-auto my-16 rounded-[40px] shadow-lg">
+    <div className="container mx-auto my-16 px-4 lg:max-w-7xl">
       <div className="grid grid-cols-4 gap-x-16 gap-y-8 lg:grid-cols-12">
         {columns &&
           columns.length > 0 &&
           columns.map((col, index) => {
-            const { enableLink, link, richText, size } = col
+            const { enableLink, enableMedia, mediaPosition, link, richText, size } = col
+
+            let mediaElement: React.ReactNode = null
+            if (enableMedia) {
+              const selectedMedia = getSelectedMedia(col)
+              const mediaData = getPopulatedMediaData(selectedMedia)
+              if (mediaData) {
+                mediaElement = (
+                  <Media
+                    resource={mediaData as MediaType | VideoEmbed}
+                    imgClassName="w-full rounded-lg"
+                  />
+                )
+              }
+            }
 
             return (
               <div className={`${getResponsiveClasses(size!)} richtext-content`} key={index}>
+                {enableMedia && mediaPosition !== 'below' && mediaElement}
+
                 {richText && (
                   <RichText
                     data={richText}
@@ -43,6 +66,8 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                     className="[&>*:first-child]:feature-paragraph [&>*:not(:first-child)]:text-muted-foreground [&>*:last-child]:mb-8"
                   />
                 )}
+
+                {enableMedia && mediaPosition === 'below' && mediaElement}
 
                 {enableLink && <CMSLink {...link} />}
               </div>
