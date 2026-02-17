@@ -208,6 +208,10 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
     /**
+     * Couleur du dégradé affiché quand aucune image n'est sélectionnée
+     */
+    backgroundStyle?: ('primary' | 'secondary' | 'flamingo' | 'chateau' | 'yellow') | null;
+    /**
      * Sélectionner au moins 3 images
      */
     images?:
@@ -1815,6 +1819,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        backgroundStyle?: T;
         images?:
           | T
           | {

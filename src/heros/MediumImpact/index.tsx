@@ -8,18 +8,25 @@ import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import type { Page } from '@/payload-types'
 
-export const MediumImpactHero: React.FC<Page['hero']> = ({ badge, links, media, richText }) => {
+const bgStyleClasses: Record<string, string> = {
+  primary: 'from-primary/80 to-primary',
+  secondary: 'from-secondary/80 to-secondary',
+}
+
+export const MediumImpactHero: React.FC<Page['hero']> = ({ badge, backgroundStyle, links, media, richText }) => {
   return (
     <div className="container pt-4">
       <div className="relative aspect-square w-full overflow-hidden rounded-[40px] md:aspect-video">
         {/* Image de fond via composant Media */}
-        {media && typeof media === 'object' && (
+        {media && typeof media === 'object' ? (
           <Media
             imgClassName="absolute inset-0 h-full w-full object-cover brightness-50"
             priority
             resource={media}
             fill
           />
+        ) : (
+          <div className={`${bgStyleClasses[backgroundStyle || 'primary']} absolute inset-0 bg-linear-to-br`} />
         )}
 
         {/* Contenu */}

@@ -40,7 +40,7 @@ export default async function Page() {
     <div className="mt-4 pb-24 md:mt-0">
       <PageClient />
       <div className="mx-auto h-120 w-full px-2 pt-12 xl:max-w-screen-2xl">
-        <section className="from-flamingo-lighter to-flamingo-lightest aspect-w-16 aspect-h-13 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-5 relative -z-10 h-full overflow-hidden rounded-3xl bg-gradient-to-br pb-20 md:rounded-[40px]">
+        <section className="from-flamingo-lighter to-flamingo-lightest aspect-w-16 aspect-h-13 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-5 relative -z-10 h-full overflow-hidden rounded-3xl bg-linear-to-br pb-20 md:rounded-[40px]">
           <FadeRight className="mx-auto flex max-w-7xl justify-center gap-6 py-16 md:py-24">
             <div className="flex flex-col px-4 py-6 sm:py-8 lg:items-center lg:px-0">
               <Badge

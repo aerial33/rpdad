@@ -115,6 +115,23 @@ export const hero: Field = {
       required: false,
     },
     {
+      name: 'backgroundStyle',
+      type: 'select',
+      label: '🎨 Couleur de fond (sans image)',
+      defaultValue: 'primary',
+      options: [
+        { label: 'Primaire (par défaut) 🟣', value: 'primary' },
+        { label: 'Blue 🔵', value: 'blue' },
+        { label: 'Flamingo 🟠', value: 'flamingo' },
+        { label: 'Chateau 🟢', value: 'chateau' },
+        { label: 'Yellow 🟡', value: 'yellow' },
+      ],
+      admin: {
+        condition: (_, { type } = {}) => ['lowImpact', 'mediumImpact'].includes(type),
+        description: "Couleur du dégradé affiché quand aucune image n'est sélectionnée",
+      },
+    },
+    {
       name: 'images',
       type: 'array',
       label: '📷 Images',

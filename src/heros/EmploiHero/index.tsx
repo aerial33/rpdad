@@ -41,10 +41,10 @@ export const EmploiHero: React.FC<{
   return (
     <>
       <section
-        className={`${gradientClasses} relative z-10 bg-gradient-to-l pt-16 md:py-20 lg:py-28`}
+        className={`${gradientClasses} relative z-10 bg-linear-to-l pt-16 md:py-20 lg:py-28`}
       >
         <div className="relative z-10 container mx-auto">
-          <div className="max-w-screen-md">
+          <div className="max-w-3xl">
             {/* Badges de statut */}
             <FadeLeft delay={0.3} duration={0.6}>
               <div className="mb-8 flex flex-wrap items-center gap-3">

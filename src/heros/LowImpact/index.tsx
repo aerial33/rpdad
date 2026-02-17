@@ -5,7 +5,20 @@ import RichText from '@/components/RichText'
 import { Badge } from '@/components/ui/badge'
 import type { Page } from '@/payload-types'
 
-export const LowImpactHero: React.FC<Page['hero']> = ({ badge, media, richText }) => {
+const bgStyleClasses: Record<string, string> = {
+  primary: 'from-primary-light via-[#cc35a1] to-primary-dark',
+  blue: 'from-[#21839c] via-[#21839c] to-blue-darkest',
+  flamingo: 'from-flamingo-lightest via-flamingo-light to-flamingo-dark',
+  chateau: 'from-chateau-lightest via-chateau-light to-chateau-dark',
+  yellow: 'from-flamingo-lighter via-yellow-light to-yellow-dark',
+}
+
+export const LowImpactHero: React.FC<Page['hero']> = ({
+  badge,
+  backgroundStyle,
+  media,
+  richText,
+}) => {
   return (
     <section className="">
       <div className="mx-auto h-120 w-full px-2 pt-12 xl:max-w-screen-2xl">
@@ -19,7 +32,9 @@ export const LowImpactHero: React.FC<Page['hero']> = ({ badge, media, richText }
               priority
             />
           ) : (
-            <div className="from-primary/80 to-primary absolute inset-0 rounded-3xl bg-gradient-to-br md:rounded-[40px]" />
+            <div
+              className={`${bgStyleClasses[backgroundStyle || 'primary']} absolute inset-0 rounded-3xl bg-linear-to-br md:rounded-[40px]`}
+            />
           )}
 
           {/* Overlay avec contenu */}
@@ -32,7 +47,7 @@ export const LowImpactHero: React.FC<Page['hero']> = ({ badge, media, richText }
             {richText && (
               <RichText
                 data={richText}
-                className="max-w-xl [&_h1]:align-middle [&_h1]:text-5xl [&_h1]:text-white [&_h1]:md:text-7xl [&_h2]:text-white [&_p]:text-white"
+                className="max-w-xl [&_h1]:align-middle [&_h1]:text-5xl [&_h1]:text-white [&_h1]:md:text-7xl [&_h2]:text-white [&_h3]:text-white [&_p]:text-white"
                 enableGutter={false}
               />
             )}
