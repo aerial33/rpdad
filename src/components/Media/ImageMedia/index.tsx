@@ -27,7 +27,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     priority,
     quality = 100,
     resource,
-    variant,
+    variant = 'large',
     size: sizeFromProps,
     src: srcFromProps,
     loading: loadingFromProps,
