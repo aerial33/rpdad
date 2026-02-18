@@ -277,7 +277,7 @@ export const Membres: CollectionConfig = {
   versions: {
     drafts: {
       autosave: {
-        interval: 100,
+        interval: 1500,
       },
       schedulePublish: true,
     },
