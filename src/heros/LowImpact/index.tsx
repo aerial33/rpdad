@@ -29,6 +29,7 @@ export const LowImpactHero: React.FC<Page['hero']> = ({
             <Media
               resource={media}
               fill
+              variant="xlarge"
               imgClassName="h-full w-full rounded-3xl object-cover brightness-70 md:rounded-[40px]"
               priority
             />

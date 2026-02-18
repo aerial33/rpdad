@@ -210,7 +210,7 @@ export interface Page {
     /**
      * Couleur du dégradé affiché quand aucune image n'est sélectionnée
      */
-    backgroundStyle?: ('primary' | 'secondary' | 'flamingo' | 'chateau' | 'yellow') | null;
+    backgroundStyle?: ('primary' | 'blue' | 'flamingo' | 'chateau' | 'yellow') | null;
     /**
      * Sélectionner au moins 3 images
      */
