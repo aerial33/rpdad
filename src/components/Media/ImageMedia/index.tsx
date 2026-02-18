@@ -27,6 +27,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     priority,
     quality = 100,
     resource,
+    variant,
     size: sizeFromProps,
     src: srcFromProps,
     loading: loadingFromProps,
@@ -41,15 +42,23 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource as Media
+    // Image variant selection is only applicable to uploaded images (Payload Media).
+    // The `Media` wrapper routes videos to `VideoMedia`, but we still keep this guard defensive.
+    if ('url' in resource) {
+      const payloadMedia = resource as Media
+      const selectedSize = variant ? payloadMedia.sizes?.[variant] : undefined
 
-    width = fullWidth!
-    height = fullHeight!
-    alt = altFromResource || ''
+      const url = selectedSize?.url ?? payloadMedia.url
+      const fullWidth = selectedSize?.width ?? payloadMedia.width
+      const fullHeight = selectedSize?.height ?? payloadMedia.height
+      const altFromResource = payloadMedia.alt
+      const cacheTag = payloadMedia.updatedAt
 
-    const cacheTag = resource.updatedAt
-
-    src = getMediaUrl(url, cacheTag)
+      width = typeof fullWidth === 'number' ? fullWidth : undefined
+      height = typeof fullHeight === 'number' ? fullHeight : undefined
+      alt = altFromResource || ''
+      src = getMediaUrl(url, cacheTag)
+    }
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
