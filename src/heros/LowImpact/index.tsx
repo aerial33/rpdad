@@ -19,6 +19,7 @@ export const LowImpactHero: React.FC<Page['hero']> = ({
   media,
   richText,
 }) => {
+  console.log('media', media)
   return (
     <section className="">
       <div className="mx-auto h-120 w-full px-2 pt-12 xl:max-w-screen-2xl">

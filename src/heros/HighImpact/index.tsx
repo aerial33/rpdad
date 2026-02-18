@@ -17,12 +17,9 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText,
   })
 
   return (
-    <div
-      className="relative -mt-[15rem] flex items-center justify-center text-white"
-      data-theme="dark"
-    >
+    <div className="relative -mt-60 flex items-center justify-center text-white" data-theme="dark">
       <div className="relative z-10 container mb-8 flex items-center justify-center">
-        <div className="richtext-content max-w-[36.5rem] md:text-center">
+        <div className="richtext-content max-w-146 md:text-center">
           {Badge && (
             <Badge variant="secondary" className="mb-3 bg-white/20 text-white backdrop-blur-sm">
               {badge}
