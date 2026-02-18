@@ -50,7 +50,7 @@ export const FAQBlock = ({ badge, title, subtitle, bgColor, items }: FAQBlockTyp
                   key={index}
                   className="border-muted-foreground border-0 border-b bg-transparent shadow-sm transition-all duration-300"
                 >
-                  <CardContent className="p-0">
+                  <CardContent className="rounded-lg bg-white p-0">
                     <button
                       onClick={() => toggleItem(index)}
                       className="hover:bg-muted/20 group w-full p-6 text-left transition-all duration-200"
