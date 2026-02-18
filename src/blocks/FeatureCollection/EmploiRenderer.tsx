@@ -129,20 +129,41 @@ export function EmploiRenderer({
             aria-roledescription="carousel"
             aria-label={`Offres d'emploi, page ${currentPage + 1} sur ${totalPages}`}
           >
-            {hasPagination && currentPage > 0 && (
-              <PrevBtn
-                onClick={() => goToPage(currentPage - 1)}
-                className="absolute -left-3 top-1/2 z-10 h-9 w-9 -translate-y-1/2 text-lg xl:-left-6 xl:h-12 xl:w-12"
-              />
-            )}
-            {hasPagination && currentPage < totalPages - 1 && (
-              <NextBtn
-                onClick={() => goToPage(currentPage + 1)}
-                className="absolute -right-3 top-1/2 z-10 h-9 w-9 -translate-y-1/2 text-lg xl:-right-6 xl:h-12 xl:w-12"
-              />
+            {hasPagination && (
+              <div className="mb-6 flex items-center justify-center gap-3" role="tablist">
+                <PrevBtn
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 0}
+                  className="hidden h-8 w-8 md:flex"
+                />
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: totalPages }).map((_, i) => {
+                    const isActive = currentPage === i
+                    return (
+                      <button
+                        key={i}
+                        role="tab"
+                        aria-selected={isActive}
+                        aria-label={`Page ${i + 1}`}
+                        onClick={() => goToPage(i)}
+                        className={`rounded-full transition-all duration-300 ${
+                          isActive
+                            ? 'bg-primary h-2.5 w-2.5'
+                            : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 h-2 w-2'
+                        }`}
+                      />
+                    )
+                  })}
+                </div>
+                <NextBtn
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages - 1}
+                  className="hidden h-8 w-8 md:flex"
+                />
+              </div>
             )}
 
-            <div className="overflow-hidden">
+            <div className="relative overflow-hidden">
               <AnimatePresence mode="popLayout" initial={false} custom={direction}>
                 <motion.div
                   key={currentPage}
@@ -150,7 +171,13 @@ export function EmploiRenderer({
                   variants={{
                     enter: (dir: number) => ({ x: `${(dir || 1) * 100}%` }),
                     center: { x: 0 },
-                    exit: (dir: number) => ({ x: `${(dir || 1) * -100}%` }),
+                    exit: (dir: number) => ({
+                      x: `${(dir || 1) * -100}%`,
+                      position: 'absolute' as const,
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                    }),
                   }}
                   initial="enter"
                   animate="center"
@@ -158,106 +185,84 @@ export function EmploiRenderer({
                   transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                   className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
                 >
-                {displayedItems.map((emploi) => (
-                  <Card
-                    key={emploi.id}
-                    className="group flex h-full flex-col overflow-hidden rounded-3xl border-none bg-white/80 backdrop-blur-sm transition-all duration-300"
-                  >
-                    <CardHeader className="shrink-0 p-0 pb-4">
-                      <div className="relative z-10 block aspect-video w-full shrink-0 overflow-hidden rounded-t-3xl">
-                        {emploi.image && typeof emploi.image === 'object' && (
-                          <Media
-                            resource={emploi.image}
-                            fill
-                            imgClassName="object-cover object-[center_30%]"
-                          />
-                        )}
-                      </div>
-                      <span className="absolute top-3 left-4 z-10">
-                        {emploi.typeContrat && (
-                          <Badge
-                            variant="default"
-                            className="bg-primary-lighter text-primary text-xs"
-                          >
-                            {emploi.typeContrat.toUpperCase()}
-                          </Badge>
-                        )}
-                      </span>
-                      <CardTitle className="mt-4 line-clamp-2 text-center text-xl">
-                        {emploi.title}
-                      </CardTitle>
-                    </CardHeader>
+                  {displayedItems.map((emploi) => (
+                    <Card
+                      key={emploi.id}
+                      className="group flex h-full flex-col overflow-hidden rounded-3xl border-none bg-white/80 backdrop-blur-sm transition-all duration-300"
+                    >
+                      <CardHeader className="shrink-0 p-0 pb-4">
+                        <div className="relative z-10 block aspect-video w-full shrink-0 overflow-hidden rounded-t-3xl">
+                          {emploi.image && typeof emploi.image === 'object' && (
+                            <Media
+                              resource={emploi.image}
+                              fill
+                              imgClassName="object-cover object-[center_30%]"
+                            />
+                          )}
+                        </div>
+                        <span className="absolute top-3 left-4 z-10">
+                          {emploi.typeContrat && (
+                            <Badge
+                              variant="default"
+                              className="bg-primary-lighter text-primary text-xs"
+                            >
+                              {emploi.typeContrat.toUpperCase()}
+                            </Badge>
+                          )}
+                        </span>
+                        <CardTitle className="mt-4 line-clamp-2 text-center text-xl">
+                          {emploi.title}
+                        </CardTitle>
+                      </CardHeader>
 
-                    <CardContent className="flex flex-1 flex-col pt-0">
-                      <CardDescription className="mb-4 line-clamp-3 flex-1 text-left">
-                        {getDescription(emploi)}
-                      </CardDescription>
+                      <CardContent className="flex flex-1 flex-col pt-0">
+                        <CardDescription className="mb-4 line-clamp-3 flex-1 text-left">
+                          {getDescription(emploi)}
+                        </CardDescription>
 
-                      <div className="my-6 shrink-0 space-y-2">
-                        {emploi.organisme?.nom && (
-                          <div className="text-muted-foreground flex items-center gap-4 text-sm">
-                            <div className="flex items-center gap-2">
-                              <Building2 className="h-4 w-4" />
-                              <span className="truncate">{emploi.organisme.nom}</span>
+                        <div className="my-6 shrink-0 space-y-2">
+                          {emploi.organisme?.nom && (
+                            <div className="text-muted-foreground flex items-center gap-4 text-sm">
+                              <div className="flex items-center gap-2">
+                                <Building2 className="h-4 w-4" />
+                                <span className="truncate">{emploi.organisme.nom}</span>
+                              </div>
+                              {emploi.publishedAt && (
+                                <>
+                                  <span className="text-muted-foreground mx-[6px] font-medium">
+                                    ·
+                                  </span>
+                                  <span className="text-muted-foreground flex items-center gap-2 text-sm">
+                                    <Calendar className="h-4 w-4" />
+                                    {displayDate(emploi.publishedAt)}
+                                  </span>
+                                </>
+                              )}
                             </div>
-                            {emploi.publishedAt && (
-                              <>
-                                <span className="text-muted-foreground mx-[6px] font-medium">
-                                  ·
-                                </span>
-                                <span className="text-muted-foreground flex items-center gap-2 text-sm">
-                                  <Calendar className="h-4 w-4" />
-                                  {displayDate(emploi.publishedAt)}
-                                </span>
-                              </>
-                            )}
-                          </div>
-                        )}
-                        {emploi.organisme?.lieu && (
-                          <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                            <MapPin className="h-4 w-4" />
-                            <span className="truncate">{emploi.organisme.lieu}</span>
-                          </div>
-                        )}
-                      </div>
+                          )}
+                          {emploi.organisme?.lieu && (
+                            <div className="text-muted-foreground flex items-center gap-2 text-sm">
+                              <MapPin className="h-4 w-4" />
+                              <span className="truncate">{emploi.organisme.lieu}</span>
+                            </div>
+                          )}
+                        </div>
 
-                      <Button
-                        asChild
-                        className="mt-auto w-full rounded-2xl transition-all group-hover:shadow-md"
-                      >
-                        <Link href={`/emplois/${emploi.slug || '#'}`}>
-                          Voir l'offre
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </motion.div>
-            </AnimatePresence>
+                        <Button
+                          asChild
+                          className="mt-auto w-full rounded-2xl transition-all group-hover:shadow-md"
+                        >
+                          <Link href={`/emplois/${emploi.slug || '#'}`}>
+                            Voir l'offre
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                          </Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
             </div>
-
-            {hasPagination && (
-              <div className="mt-8 flex items-center justify-center gap-2" role="tablist">
-                {Array.from({ length: totalPages }).map((_, i) => {
-                  const isActive = currentPage === i
-                  return (
-                    <button
-                      key={i}
-                      role="tab"
-                      aria-selected={isActive}
-                      aria-label={`Page ${i + 1}`}
-                      onClick={() => goToPage(i)}
-                      className={`rounded-full transition-all duration-300 ${
-                        isActive
-                          ? 'bg-primary h-2.5 w-2.5'
-                          : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 h-2 w-2'
-                      }`}
-                    />
-                  )
-                })}
-              </div>
-            )}
           </div>
         ) : (
           <div className="py-12 text-center">
