@@ -1,4 +1,5 @@
-// import { Analytics } from '@vercel/analytics/next'
+import { Analytics } from '@vercel/analytics/next'
+
 import React from 'react'
 
 import type { Metadata } from 'next'
@@ -52,7 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </ConsentManager>
           <Toaster />
         </Providers>
-        {/* <Analytics /> */}
+        <Analytics />
       </body>
     </html>
   )
