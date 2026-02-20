@@ -37,7 +37,7 @@ export const Card: React.FC<{
   const { slug, meta, title, heroImage } = doc || {}
   const { description, image: metaImage } = meta || {}
   // @ts-ignore
-  const displayImage = heroImage?.sizes?.medium || metaImage
+  const displayImage = heroImage || metaImage
 
   // Handle categories for posts and category for emplois
   const categories = doc && 'categories' in doc ? doc.categories : undefined
@@ -58,7 +58,7 @@ export const Card: React.FC<{
       case 'featured':
         return 'w-full object-cover !transition-all !duration-[0.35s] !ease-in-out group-hover:scale-105 hover:brightness-50'
       case 'grid':
-        return 'h-48 object-cover !transition-all !duration-[0.35s] !ease-in-out group-hover:scale-105 hover:brightness-50'
+        return 'h-48 !transition-all !duration-[0.35s] !ease-in-out group-hover:scale-105 hover:brightness-50'
       default:
         return 'h-48 object-cover !transition-all !duration-[0.35s] !ease-in-out group-hover:scale-105 hover:brightness-50'
     }
@@ -101,20 +101,20 @@ export const Card: React.FC<{
             </div>
           )}
           {displayImage && typeof displayImage !== 'string' && (
-            <Media resource={displayImage} className={getImageClasses()} />
+            <Media resource={displayImage} className={getImageClasses()} variant="og" />
           )}
         </Link>
-        <figcaption className="pointer-events-none absolute inset-0 z-[5] h-full w-full p-2 px-4 py-3 text-center opacity-0 group-hover:opacity-100">
-          <span className="absolute top-1/2 left-0 !mb-0 w-full -translate-y-[80%] p-[.75rem_1rem] text-xl font-medium text-white opacity-0 transition-all duration-300 ease-out group-hover:-translate-y-1/2 group-hover:opacity-100">
+        <figcaption className="pointer-events-none absolute inset-0 z-5 h-full w-full p-2 px-4 py-3 text-center opacity-0 group-hover:opacity-100">
+          <span className="absolute top-1/2 left-0 mb-0! w-full -translate-y-[80%] p-[.75rem_1rem] text-xl font-medium text-white opacity-0 transition-all duration-300 ease-out group-hover:-translate-y-1/2 group-hover:opacity-100">
             {relationTo === 'posts' ? 'Lire notre article' : "Voir l'offre"}
           </span>
         </figcaption>
       </figure>
       <div className={`card-body flex-[1_1_auto] ${getCardBodyPadding()}`}>
-        <div className="post-header !mb-[.9rem]">
+        <div className="post-header mb-[.9rem]!">
           {/* Categories for posts */}
           {relationTo === 'posts' && showCategories && hasCategories && (
-            <div className="relative !mb-[.4rem] inline-flex !pl-[1.4rem] align-top text-[0.7rem] font-bold !tracking-[0.02rem] !text-[#aab0bc] uppercase before:absolute before:top-2/4 before:left-0 before:inline-block before:h-[0.05rem] before:w-3 before:translate-y-[-60%] before:bg-[#3f78e0] before:content-['']">
+            <div className="relative mb-[.4rem]! inline-flex pl-[1.4rem]! align-top text-[0.7rem] font-bold tracking-[0.02rem]! text-[#aab0bc] uppercase before:absolute before:top-2/4 before:left-0 before:inline-block before:h-[0.05rem] before:w-3 before:translate-y-[-60%] before:bg-[#3f78e0] before:content-['']">
               {categories?.map((category, index) => {
                 if (typeof category === 'object') {
                   const { title: titleFromCategory } = category
@@ -146,7 +146,7 @@ export const Card: React.FC<{
           )} */}
 
           {titleToUse && (
-            <h3 className="post-title !mt-1 !mb-0 text-3xl !leading-[1.35] font-bold">
+            <h3 className="post-title mt-1! mb-0! text-3xl leading-[1.35]! font-bold">
               <Link className="hover:text-primary text-gray-700" href={href} ref={link.ref}>
                 {titleToUse}
               </Link>
@@ -154,7 +154,7 @@ export const Card: React.FC<{
           )}
         </div>
 
-        <div className="!relative">
+        <div className="relative">
           {description && <p className="line-clamp-5">{sanitizedDescription}</p>}
 
           {/* Additional info for emplois */}
@@ -179,7 +179,7 @@ export const Card: React.FC<{
 
       {/* Card footer */}
       <div className={`card-footer ${getCardFooterPadding()}`}>
-        <ul className="text-muted-foreground m-0 !mb-0 flex list-none gap-2 p-0 text-xs">
+        <ul className="text-muted-foreground m-0 mb-0! flex list-none gap-2 p-0 text-xs">
           {publishedAt && (
             <li className="flex items-center gap-1">
               <Calendar size={16} />

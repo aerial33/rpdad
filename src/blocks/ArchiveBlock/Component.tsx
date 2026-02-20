@@ -6,6 +6,7 @@ import React from 'react'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import RichText from '@/components/RichText'
 import type { ArchiveBlock as ArchiveBlockProps, Post } from '@/payload-types'
+import { getCachedSidebarProps } from '@/utilities/getSidebar'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
@@ -51,15 +52,29 @@ export const ArchiveBlock: React.FC<
       posts = filteredSelectedPosts
     }
   }
+  // Récupérer les données de sidebar correctement formatées
+  const getSidebarProps = getCachedSidebarProps('posts')
+  const sidebarData = await getSidebarProps()
 
+  // Filtrer les catégories si des catégories spécifiques sont sélectionnées dans le bloc
+  // let filteredCategories = sidebarData.categories
+  // if (categories && categories.length > 0 && sidebarData.categories) {
+  //   const selectedCategoryIds = categories.map((category) => {
+  //     if (typeof category === 'object') return category.id.toString()
+  //     return category.toString()
+  //   })
+  //   filteredCategories = sidebarData.categories.filter((cat) =>
+  //     selectedCategoryIds.includes(cat.id),
+  //   )
+  // }
   return (
     <div className="my-16" id={`block-${id}`}>
       {introContent && (
         <div className="container mb-16">
-          <RichText className="ms-0 max-w-[48rem]" data={introContent} enableGutter={false} />
+          <RichText className="ms-0 max-w-3xl" data={introContent} enableGutter={false} />
         </div>
       )}
-      <CollectionArchive posts={posts} />
+      <CollectionArchive posts={posts} sidebarProps={{ ...sidebarData }} />
     </div>
   )
 }
