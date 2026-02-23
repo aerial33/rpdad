@@ -15,8 +15,8 @@ import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs'
 import { CMSLink } from '../Link'
 import { Media } from '../Media'
 import RichText from '../RichText'
-import SocialsList, { SOCIAL_PROFILES_DATA } from '../SocialsList/SocialsList'
 import type { SocialProfileType } from '../SocialsList/SocialsList'
+import SocialsList, { SOCIAL_PROFILES_DATA } from '../SocialsList/SocialsList'
 import { Badge } from '../ui/badge'
 
 export const MembresContent = (membre: Membre) => {
@@ -42,18 +42,20 @@ export const MembresContent = (membre: Membre) => {
             fill
             imgClassName="object-cover object-[center_5%]"
             priority
+            variant="medium"
           />
         </div>
         <div className="container -mt-10 lg:-mt-16">
           <div className="relative mb-16 flex flex-col rounded-3xl bg-white p-5 shadow-xl md:flex-row md:rounded-[40px] lg:mb-8 lg:p-8">
-            <div className="mt-12 w-32 flex-shrink-0 sm:mt-0 lg:w-40">
-              <div className="wil-avatar relative z-0 inline-flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-xl font-semibold uppercase shadow-2xl ring-4 ring-white lg:h-36 lg:w-36 lg:text-2xl">
+            <div className="mt-12 w-32 shrink-0 sm:mt-0 lg:w-40">
+              <div className="wil-avatar relative z-0 inline-flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-xl font-semibold uppercase shadow-2xl ring-4 ring-white lg:h-36 lg:w-36 lg:text-2xl">
                 {membre.logo && typeof membre.logo === 'object' ? (
                   <Media
                     resource={membre.logo}
                     alt={`Logo ${membre.name}`}
                     fill
                     imgClassName="object-contain p-2"
+                    variant="square"
                   />
                 ) : (
                   <Image
@@ -67,7 +69,7 @@ export const MembresContent = (membre: Membre) => {
             </div>
 
             {/*  */}
-            <div className="flex-grow pt-5 md:pt-1 lg:ml-6 xl:ml-12">
+            <div className="grow pt-5 md:pt-1 lg:ml-6 xl:ml-12">
               <div className="w-full space-y-4">
                 <h2 className="mb-4 w-full items-center text-2xl font-medium text-gray-600 sm:text-4xl">
                   {'Service Autonomie à Domicile: '}{' '}
@@ -77,11 +79,15 @@ export const MembresContent = (membre: Membre) => {
                 {membre.informations?.website && (
                   <CMSLink
                     type="custom"
-                    url={membre.informations.website.startsWith('http') ? membre.informations.website : `https://${membre.informations.website}`}
+                    url={
+                      membre.informations.website.startsWith('http')
+                        ? membre.informations.website
+                        : `https://${membre.informations.website}`
+                    }
                     newTab
                     className="flex cursor-pointer items-center space-x-2.5 truncate text-xs font-medium text-neutral-500 rtl:space-x-reverse"
                   >
-                    <GlobeAltIcon className="h-4 w-4 flex-shrink-0" />
+                    <GlobeAltIcon className="h-4 w-4 shrink-0" />
                     <span className="truncate text-neutral-700">{membre.informations.website}</span>
                   </CMSLink>
                 )}
@@ -137,7 +143,7 @@ export const MembresContent = (membre: Membre) => {
                 />
               </Badge>
               <RichText
-                className="prose prose-sm md:prose-lg richtext-content md:border-chateau-light mx-auto max-w-4xl md:border-l-3 md:pl-4 lg:pl-8"
+                className="prose prose-sm md:prose-lg richtext-content md:border-chateau-light mx-auto max-w-4xl px-4 md:border-l-3 md:pl-4 lg:pl-8"
                 data={membre.content}
                 enableGutter={false}
               />
@@ -154,6 +160,7 @@ export const MembresContent = (membre: Membre) => {
                       alt={`Logo ${membre.name}`}
                       fill
                       imgClassName="object-contain p-2"
+                      variant="square"
                     />
                   </div>
                 ) : null}
@@ -202,7 +209,7 @@ export const MembresContent = (membre: Membre) => {
                     )}
                     {membre.informations.contact.mail && (
                       <div className="flex items-center gap-2">
-                        <EnvelopeIcon className="h-4 w-4 flex-shrink-0" />
+                        <EnvelopeIcon className="h-4 w-4 shrink-0" />
                         <a
                           href={`mailto:${membre.informations.contact.mail}`}
                           className="theme-dark:hover:text-zinc-200 truncate hover:text-zinc-900"
@@ -252,7 +259,11 @@ export const MembresContent = (membre: Membre) => {
                   <div className="theme-dark:text-zinc-400 ml-7 text-sm text-zinc-600">
                     <CMSLink
                       type="custom"
-                      url={membre.informations.website.startsWith('http') ? membre.informations.website : `https://${membre.informations.website}`}
+                      url={
+                        membre.informations.website.startsWith('http')
+                          ? membre.informations.website
+                          : `https://${membre.informations.website}`
+                      }
                       newTab
                       className="theme-dark:hover:text-zinc-200 break-all underline hover:text-zinc-900"
                     >
