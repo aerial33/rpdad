@@ -132,7 +132,7 @@ export const MembresContent = (membre: Membre) => {
       <section>
         <div className="container mx-auto flex flex-col items-center pt-4 pb-8 md:pt-8 md:pb-10 lg:flex-row lg:justify-between lg:pb-16 xl:px-0">
           {membre.content && (
-            <div className="md:border-foret">
+            <div className="md:border-foret px-4 md:px-0">
               <Badge className="border-muted-foreground mb-8" variant="outline">
                 <Breadcrumbs
                   breadcrumbs={[
