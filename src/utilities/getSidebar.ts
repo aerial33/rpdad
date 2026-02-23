@@ -70,6 +70,9 @@ async function getCategoriesWithCount(
           categories: {
             contains: category.id,
           },
+          _status: {
+            equals: 'published',
+          },
         },
       })
 
