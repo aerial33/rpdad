@@ -101,7 +101,7 @@ export const Card: React.FC<{
             </div>
           )}
           {displayImage && typeof displayImage !== 'string' && (
-            <Media resource={displayImage} className={getImageClasses()} variant="og" />
+            <Media resource={displayImage} className={getImageClasses()} variant="large" />
           )}
         </Link>
         <figcaption className="pointer-events-none absolute inset-0 z-5 h-full w-full p-2 px-4 py-3 text-center opacity-0 group-hover:opacity-100">

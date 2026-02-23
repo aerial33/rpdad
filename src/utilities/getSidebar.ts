@@ -16,6 +16,7 @@ async function getFeaturedPosts(): Promise<SidebarWidgetsProps['popularPosts']> 
 
   const featuredDocs = await payload.find({
     collection: 'posts',
+    // draft: false,
     where: {
       isFeatured: {
         equals: true,

@@ -59,7 +59,7 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
     <div className="relative">
       <div className={`nc-PageSingle py-4 pt-8`}>
         <header className="container rounded-xl">
-          <div className="mx-auto max-w-screen-lg">
+          <div className="mx-auto max-w-5xl">
             <div className="space-y-2 text-center">
               {/* <CategoryBadgeList
                 itemClass="!px-3"
@@ -71,8 +71,8 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
                   {post.meta.description}
                 </span>
               )}
-              <div className="mx-auto mt-4 max-w-screen-md border-b border-neutral-200 dark:border-neutral-700"></div>
-              <div className="mx-auto mb-4 flex max-w-screen-md flex-col justify-between space-y-5 sm:flex-row sm:items-end sm:space-y-0 sm:space-x-5 rtl:space-x-reverse">
+              <div className="mx-auto mt-4 max-w-3xl border-b border-neutral-200 dark:border-neutral-700"></div>
+              <div className="mx-auto mb-4 flex max-w-3xl flex-col justify-between space-y-5 sm:flex-row sm:items-end sm:space-y-0 sm:space-x-5 rtl:space-x-reverse">
                 {/* <PostMeta2
                   size="large"
                   className="leading-none flex-shrink-0"
@@ -97,8 +97,9 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
           <div className="container my-10 sm:my-12">
             <Media
               resource={post.heroImage}
-              imgClassName="w-full rounded-xl aspect-video"
-              size="(max-width: 1024px) 100vw, 1280px"
+              imgClassName="w-full rounded-xl aspect-video object-cover object-top"
+              size="(max-width: 720px) 100vw, 720px"
+              variant="medium"
             />
           </div>
         )}
@@ -107,11 +108,11 @@ const SingleContent: FC<SingleContentProps> = ({ post, hiddenDesc }: SingleConte
         {/* ENTRY CONTENT */}
         <div
           id="single-entry-content"
-          className="prose lg:prose-lg richtext-content mx-auto !max-w-screen-md"
+          className="prose lg:prose-lg richtext-content mx-auto max-w-3xl! px-4 lg:px-0"
         >
           <RichText data={post.content} enableGutter={false} />
         </div>
-        <div className="mx-auto max-w-screen-md"></div>
+        <div className="mx-auto max-w-3xl"></div>
       </div>
     </div>
   )

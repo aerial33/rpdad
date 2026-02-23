@@ -57,9 +57,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <SingleContent post={post} />
       {post.relatedPosts && post.relatedPosts.length > 0 && (
-        <div className="container border">
+        <div className="container">
           <RelatedPosts
-            className="col-span-3 col-start-1 mx-auto mt-12 max-w-[52rem] grid-rows-[2fr] lg:grid lg:grid-cols-subgrid"
+            className="col-span-3 col-start-1 mx-auto mt-12 max-w-208 grid-rows-[2fr] lg:grid lg:grid-cols-subgrid"
             docs={post.relatedPosts.filter((post) => typeof post === 'object')}
           />
         </div>
