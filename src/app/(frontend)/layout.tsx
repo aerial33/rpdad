@@ -1,5 +1,3 @@
-import { Analytics } from '@vercel/analytics/next'
-
 import React from 'react'
 
 import type { Metadata } from 'next'
@@ -10,6 +8,7 @@ import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { AdminBar } from '@/components/Admin/AdminBar'
 import ConsentManager from '@/components/consent/consent-manager'
+import { ConditionalAnalytics } from '@/components/consent/conditional-analytics'
 import { Toaster } from '@/components/ui/sonner'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
@@ -50,10 +49,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Header />
             {children}
             <Footer />
+            <ConditionalAnalytics />
           </ConsentManager>
           <Toaster />
         </Providers>
-        <Analytics />
       </body>
     </html>
   )

@@ -1,5 +1,7 @@
 'use client'
 
+import { useConsentManager } from '@c15t/nextjs'
+
 import React, { Fragment, useState } from 'react'
 
 import Image from 'next/image'
@@ -25,6 +27,7 @@ const getEmbedUrl = (source: 'youtube' | 'vimeo', videoId: string): string => {
 
 export const EmbeddedVideo: React.FC<EmbeddedVideoProps> = ({ embed, className }) => {
   const [isPlaying, setIsPlaying] = useState(false)
+  const { consents, setConsent } = useConsentManager()
 
   if (!embed.videoId) return null
 
@@ -43,6 +46,35 @@ export const EmbeddedVideo: React.FC<EmbeddedVideoProps> = ({ embed, className }
   // Vimeo sans custom thumbnail: pas de poster (iframe direct)
 
   const embedUrl = getEmbedUrl(source, videoId)
+
+  // Consent wall si marketing non accepté
+  if (!consents.marketing) {
+    return (
+      <div
+        className={cn('group relative aspect-video overflow-hidden rounded-xl border-2', className)}
+      >
+        {thumbnailSrc && (
+          <Image
+            src={thumbnailSrc}
+            alt={alt || `Vidéo ${source}`}
+            fill
+            className="m-0! rounded-xl object-cover opacity-20"
+          />
+        )}
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
+          <p className="text-sm font-bold">
+            Cette vidéo nécessite l&apos;activation des cookies médias.
+          </p>
+          <button
+            onClick={() => setConsent('marketing', true)}
+            className="bg-primary text-primary-foreground cursor-pointer rounded-md px-4 py-2 text-sm font-semibold hover:opacity-90"
+          >
+            Activer et regarder
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   // Cas Vimeo sans thumbnail: iframe direct
   if (!thumbnailSrc) {
