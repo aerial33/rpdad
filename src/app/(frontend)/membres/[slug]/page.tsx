@@ -54,7 +54,6 @@ export default async function Membre({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
 
-      {/* TODO: Replace with actual membre content component */}
       <MembresContent {...membre} />
     </div>
   )

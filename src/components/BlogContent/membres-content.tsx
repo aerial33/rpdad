@@ -6,9 +6,6 @@ import {
   PhoneIcon,
 } from '@heroicons/react/24/outline'
 
-import Image from 'next/image'
-
-import headerMembresImg from '@/graphics/headersImg/header-members.svg'
 import type { Membre } from '@/payload-types'
 
 import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs'
@@ -35,95 +32,62 @@ export const MembresContent = (membre: Membre) => {
   return (
     <>
       <div className="w-full">
-        <div className="relative h-52 w-full md:h-72 2xl:h-90">
-          <Media
-            src={headerMembresImg}
-            alt="Header membres"
-            fill
-            imgClassName="object-cover object-[center_5%]"
-            priority
-            variant="medium"
-          />
-        </div>
-        <div className="container -mt-10 lg:-mt-16">
+        <div className="from-primary-light to-primary-dark via-primary relative h-52 w-full bg-linear-to-br"></div>
+        <div className="container -mt-20 lg:-mt-16">
           <div className="relative mb-16 flex flex-col rounded-3xl bg-white p-5 shadow-xl md:flex-row md:rounded-[40px] lg:mb-8 lg:p-8">
-            <div className="mt-12 w-32 shrink-0 sm:mt-0 lg:w-40">
-              <div className="wil-avatar relative z-0 inline-flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-xl font-semibold uppercase shadow-2xl ring-4 ring-white lg:h-36 lg:w-36 lg:text-2xl">
+            <div className="mr-4 shrink-0 self-center sm:mt-0 md:self-start lg:w-40">
+              <div className="wil-avatar relative z-0 inline-flex h-32 w-32 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white text-xl font-semibold uppercase shadow-2xl ring-4 ring-white lg:h-36 lg:w-36 lg:text-2xl">
                 {membre.logo && typeof membre.logo === 'object' ? (
                   <Media
                     resource={membre.logo}
                     alt={`Logo ${membre.name}`}
                     fill
                     imgClassName="object-contain p-2"
-                    variant="square"
+                    variant="thumbnail"
                   />
                 ) : (
-                  <Image
-                    src={''}
-                    alt="Logo par défaut"
-                    fill
-                    className="bg-gray-400 object-contain p-2"
-                  />
+                  <span className="flex h-full w-full items-center justify-center bg-zinc-100 text-zinc-500">
+                    {membre.name
+                      .split(' ')
+                      .slice(0, 2)
+                      .map((w) => w[0])
+                      .join('')
+                      .toUpperCase()}
+                  </span>
                 )}
               </div>
             </div>
 
             {/*  */}
-            <div className="grow pt-5 md:pt-1 lg:ml-6 xl:ml-12">
-              <div className="w-full space-y-4">
-                <h2 className="mb-4 w-full items-center text-2xl font-medium text-gray-600 sm:text-4xl">
+            <div className="grow items-center pt-5 md:pt-1 lg:ml-6 xl:ml-12">
+              <div className="flex h-full w-full flex-col">
+                <h2 className="mb-8 w-full grow items-center text-center text-2xl font-medium text-gray-600 sm:text-4xl md:text-left">
                   {'Service Autonomie à Domicile: '}{' '}
                   <span className="font-bold">{membre.name}</span>
                 </h2>
-
-                {membre.informations?.website && (
-                  <CMSLink
-                    type="custom"
-                    url={
-                      membre.informations.website.startsWith('http')
-                        ? membre.informations.website
-                        : `https://${membre.informations.website}`
-                    }
-                    newTab
-                    className="flex cursor-pointer items-center space-x-2.5 truncate text-xs font-medium text-neutral-500 rtl:space-x-reverse"
-                  >
-                    <GlobeAltIcon className="h-4 w-4 shrink-0" />
-                    <span className="truncate text-neutral-700">{membre.informations.website}</span>
-                  </CMSLink>
-                )}
-                {socials.length > 0 && <SocialsList itemClass="block w-7 h-7" socials={socials} />}
+                <div className="flex items-center justify-between">
+                  {membre.informations?.website && (
+                    <CMSLink
+                      type="custom"
+                      url={
+                        membre.informations.website.startsWith('http')
+                          ? membre.informations.website
+                          : `https://${membre.informations.website}`
+                      }
+                      newTab
+                      className="flex cursor-pointer items-center space-x-2.5 truncate border-red-500 text-xs font-medium text-neutral-500 rtl:space-x-reverse"
+                    >
+                      <GlobeAltIcon className="h-4 w-4 shrink-0" />
+                      <span className="truncate text-neutral-700">
+                        {membre.informations.website}
+                      </span>
+                    </CMSLink>
+                  )}
+                  {socials.length > 0 && (
+                    <SocialsList itemClass="block w-7 h-7" socials={socials} />
+                  )}
+                </div>
               </div>
-            </div>
-
-            {/*  */}
-            <div className="absolute start-5 end-5 top-4 flex justify-end sm:start-auto sm:end-5 sm:top-5 md:static">
-              {/* <FollowButton
-                isFollowing={false}
-                fontSize="text-sm md:text-base font-medium"
-                sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
-              /> */}
-
-              {/* <div className="mx-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200 focus:outline-none dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700">
-                    <ShareIcon className="h-5 w-5" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {SOCIALS_DATA.map((item) => (
-                      <DropdownMenuItem
-                        key={item.id}
-                        onClick={() => window.open(item.href, '_blank')}
-                        className="cursor-pointer"
-                      >
-                        <div dangerouslySetInnerHTML={{ __html: item.icon }} />
-                        <span className="ml-2">{item.name}</span>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div> */}
-
-              {/* <AccountActionDropdown containerClassName="h-10 w-10 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700" /> */}
             </div>
           </div>
         </div>
@@ -143,7 +107,7 @@ export const MembresContent = (membre: Membre) => {
                 />
               </Badge>
               <RichText
-                className="prose prose-sm md:prose-lg richtext-content md:border-chateau-light mx-auto max-w-4xl px-4 md:border-l-3 md:pl-4 lg:pl-8"
+                className="prose prose-sm md:prose-lg richtext-content md:border-chateau-light mx-auto max-w-4xl md:border-l-3 md:pl-4 lg:pl-8"
                 data={membre.content}
                 enableGutter={false}
               />
@@ -154,16 +118,25 @@ export const MembresContent = (membre: Membre) => {
               {/* Logo and Name */}
               <div className="mb-6 flex flex-col items-center px-6">
                 {membre.logo && typeof membre.logo === 'object' ? (
-                  <div className="relative mb-4 h-20 w-20 overflow-hidden rounded-full bg-white shadow-xl ring-2 ring-white">
+                  <div className="relative mb-4 h-20 w-20 overflow-hidden rounded-2xl bg-white shadow-xl ring-2 ring-white">
                     <Media
                       resource={membre.logo}
                       alt={`Logo ${membre.name}`}
                       fill
                       imgClassName="object-contain p-2"
-                      variant="square"
+                      variant="thumbnail"
                     />
                   </div>
-                ) : null}
+                ) : (
+                  <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-zinc-200 text-xl font-semibold text-zinc-500 uppercase shadow-xl">
+                    {membre.name
+                      .split(' ')
+                      .slice(0, 2)
+                      .map((w) => w[0])
+                      .join('')
+                      .toUpperCase()}
+                  </div>
+                )}
                 <h3 className="theme-dark:text-zinc-100 text-center text-xl leading-tight font-bold">
                   {membre.name}
                 </h3>
