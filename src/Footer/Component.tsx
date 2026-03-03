@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, Mail, Map, Phone, Youtube } from 'lucide-react'
 
 import { CMSLink } from '@/components/Link'
 import { CookieSettingsButton } from '@/components/consent/cookie-settings-button'
@@ -65,14 +65,20 @@ export async function Footer() {
           ))}
         </div>
         <div className="flex flex-col items-center justify-center text-center">
-          <h3 className="mb-6 font-bold">Adresse</h3>
-          <p className="text-muted-foreground mb-6">
-            4 voie Romaine, <br />
-            Espace France Bâtiment B<br />
-            33610 Canéjan
+          <p className="mb-4 flex items-center gap-2 font-bold">
+            <Map className="size-5" /> Adresse
           </p>
-          <p className="text-muted-foreground">{'05.40.12.90.11'}</p>
-          <p className="text-muted-foreground">{'rpdad@udccas33.org'}</p>
+          <h3 className="mb-2 text-lg font-bold text-black">UDCCAS-RPDAD</h3>
+          <p className="text-muted-foreground mb-2 max-w-[200px]">
+            4 voie Romaine, Espace France Bâtiment B
+          </p>
+          <p className="text-muted-foreground mb-4">33610 Canéjan</p>
+          <p className="text-muted-foreground flex items-center gap-2">
+            <Phone className="size-5" /> {'05.40.12.90.11'}
+          </p>
+          <p className="text-muted-foreground flex items-center gap-2">
+            <Mail className="size-5" /> {'rpdad@udccas33.org'}
+          </p>
         </div>
       </div>
       <div className="text-muted-foreground border-flamingo container mt-20 flex flex-col justify-between gap-4 border-t px-4 pt-8 text-center text-sm font-medium lg:flex-row lg:items-center lg:text-left">
