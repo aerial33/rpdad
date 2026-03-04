@@ -2,6 +2,7 @@ import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
+  LinkFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import type { Block } from 'payload'
@@ -41,6 +42,22 @@ export const FormBlock: Block = {
         },
       }),
       label: 'Intro Content',
+    },
+    {
+      name: 'gdprContent',
+      type: 'richText',
+      label: 'Texte protection des données (RGPD)',
+      admin: {
+        description: 'Affiché en bas du formulaire dans un collapse "Protection de vos données".',
+      },
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+          LinkFeature({}),
+        ],
+      }),
     },
   ],
   graphQL: {

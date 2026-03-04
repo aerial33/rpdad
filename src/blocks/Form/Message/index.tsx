@@ -1,6 +1,8 @@
-import RichText from '@/components/RichText'
-import React from 'react'
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
+
+import React from 'react'
+
+import RichText from '@/components/RichText'
 
 import { Width } from '../Width'
 

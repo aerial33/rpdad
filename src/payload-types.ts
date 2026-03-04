@@ -656,6 +656,24 @@ export interface FormBlock {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Affiché en bas du formulaire dans un collapse "Protection de vos données".
+   */
+  gdprContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
@@ -1947,6 +1965,7 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  gdprContent?: T;
   id?: T;
   blockName?: T;
 }
