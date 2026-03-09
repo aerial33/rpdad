@@ -1,6 +1,6 @@
 'use client'
 
-import { Facebook, Instagram, Linkedin, SearchIcon, Youtube } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react'
 
 import React, { useEffect, useState } from 'react'
 
@@ -74,10 +74,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
               </a>
             </li>
           </ul>
-          <Link href="/search">
+          {/* <Link href="/search">
             <span className="sr-only">Search</span>
             <SearchIcon className="hover:text-primary w-5 font-medium" />
-          </Link>
+          </Link> */}
         </div>
         <MobileMenu data={data} />
         {/* <CTA label="Contactez-nous" link="/contact" variant="default" /> */}
