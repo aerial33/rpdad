@@ -674,6 +674,16 @@ export interface FormBlock {
     };
     [k: string]: unknown;
   } | null;
+  bgColor?:
+    | (
+        | 'bg-white'
+        | 'bg-neutral-100'
+        | 'bg-flamingo-lightest'
+        | 'bg-blue-lightest'
+        | 'bg-chateau-lightest'
+        | 'bg-primary-lightest'
+      )
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
@@ -1966,6 +1976,7 @@ export interface FormBlockSelect<T extends boolean = true> {
   enableIntro?: T;
   introContent?: T;
   gdprContent?: T;
+  bgColor?: T;
   id?: T;
   blockName?: T;
 }

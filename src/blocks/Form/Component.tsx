@@ -20,7 +20,7 @@ export const FormBlock: React.FC<
     id?: string
   } & FormBlockType
 > = (props) => {
-  const { enableIntro, form: formFromProps, introContent, gdprContent } = props
+  const { enableIntro, form: formFromProps, introContent, gdprContent, bgColor } = props
 
   // Handle case where form might be just an ID - in practice it should always be populated
   const formData = typeof formFromProps === 'object' ? formFromProps : null
@@ -131,8 +131,8 @@ export const FormBlock: React.FC<
 
   return (
     <div className="relative py-20">
-      <BackgroundSection className={'bg-gray-100'} />
-      <div className="container mx-auto px-4 xl:flex xl:justify-between xl:gap-8 xl:px-0">
+      <BackgroundSection className={bgColor || 'bg-neutrcal-100'} />
+      <div className="container px-4 xl:flex xl:justify-between xl:gap-8 xl:px-0">
         <div className="mb-16 text-left xl:max-w-3xl">
           {enableIntro && introContent && !hasSubmitted && (
             <RichText
@@ -142,7 +142,7 @@ export const FormBlock: React.FC<
             />
           )}
         </div>
-        <div className="border-muted-foreground mx-auto max-w-3xl rounded-[0.8rem] border-b bg-white p-4 shadow-sm">
+        <div className="border-muted-foreground mx-auto w-full max-w-3xl rounded-[0.8rem] border-b bg-white p-4 shadow-sm">
           <FormProvider {...formMethods}>
             {!isLoading &&
               hasSubmitted &&

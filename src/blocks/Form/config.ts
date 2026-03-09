@@ -59,6 +59,20 @@ export const FormBlock: Block = {
         ],
       }),
     },
+    {
+      name: 'bgColor',
+      type: 'select',
+      label: '🎨 Couleur de fond',
+      defaultValue: 'bg-white',
+      options: [
+        { label: '⚪ Blanc', value: 'bg-white' },
+        { label: '⚫ Gris', value: 'bg-neutral-100' },
+        { label: '🟠 Orange', value: 'bg-flamingo-lightest' },
+        { label: '🔵 Bleu', value: 'bg-blue-lightest' },
+        { label: '🟢 Vert', value: 'bg-chateau-lightest' },
+        { label: '🟣 Violet', value: 'bg-primary-lightest' },
+      ],
+    },
   ],
   graphQL: {
     singularName: 'FormBlock',
